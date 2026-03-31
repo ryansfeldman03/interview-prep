@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anthropic BDR Prep — Ryan Feldman</title>
+<title>Carl Johnson Interview — Ryan Feldman</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -152,7 +152,7 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
 <body>
 
 <nav class="nav">
-  <div class="nav-brand">Anthropic BDR Prep <span>— Ryan Feldman</span></div>
+  <div class="nav-brand">Carl Johnson Interview <span>— Stage 2</span></div>
   <button class="nav-tab active" onclick="showView('dashboard')">Dashboard</button>
   <button class="nav-tab" onclick="showView('drill')">Drill</button>
   <button class="nav-tab" onclick="showView('mock')">Mock Interview</button>
@@ -206,27 +206,17 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
 <!-- MOCK INTERVIEW -->
 <div id="view-mock" class="view">
   <div id="mock-setup">
-    <h2>Mock Interview</h2>
-    <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Choose your stage. Say every answer out loud — treat it like the real call. Timer runs 2 minutes per question.</p>
-    <div class="stage-grid">
-      <div class="stage-card" onclick="selectStage('allen',this)">
-        <div class="stage-name">📞 Allen Paisansiri</div>
-        <div class="stage-desc">Recruiter screen · Fit, background, comp, motivation</div>
-      </div>
-      <div class="stage-card sel" onclick="selectStage('carl',this)">
-        <div class="stage-name">🎯 Carl Johnson — HM</div>
-        <div class="stage-desc">Stage 2 · Behavioral, sales skills, product, "why Anthropic"</div>
-      </div>
-      <div class="stage-card" onclick="selectStage('panel',this)">
-        <div class="stage-name">👥 Panel / Future Rounds</div>
-        <div class="stage-desc">Mixed: competitive, situational, cold call roleplay</div>
-      </div>
-      <div class="stage-card" onclick="selectStage('roleplay',this)">
-        <div class="stage-name">🎭 Cold Call Roleplay</div>
-        <div class="stage-desc">Pitch a VP Eng on Claude · Handle OpenAI objections</div>
+    <h2>Mock Interview — Carl Johnson</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Manager, Sales Development · 25 minutes · Video call. Say every answer out loud. Timer runs 2 minutes per question — same pressure as the real call.</p>
+    <div class="card" style="margin-bottom:16px;font-size:13px;line-height:1.7;color:var(--muted)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:8px">Allen's exact guidance for this call</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div><span style="color:var(--text);font-weight:600">1 · Background</span> — FiberSeal from zero, Morgan Stanley, AI command center. Lead with "I run on Claude."</div>
+        <div><span style="color:var(--text);font-weight:600">2 · Motivations for Anthropic</span> — PBC structure, 1,167% growth, authentic mission alignment. Not a rehearsed answer.</div>
+        <div><span style="color:var(--text);font-weight:600">3 · Product Knowledge</span> — Know the 6 numbers cold. Claude Code, MCP, why you win 70% vs. OpenAI.</div>
       </div>
     </div>
-    <button class="btn btn-primary btn-lg" onclick="startMock()">Start Session</button>
+    <button class="btn btn-primary btn-lg" onclick="startMock()">Start Mock Interview</button>
   </div>
   <div id="mock-session" style="display:none">
     <div class="pbar-bg"><div class="pbar-fill" id="mock-pbar" style="width:0%"></div></div>
@@ -788,25 +778,13 @@ function rate(q) { sm2Update(drillQueue[drillIdx].id,q); drillIdx++; renderDrill
 // ==========================================
 // MOCK INTERVIEW
 // ==========================================
-let selectedStage='carl', mockQueue=[], mockIdx=0, mockTimerInterval=null, mockTimeLeft=120;
+let mockQueue=[], mockIdx=0, mockTimerInterval=null, mockTimeLeft=120;
 
-const STAGE_QS = {
-  allen: ['b001','w001','w002','s004','b007','a004','p005','o001'],
-  // Allen's exact order: background → motivations → product knowledge
-  carl:  ['b001','b002','b003','b006','w001','w002','w003','p001','p002','p003','p005','p006'],
-  panel: ['p007','o001','o002','o003','b006','s002','s003','w004','a001','a002'],
-  roleplay: ['s003','o001','o003','o005','o004','s002','o006','p006'],
-};
-
-function selectStage(stage,el) {
-  selectedStage=stage;
-  document.querySelectorAll('.stage-card').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-}
+// Carl Johnson HM — Allen's 3 topics: background → motivations → product
+const CARL_QS = ['b001','b002','b003','b006','w001','w002','w003','p001','p002','p003','p005','p006'];
 
 function startMock() {
-  const ids=STAGE_QS[selectedStage]||STAGE_QS.carl;
-  mockQueue=ids.map(id=>QUESTIONS.find(q=>q.id===id)).filter(Boolean);
+  mockQueue=CARL_QS.map(id=>QUESTIONS.find(q=>q.id===id)).filter(Boolean);
   mockIdx=0;
   document.getElementById('mock-setup').style.display='none';
   document.getElementById('mock-done').style.display='none';
