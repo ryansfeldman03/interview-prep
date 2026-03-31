@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carl Johnson Interview Course — Ryan Feldman</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080e1a;--surface:#0f172a;--card:#1a2332;--border:#253047;
+  --accent:#f59e0b;--blue:#3b82f6;--green:#10b981;--red:#ef4444;--purple:#8b5cf6;
+  --text:#f1f5f9;--muted:#94a3b8;--dim:#475569;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
+
+/* TOP NAV */
+.topnav{background:var(--surface);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;padding:0 20px;gap:16px;position:sticky;top:0;z-index:200}
+.topnav-brand{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:-0.3px;white-space:nowrap;flex-shrink:0}
+.topnav-brand span{color:var(--muted);font-weight:400;font-size:12px;margin-left:6px}
+.topnav-progress{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.topnav-prog-label{font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.topnav-bar-bg{flex:1;height:5px;background:var(--border);border-radius:99px;min-width:60px}
+.topnav-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+.topnav-link{font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:5px 12px;border-radius:6px;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.topnav-link:hover{color:var(--accent);border-color:var(--accent)}
+.topnav-hamburger{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:4px;flex-shrink:0}
+
+/* LAYOUT */
+.layout{display:flex;height:calc(100vh - 54px)}
+.sidebar{width:270px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-header{padding:16px 18px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dim)}
+.mod-item{padding:12px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;border-left:3px solid transparent;transition:all .15s;position:relative}
+.mod-item:hover{background:rgba(245,158,11,.04)}
+.mod-item.active{background:rgba(245,158,11,.07);border-left-color:var(--accent)}
+.mod-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;margin-top:1px}
+.mod-check.done{background:var(--green);border-color:var(--green);color:#fff}
+.mod-info{min-width:0}
+.mod-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin-bottom:2px}
+.mod-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
+.mod-time{font-size:11px;color:var(--muted);margin-top:2px}
+.sidebar-spacer{flex:1}
+
+/* MAIN CONTENT */
+.main{flex:1;overflow-y:auto;padding:28px 32px}
+.module-view{display:none;max-width:760px;margin:0 auto}
+.module-view.active{display:block}
+
+/* MODULE HEADER */
+.mod-header{margin-bottom:28px}
+.mod-header-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mod-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:99px}
+.mod-badge-time{font-size:11px;color:var(--muted);background:var(--card);border:1px solid var(--border);padding:4px 10px;border-radius:99px}
+.mod-title-lg{font-size:24px;font-weight:800;line-height:1.2;margin-bottom:6px}
+.mod-goal{font-size:14px;color:var(--muted);line-height:1.6;padding:12px 16px;background:rgba(245,158,11,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+
+/* CONTENT SECTIONS */
+.section{margin-bottom:28px}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.content-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:10px}
+.content-card p{font-size:14px;line-height:1.8;color:var(--text);margin-bottom:10px}
+.content-card p:last-child{margin-bottom:0}
+
+/* FRAMEWORK BOXES */
+.framework{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:16px;margin-bottom:10px}
+.framework-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--blue);margin-bottom:10px}
+.fw-row{display:flex;gap:10px;margin-bottom:7px;align-items:flex-start;font-size:13px;line-height:1.6}
+.fw-label{font-weight:700;color:var(--accent);flex-shrink:0;width:80px}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.pillar{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.pillar-num{font-size:22px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:4px}
+.pillar-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pillar-text{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* MODEL ANSWER */
+.model-answer{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:20px;margin-bottom:10px}
+.model-answer-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:10px}
+.model-answer-text{font-size:14px;line-height:1.8;color:var(--text)}
+
+/* PRODUCT CARDS */
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.product-name{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:2px}
+.product-tagline{font-size:11px;color:var(--purple);font-style:italic;margin-bottom:8px}
+.product-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.product-opener{background:rgba(59,130,246,.07);border-radius:6px;padding:8px 10px;font-size:12px;color:#93c5fd;line-height:1.5;margin-bottom:6px}
+.product-opener::before{content:'BDR opener: ';font-weight:700}
+.product-key{font-size:11px;color:var(--green);font-weight:600}
+.product-key::before{content:'Key: '}
+
+/* NUMBERS */
+.numbers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.num-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.num-val{font-size:22px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:3px}
+.num-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+
+/* COMPETITIVE */
+.vs-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
+.vs-header{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:10px}
+.vs-point{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.6;margin-bottom:6px}
+.vs-point::before{content:'→';color:var(--accent);flex-shrink:0}
+
+/* OBJECTION FRAMEWORK */
+.objection-steps{counter-reset:step;display:flex;flex-direction:column;gap:8px}
+.obj-step{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px}
+.obj-step-num{width:24px;height:24px;border-radius:50%;background:rgba(245,158,11,.15);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.obj-step-text{font-size:13px;line-height:1.6}
+.obj-step-text b{color:var(--accent)}
+
+/* STAR STORIES */
+.star-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.star-header{padding:16px 18px;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.star-header:hover{background:rgba(245,158,11,.04)}
+.star-title-wrap{flex:1}
+.star-title{font-size:14px;font-weight:700;margin-bottom:3px}
+.star-tags{font-size:11px;color:var(--accent)}
+.star-chevron{color:var(--muted);font-size:16px;flex-shrink:0;transition:transform .2s;margin-top:2px}
+.star-chevron.open{transform:rotate(180deg)}
+.star-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.star-body.show{display:block}
+.star-row{margin-bottom:10px;margin-top:14px}
+.star-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:3px}
+.star-text{font-size:13px;line-height:1.7;color:var(--muted)}
+.bridge-box{margin-top:12px;padding:10px 12px;background:rgba(245,158,11,.08);border-left:3px solid var(--accent);border-radius:0 7px 7px 0;font-size:12px;color:var(--text);line-height:1.6}
+.bridge-box::before{content:'Bridge: ';font-weight:700;color:var(--accent)}
+
+/* PRACTICE SECTION */
+.practice-list{display:flex;flex-direction:column;gap:8px}
+.practice-item{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
+.practice-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;cursor:pointer;appearance:none;-webkit-appearance:none;background:none;margin-top:2px;transition:all .2s}
+.practice-check:checked{background:var(--accent);border-color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%230a0f1e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:contain}
+.practice-text{flex:1}
+.practice-q{font-size:14px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:3px}
+.practice-hint{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* COMPLETION CHECK */
+.completion-zone{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.25);border-radius:12px;padding:20px;margin-bottom:24px}
+.completion-zone-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:12px}
+.completion-check-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5}
+.completion-check-item input[type=checkbox]{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;cursor:pointer;appearance:none;-webkit-appearance:none;background:none;margin-top:2px;transition:all .2s}
+.completion-check-item input[type=checkbox]:checked{background:var(--green);border-color:var(--green);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:contain}
+
+/* COMPLETE BUTTON */
+.complete-btn{width:100%;padding:14px;border-radius:10px;border:none;cursor:pointer;font-size:15px;font-weight:700;background:var(--accent);color:#0a0f1e;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.complete-btn:hover{background:#fcd34d}
+.complete-btn:disabled{background:var(--dim);color:var(--muted);cursor:not-allowed}
+.complete-btn.done{background:var(--green);color:#fff}
+
+/* MOCK INTERVIEW */
+.mock-prereq{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:16px;margin-bottom:20px}
+.mock-prereq-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:10px}
+.mock-checklist{display:flex;flex-direction:column;gap:8px}
+.mock-check-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text)}
+.mock-check-item input{width:16px;height:16px;cursor:pointer;accent-color:var(--accent);flex-shrink:0}
+.mock-screen{display:none}
+.mock-screen.active{display:block}
+.mock-setup{text-align:center;padding:20px 0}
+.mock-setup p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px}
+.mock-start-btn{padding:14px 32px;border-radius:10px;border:none;cursor:pointer;font-size:16px;font-weight:700;background:var(--accent);color:#0a0f1e;transition:all .15s}
+.mock-start-btn:hover{background:#fcd34d}
+.mock-running{text-align:center}
+.mock-progress{font-size:11px;color:var(--muted);margin-bottom:12px;text-align:center}
+.mock-pbar-bg{width:100%;height:4px;background:var(--border);border-radius:99px;margin-bottom:24px}
+.mock-pbar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.mock-q-text{font-size:20px;font-weight:700;line-height:1.45;text-align:center;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:16px}
+.timer{font-size:56px;font-weight:800;text-align:center;color:var(--accent);font-variant-numeric:tabular-nums;margin-bottom:8px;font-family:'SF Mono','Fira Code',monospace;letter-spacing:-2px}
+.timer.urgent{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.timer-label{font-size:11px;color:var(--muted);text-align:center;margin-bottom:20px}
+.mock-btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mock-btn{padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s}
+.mock-btn-next{background:var(--accent);color:#0a0f1e}
+.mock-btn-next:hover{background:#fcd34d}
+.mock-btn-skip{background:var(--card);color:var(--muted);border:1px solid var(--border)}
+.mock-btn-skip:hover{color:var(--text);border-color:var(--dim)}
+.mock-done{text-align:center;padding:24px 0}
+.mock-done-icon{font-size:56px;margin-bottom:12px}
+.mock-done h3{font-size:22px;font-weight:700;margin-bottom:8px}
+.mock-done p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:480px;margin-left:auto;margin-right:auto}
+.self-rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.self-rate-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.self-rate-label{font-size:12px;color:var(--muted);margin-bottom:8px}
+.star-rating{display:flex;justify-content:center;gap:4px}
+.star-btn{background:none;border:none;cursor:pointer;font-size:18px;color:var(--dim);transition:color .15s;line-height:1}
+.star-btn.lit{color:var(--accent)}
+.weakest-box{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:9px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:var(--text);line-height:1.6}
+.weakest-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);margin-bottom:6px}
+
+/* COURSE COMPLETE SCREEN */
+.course-complete{display:none;text-align:center;padding:48px 24px;max-width:600px;margin:0 auto}
+.course-complete.active{display:block}
+.badge{display:inline-block;background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(139,92,246,.2));border:2px solid var(--accent);border-radius:16px;padding:28px 40px;margin-bottom:24px}
+.badge-icon{font-size:60px;margin-bottom:10px}
+.badge-title{font-size:22px;font-weight:800;color:var(--accent);margin-bottom:4px}
+.badge-name{font-size:16px;color:var(--text);margin-bottom:4px}
+.badge-date{font-size:12px;color:var(--muted)}
+.course-complete h2{font-size:26px;font-weight:800;margin-bottom:12px}
+.course-complete .sub{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:28px}
+.final-3{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;text-align:left}
+.final-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.final-num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#0a0f1e;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.final-text{font-size:13px;line-height:1.6;color:var(--text)}
+.restart-btn{padding:12px 28px;border-radius:10px;border:1px solid var(--border);cursor:pointer;font-size:14px;font-weight:600;background:none;color:var(--muted);transition:all .15s}
+.restart-btn:hover{color:var(--text);border-color:var(--dim)}
+
+/* HIGHLIGHT BOXES */
+.tip-box{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.2);border-radius:9px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--text);line-height:1.6}
+.tip-box b{color:#a78bfa}
+.warning-box{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:9px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--text);line-height:1.6}
+.warning-box b{color:#fca5a5}
+.info-box{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:9px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--text);line-height:1.6}
+.info-box b{color:#93c5fd}
+.quote{font-size:15px;font-style:italic;color:var(--text);line-height:1.8;padding:16px 20px;border-left:4px solid var(--accent);background:rgba(245,158,11,.04);border-radius:0 10px 10px 0;margin-bottom:10px}
+
+/* MOBILE */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150}
+@media(max-width:768px){
+  .topnav-hamburger{display:block}
+  .topnav-prog-label{display:none}
+  .layout{height:calc(100dvh - 54px)}
+  .sidebar{position:fixed;left:-270px;top:54px;height:calc(100dvh - 54px);z-index:160;transition:left .25s}
+  .sidebar.open{left:0}
+  .sidebar-overlay{display:none}
+  .sidebar-overlay.open{display:block}
+  .main{padding:20px 16px}
+  .pillars{grid-template-columns:1fr}
+  .product-grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:repeat(2,1fr)}
+  .self-rate-grid{grid-template-columns:1fr}
+  .timer{font-size:44px}
+  .mock-q-text{font-size:16px;padding:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <button class="topnav-hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="topnav-brand">Carl Johnson Interview Course <span>— Ryan Feldman</span></div>
+  <div class="topnav-progress">
+    <span class="topnav-prog-label" id="prog-label">0 of 7 modules complete</span>
+    <div class="topnav-bar-bg"><div class="topnav-bar-fill" id="prog-bar" style="width:0%"></div></div>
+  </div>
+  <a class="topnav-link" href="InterviewIQ.html">Open InterviewIQ →</a>
+</nav>
+
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">Course Modules</div>
+    <div class="mod-item active" id="sidenav-1" onclick="goToModule(1)">
+      <div class="mod-check" id="check-1"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 1</div>
+        <div class="mod-title">Your Story</div>
+        <div class="mod-time">15 min</div>
+      </div>
+    </div>
+    <div class="mod-item" id="sidenav-2" onclick="goToModule(2)">
+      <div class="mod-check" id="check-2"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 2</div>
+        <div class="mod-title">Why Anthropic</div>
+        <div class="mod-time">15 min</div>
+      </div>
+    </div>
+    <div class="mod-item" id="sidenav-3" onclick="goToModule(3)">
+      <div class="mod-check" id="check-3"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 3</div>
+        <div class="mod-title">Product Foundation</div>
+        <div class="mod-time">35 min</div>
+      </div>
+    </div>
+    <div class="mod-item" id="sidenav-4" onclick="goToModule(4)">
+      <div class="mod-check" id="check-4"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 4</div>
+        <div class="mod-title">Competitive Landscape</div>
+        <div class="mod-time">15 min</div>
+      </div>
+    </div>
+    <div class="mod-item" id="sidenav-5" onclick="goToModule(5)">
+      <div class="mod-check" id="check-5"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 5</div>
+        <div class="mod-title">BDR Skills</div>
+        <div class="mod-time">15 min</div>
+      </div>
+    </div>
+    <div class="mod-item" id="sidenav-6" onclick="goToModule(6)">
+      <div class="mod-check" id="check-6"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 6</div>
+        <div class="mod-title">Your STAR Stories</div>
+        <div class="mod-time">15 min</div>
+      </div>
+    </div>
+    <div class="mod-item" id="sidenav-7" onclick="goToModule(7)">
+      <div class="mod-check" id="check-7"></div>
+      <div class="mod-info">
+        <div class="mod-num">Module 7</div>
+        <div class="mod-title">Final Mock Interview</div>
+        <div class="mod-time">25 min</div>
+      </div>
+    </div>
+    <div class="sidebar-spacer"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main-content">
+
+    <!-- COURSE COMPLETE -->
+    <div class="course-complete" id="course-complete">
+      <div class="badge">
+        <div class="badge-icon">🎯</div>
+        <div class="badge-title">Interview Ready</div>
+        <div class="badge-name">Ryan Feldman</div>
+        <div class="badge-date" id="badge-date"></div>
+      </div>
+      <h2>You're ready for Carl.</h2>
+      <p class="sub">You've completed all 7 modules. The system is loaded. Now trust it and go have the conversation.</p>
+      <div class="final-3">
+        <div class="final-item">
+          <div class="final-num">1</div>
+          <div class="final-text"><strong>Lead with the Claude angle.</strong> You already run your entire sales operation on their product. No other candidate can say that. Get that line in within the first 30 seconds — every time.</div>
+        </div>
+        <div class="final-item">
+          <div class="final-num">2</div>
+          <div class="final-text"><strong>Be specific. Always.</strong> $19B ARR, 1,167% growth, 73% new buyer market share, 70% Fortune 100. Numbers earn credibility. Generalities lose it. Carl will notice.</div>
+        </div>
+        <div class="final-item">
+          <div class="final-num">3</div>
+          <div class="final-text"><strong>Connect to Carl directly.</strong> He built an outbound engine at AssemblyAI where none existed — same as FiberSeal. Draw that parallel explicitly. That's the moment the call shifts from interview to conversation.</div>
+        </div>
+      </div>
+      <button class="restart-btn" onclick="restartCourse()">Restart Course</button>
+    </div>
+
+    <!-- MODULE 1: Your Story -->
+    <div class="module-view active" id="module-1">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(245,158,11,.15);color:var(--accent)">Module 1</span>
+          <span class="mod-badge-time">15 min</span>
+        </div>
+        <div class="mod-title-lg">Your Story</div>
+        <div class="mod-goal">Goal: Deliver a 90-second "tell me about yourself" that gets the Claude angle in within 30 seconds.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The Framework</div>
+        <div class="framework">
+          <div class="framework-title">Narrative Structure: Present → Past → Why Here</div>
+          <div class="fw-row"><span class="fw-label">Present:</span><span>UMD Communications grad, built a full AI-powered prospecting operation at FiberSeal — 500 calls/week, 20 meetings/month.</span></div>
+          <div class="fw-row"><span class="fw-label">Past:</span><span>Morgan Stanley intern (client-facing, Aladdin software, tailored solutions), caddie at Burning Tree (reading people, adapting fast).</span></div>
+          <div class="fw-row"><span class="fw-label">Why Here:</span><span>Already run on Claude every day. Prospecting for Anthropic isn't a pitch — it's authentic.</span></div>
+        </div>
+        <div class="tip-box"><b>The "I run on Claude" line</b> is your single most differentiating fact. No other candidate can say this. Lead with it — not where you went to school.</div>
+        <div class="warning-box"><b>The 30-second rule:</b> Carl makes a judgment in the first 30 seconds. Your Claude angle must land before the 30-second mark. Practice until it's automatic.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Answer — Internalize This</div>
+        <div class="model-answer">
+          <div class="model-answer-label">Your 90-Second Story</div>
+          <div class="model-answer-text">"I'm a recent UMD Communications grad who spent last year at Morgan Stanley as a wealth management intern — real client-facing work, listening, presenting tailored solutions, managing relationships. While I was there I started building AI systems on the side. Not as a hobby — as the backbone of how I work. I built a full prospecting engine using Claude: automated research briefings, signal-based outreach, live CRM updates through the MCP connector. That system powered 500 calls a week and 20 booked meetings a month at FiberSeal, a fabric protection company I was running sales for in South Florida. The reason I'm specifically targeting Anthropic is that I already run on your product. Every day. Selling Claude to enterprises isn't a pitch for me — it's authentic. I want to be part of the team that's scaling this to the rest of the Fortune 100."</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Practice Prompts — Say Each Answer Out Loud</div>
+        <div class="practice-list">
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m1p1')">
+            <div class="practice-text">
+              <div class="practice-q">"Tell me about yourself."</div>
+              <div class="practice-hint">Set a timer for 90 seconds. Did you get the Claude angle in before the 30-second mark?</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m1p2')">
+            <div class="practice-text">
+              <div class="practice-q">"Walk me through your background."</div>
+              <div class="practice-hint">Same drill, different framing. Don't start from birth — start from what makes you different.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Completion Check</div>
+        <div class="completion-zone">
+          <div class="completion-zone-label">Before you advance, confirm:</div>
+          <div class="completion-check-item">
+            <input type="checkbox" id="m1-check" onchange="checkModuleReady(1)">
+            <label for="m1-check">I can deliver this in 90 seconds with the Claude angle in the first 30 seconds.</label>
+          </div>
+        </div>
+        <button class="complete-btn" id="btn-complete-1" onclick="completeModule(1)" disabled>
+          Mark Complete + Go to Module 2 →
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 2: Why Anthropic -->
+    <div class="module-view" id="module-2">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(245,158,11,.15);color:var(--accent)">Module 2</span>
+          <span class="mod-badge-time">15 min</span>
+        </div>
+        <div class="mod-title-lg">Why Anthropic</div>
+        <div class="mod-goal">Goal: Give a specific, verifiable, 3-pillar answer to "Why Anthropic?" that doesn't sound rehearsed.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The 3-Pillar Framework</div>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-num">1</div>
+            <div class="pillar-title">Product</div>
+            <div class="pillar-text">You already run on Claude. Pre-call research, email drafts, CRM updates via MCP, objection prep, pipeline briefings. You're not learning the product — you're already one of its most intensive users.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">2</div>
+            <div class="pillar-title">Mission</div>
+            <div class="pillar-text">PBC (Public Benefit Corporation) — safety research is in the legal DNA. OpenAI restructured away from nonprofit. Anthropic's structure requires the mission. You want to sell something you believe in.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">3</div>
+            <div class="pillar-title">Timing</div>
+            <div class="pillar-text">$19B ARR, 1,167% growth, 73% of new AI buyers choosing Anthropic. 75 products launched in 52 days. This is the Salesforce/AWS early scaling window — the BDRs who get in now build 10-year careers.</div>
+          </div>
+        </div>
+        <div class="tip-box"><b>Carl's angle:</b> He left AssemblyAI and chose Anthropic deliberately. He wants to see the same conviction — not "I love AI," but "I've thought hard about this specific company."</div>
+        <div class="warning-box"><b>The anti-pattern:</b> "I'm passionate about AI and excited about the opportunity." This is what 90% of candidates say. Say nothing that isn't specific and verifiable.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Answer — 3 Pillars</div>
+        <div class="model-answer">
+          <div class="model-answer-label">Why Anthropic — The Answer</div>
+          <div class="model-answer-text">"Three real reasons. First: I already run my entire sales operation on Claude. Pre-call research, email drafts, live CRM updates, objection prep — Claude is the backbone. When I cold call a prospect about Claude, I'm not learning a product, I'm sharing what I use every day. Second: the mission is structurally different. OpenAI restructured away from nonprofit. Google's AI is a business unit. Anthropic is a Public Benefit Corporation — safety research is in the legal DNA, not marketing. I want to sell something I genuinely believe in. Third: the timing. $19B ARR, 1,167% growth, and we just saw Anthropic take 73% of new AI buyers in 10 weeks while OpenAI dropped to 27%. The BDRs who get in during this window build the foundation of the sales org. I want to be one of them."</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The Carl Connection</div>
+        <div class="content-card">
+          <p><strong style="color:var(--accent)">Built prospecting from scratch at AssemblyAI</strong> — same as the FiberSeal build. Zero pipeline, zero territory, zero playbook. Both of you did it anyway.</p>
+          <p><strong style="color:var(--accent)">Chose Anthropic deliberately from another AI company.</strong> He's seen the other side. He picked this one. That deliberateness is what he's looking for in you.</p>
+          <p><strong style="color:var(--accent)">Ex-Boeing background</strong> — responds to scrappiness and adaptability, not just polish. He's been in environments where you have to improvise.</p>
+          <p style="margin-bottom:0"><strong style="color:var(--text)">The line to use:</strong> "Carl and I have both built outbound engines where none existed. That's the connection I want to draw."</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Practice Prompts — Say Each Answer Out Loud</div>
+        <div class="practice-list">
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m2p1')">
+            <div class="practice-text">
+              <div class="practice-q">"Why Anthropic specifically — why not OpenAI or Google?"</div>
+              <div class="practice-hint">Hit all 3 pillars. Product, mission, timing. In that order.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m2p2')">
+            <div class="practice-text">
+              <div class="practice-q">"Why is this a generational career opportunity?"</div>
+              <div class="practice-hint">Salesforce/AWS early scaling window. The BDRs who got in then built 10-year careers. Name the numbers.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m2p3')">
+            <div class="practice-text">
+              <div class="practice-q">"What do you know about Carl Johnson specifically?"</div>
+              <div class="practice-hint">AssemblyAI, Boeing, built from scratch, chose Anthropic deliberately. Draw the parallel to your FiberSeal build.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Completion Check</div>
+        <div class="completion-zone">
+          <div class="completion-zone-label">Before you advance, confirm:</div>
+          <div class="completion-check-item">
+            <input type="checkbox" id="m2-check" onchange="checkModuleReady(2)">
+            <label for="m2-check">My answer has all 3 pillars and at least 2 specific numbers.</label>
+          </div>
+        </div>
+        <button class="complete-btn" id="btn-complete-2" onclick="completeModule(2)" disabled>
+          Mark Complete + Go to Module 3 →
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 3: Product Foundation -->
+    <div class="module-view" id="module-3">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(16,185,129,.15);color:var(--green)">Module 3</span>
+          <span class="mod-badge-time">35 min</span>
+        </div>
+        <div class="mod-title-lg">Product Foundation</div>
+        <div class="mod-goal">Goal: Be fluent on every Anthropic product — explain any one in 2 sentences to a non-technical person, and connect it to a BDR sales angle.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The 7 Products</div>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-name">Claude API</div>
+            <div class="product-tagline">"The Electricity Grid"</div>
+            <div class="product-desc">Raw access to Claude for developers. Pay per token, build any application. Available via AWS Bedrock, Google Vertex, Microsoft Foundry — no cloud migration required. Three tiers: Opus ($5/$25/1M tokens), Sonnet ($3/$15), Haiku ($1/$5).</div>
+            <div class="product-opener">"Is your team building anything custom with AI, or mostly using off-the-shelf tools?"</div>
+            <div class="product-key">80% enterprise, core revenue engine.</div>
+          </div>
+          <div class="product-card">
+            <div class="product-name">Claude Code</div>
+            <div class="product-tagline">"The Junior Developer"</div>
+            <div class="product-desc">Agentic coding tool. Not autocomplete — autonomous. Give it a task, it does the whole thing. $2.5B ARR, fastest growing. Bottom-up motion: devs adopt individually → VP Eng signs enterprise contract. 4% of all public GitHub commits.</div>
+            <div class="product-opener">"Are your engineers spending time on repetitive coding tasks that feel like they should be automated?"</div>
+            <div class="product-key">Find where the fire is burning and pour gas on it.</div>
+          </div>
+          <div class="product-card">
+            <div class="product-name">MCP</div>
+            <div class="product-tagline">"The USB-C Port"</div>
+            <div class="product-desc">Open standard connecting Claude to any tool — Slack, Salesforce, Gmail, databases. Donated to Linux Foundation Dec 2025, now adopted by OpenAI and Google. More connectors = more stickiness = harder to remove.</div>
+            <div class="product-opener">"What's your team's current stack? Because MCP means Claude lives natively inside all of it."</div>
+            <div class="product-key">Platform moat — turns Claude from a tool into infrastructure.</div>
+          </div>
+          <div class="product-card">
+            <div class="product-name">Cowork</div>
+            <div class="product-tagline">"The Everyone Else Tool"</div>
+            <div class="product-desc">Desktop app for non-technical users: legal, finance, HR, ops. Launched Jan 2026. Plugins for each function. The enterprise expansion play beyond engineering.</div>
+            <div class="product-opener">"A lot of customers start with engineering and then ask 'what about our legal and finance teams?' That's Cowork."</div>
+            <div class="product-key">Horizontal expansion = $50K API deal becomes $500K enterprise deal.</div>
+          </div>
+          <div class="product-card">
+            <div class="product-name">Computer Use</div>
+            <div class="product-tagline">"Claude with Hands"</div>
+            <div class="product-desc">Claude controls a Mac — clicks, navigates, fills forms. Launched March 23, 2026. AI-driven automation vs. brittle RPA (Zapier, UiPath). Handles exceptions with judgment, not just fixed scripts.</div>
+            <div class="product-opener">"Do you have repetitive computer-based workflows someone does manually today?"</div>
+            <div class="product-key">No competitor has shipped this at scale.</div>
+          </div>
+          <div class="product-card">
+            <div class="product-name">Claude Marketplace</div>
+            <div class="product-tagline">"The App Store for Enterprise AI"</div>
+            <div class="product-desc">Launched March 6, 2026. Enterprise procurement platform — buy Claude-powered partner apps (Harvey, GitLab, Snowflake, Rogo, Replit, Lovable) on one Anthropic contract. 0% commission. One invoice. Procurement consolidation play.</div>
+            <div class="product-opener">"Are you running a vendor consolidation conversation on the AI side?"</div>
+            <div class="product-key">Snowflake deal = $200M, 12,600 customers. Makes Anthropic commitment harder to remove.</div>
+          </div>
+        </div>
+
+        <!-- Constitutional AI full-width -->
+        <div class="product-card" style="margin-top:0">
+          <div class="product-name">Constitutional AI + RSP</div>
+          <div class="product-tagline">"Safety Baked In"</div>
+          <div class="product-desc">Constitutional AI: values trained in systematically through self-critique — not a content filter, but internalized judgment. RSP (Responsible Scaling Policy): voluntary framework defining AI Safety Levels (ASL-2 = current models, ASL-3 = Opus 4.6 triggered enhanced controls). Commitment: if safety measures can't keep up with capability, they pause. They don't ship.</div>
+          <div class="product-opener">"When your compliance team asks 'how do you guarantee safe outputs?' we have a structural answer — not just guardrails."</div>
+          <div class="product-key">Only AI vendor that can say safety is both architecturally baked in AND legally required (PBC).</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6 Numbers to Know Cold</div>
+        <div class="numbers-grid">
+          <div class="num-card"><div class="num-val">$19B</div><div class="num-label">ARR</div></div>
+          <div class="num-card"><div class="num-val">1,167%</div><div class="num-label">YoY Growth</div></div>
+          <div class="num-card"><div class="num-val">$380B</div><div class="num-label">Valuation</div></div>
+          <div class="num-card"><div class="num-val">70%</div><div class="num-label">Fortune 100</div></div>
+          <div class="num-card"><div class="num-val">$2.5B</div><div class="num-label">Claude Code ARR</div></div>
+          <div class="num-card"><div class="num-val">73%</div><div class="num-label">New Buyer Market Share</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Practice Prompts — Say Each Answer Out Loud</div>
+        <div class="practice-list">
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m3p1')">
+            <div class="practice-text">
+              <div class="practice-q">"What are Anthropic's main products? Walk me through each."</div>
+              <div class="practice-hint">API, Claude Code, MCP, Cowork, Computer Use, Marketplace, Constitutional AI. Each in 2 sentences max.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m3p2')">
+            <div class="practice-text">
+              <div class="practice-q">"What is MCP and why does it matter for enterprise sales?"</div>
+              <div class="practice-hint">USB-C port. Open standard. Linux Foundation. Turns Claude into infrastructure, not a tool. Harder to rip out.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m3p3')">
+            <div class="practice-text">
+              <div class="practice-q">"What is Claude Code and why is it the fastest-growing product?"</div>
+              <div class="practice-hint">$2.5B ARR, agentic not assistive, bottom-up motion from developers, 4% of public GitHub commits.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m3p4')">
+            <div class="practice-text">
+              <div class="practice-q">"What is Constitutional AI and how does it differentiate Anthropic?"</div>
+              <div class="practice-hint">Internalized judgment through self-critique, not a filter. RSP = commitment to pause if safety can't keep up. PBC = legally required.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m3p5')">
+            <div class="practice-text">
+              <div class="practice-q">"What buying signals tell you a company is ready for a Claude conversation?"</div>
+              <div class="practice-hint">AI engineering job postings, new CTO/VP Eng hire, Series B/C funding, public AI initiative, OpenAI pricing complaints.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Completion Check</div>
+        <div class="completion-zone">
+          <div class="completion-zone-label">Before you advance, confirm:</div>
+          <div class="completion-check-item">
+            <input type="checkbox" id="m3-check" onchange="checkModuleReady(3)">
+            <label for="m3-check">I can explain each product in 2 sentences without looking at notes.</label>
+          </div>
+        </div>
+        <button class="complete-btn" id="btn-complete-3" onclick="completeModule(3)" disabled>
+          Mark Complete + Go to Module 4 →
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 4: Competitive Landscape -->
+    <div class="module-view" id="module-4">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(239,68,68,.15);color:var(--red)">Module 4</span>
+          <span class="mod-badge-time">15 min</span>
+        </div>
+        <div class="mod-title-lg">Competitive Landscape</div>
+        <div class="mod-goal">Goal: Win any competitive conversation without attacking competitors.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The Rule</div>
+        <div class="tip-box"><b>Never attack. Raise a question. Find the gap.</b> Attacking competitors makes you look insecure. Asking a question makes you look confident and consultative.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">vs. OpenAI</div>
+        <div class="vs-card">
+          <div class="vs-header">Head-to-Head Differentiators</div>
+          <div class="vs-point">Win rate: 70% of head-to-head enterprise deals go to Anthropic.</div>
+          <div class="vs-point">Safety: Constitutional AI + PBC vs. OpenAI's restructured-away-from-nonprofit story.</div>
+          <div class="vs-point">MCP: Open ecosystem vs. closed. More connectors, more stickiness.</div>
+          <div class="vs-point">Computer Use: Live. OpenAI hasn't shipped this at scale.</div>
+          <div class="vs-point">Market share: 73% of new AI buyers choosing Anthropic (Ramp data, early 2026). OpenAI at 27%.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">vs. Google Gemini</div>
+        <div class="vs-card">
+          <div class="vs-header">Key Angles</div>
+          <div class="vs-point">Cloud independence: Deploy on AWS Bedrock, Azure, or direct API. Most enterprises aren't Google-only.</div>
+          <div class="vs-point">Independent governance: Enterprise legal teams don't want a hyperscaler owning their AI vendor.</div>
+          <div class="vs-point">MCP open ecosystem vs. Google's walled garden.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">vs. Microsoft Copilot</div>
+        <div class="vs-card">
+          <div class="vs-header">Key Angles</div>
+          <div class="vs-point">Copilot is a wrapper on OpenAI — not an independent model roadmap.</div>
+          <div class="vs-point">Claude Code vs. GitHub Copilot: agentic (does the task) vs. assistive (completes lines). Different capability tier.</div>
+          <div class="vs-point">MCP connects to any system — Copilot is deeply Microsoft-native.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Objection Handling Framework</div>
+        <div class="objection-steps">
+          <div class="obj-step"><div class="obj-step-num">1</div><div class="obj-step-text"><b>Acknowledge:</b> "Makes sense — a lot of our best customers started there too."</div></div>
+          <div class="obj-step"><div class="obj-step-num">2</div><div class="obj-step-text"><b>Explore:</b> "Can I ask how you're using it currently? What's the main workflow?"</div></div>
+          <div class="obj-step"><div class="obj-step-num">3</div><div class="obj-step-text"><b>Find the gap:</b> "What's one thing you wish it did better or handled differently?"</div></div>
+          <div class="obj-step"><div class="obj-step-num">4</div><div class="obj-step-text"><b>Position Claude in the gap:</b> Connect the specific gap to a specific Claude capability.</div></div>
+          <div class="obj-step"><div class="obj-step-num">5</div><div class="obj-step-text"><b>Small CTA:</b> "Worth 15 minutes to see if we fill that specific gap?"</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Practice Prompts — Say Each Answer Out Loud</div>
+        <div class="practice-list">
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m4p1')">
+            <div class="practice-text">
+              <div class="practice-q">"We already use OpenAI — we're all in with them."</div>
+              <div class="practice-hint">Acknowledge, explore, find the gap. Don't pitch immediately. Ask how they're using it.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m4p2')">
+            <div class="practice-text">
+              <div class="practice-q">"We're a Google shop — we use Gemini."</div>
+              <div class="practice-hint">Cloud independence angle. Independent governance. MCP vs. walled garden.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m4p3')">
+            <div class="practice-text">
+              <div class="practice-q">"We already have Microsoft Copilot through our M365 contract."</div>
+              <div class="practice-hint">Wrapper vs. independent roadmap. Agentic vs. assistive. Claude Code angle.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m4p4')">
+            <div class="practice-text">
+              <div class="practice-q">"We've actually tried Claude. For our use case, ChatGPT outperformed it in our benchmarks."</div>
+              <div class="practice-hint">Get curious, not defensive. "Tell me more about your benchmark — what was the use case?" Find the specific context, then position.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Completion Check</div>
+        <div class="completion-zone">
+          <div class="completion-zone-label">Before you advance, confirm:</div>
+          <div class="completion-check-item">
+            <input type="checkbox" id="m4-check" onchange="checkModuleReady(4)">
+            <label for="m4-check">I can handle any competitor objection without attacking the competitor.</label>
+          </div>
+        </div>
+        <button class="complete-btn" id="btn-complete-4" onclick="completeModule(4)" disabled>
+          Mark Complete + Go to Module 5 →
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 5: BDR Skills -->
+    <div class="module-view" id="module-5">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(59,130,246,.15);color:var(--blue)">Module 5</span>
+          <span class="mod-badge-time">15 min</span>
+        </div>
+        <div class="mod-title-lg">BDR Skills</div>
+        <div class="mod-goal">Goal: Demonstrate you understand the Anthropic GTM motion and can execute it from day one.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The Anthropic BDR Motion</div>
+        <div class="content-card">
+          <p><strong style="color:var(--accent)">ICP:</strong> VP Engineering, CTO, Head of AI/ML at 500+ person companies.</p>
+          <p><strong style="color:var(--accent)">Entry point:</strong> Often individual developers (Claude Code adoption) → BDR converts to enterprise contract.</p>
+          <p><strong style="color:var(--accent)">Expansion path:</strong> Engineering → Cowork → Marketplace. Each step widens the footprint.</p>
+          <p style="margin-bottom:0"><strong style="color:var(--accent)">Best signals:</strong> AI engineering job postings, new CTO/VP Eng hire, Series B/C funding, public AI initiative announcement, OpenAI pricing complaints.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cold Email Formula</div>
+        <div class="framework">
+          <div class="framework-title">Under 125 Words — 49% Higher Reply Rate</div>
+          <div class="fw-row"><span class="fw-label">Line 1:</span><span>The signal. Proves you looked. Specific and recent.</span></div>
+          <div class="fw-row"><span class="fw-label">Line 2:</span><span>A question that raises a specific doubt — not a pitch. Make them think.</span></div>
+          <div class="fw-row"><span class="fw-label">Line 3:</span><span>One CTA. 15-minute call. That's it.</span></div>
+          <div class="fw-row"><span class="fw-label">Subject:</span><span>Specific. No spam words. Reference the signal if possible.</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cold Call Structure</div>
+        <div class="framework">
+          <div class="framework-title">4-Part Structure</div>
+          <div class="fw-row"><span class="fw-label">Opener:</span><span>"Do you have 27 seconds?" — increases connect-to-conversation by 40%.</span></div>
+          <div class="fw-row"><span class="fw-label">Hook:</span><span>Reference the signal. Why them, why now.</span></div>
+          <div class="fw-row"><span class="fw-label">Question:</span><span>Don't pitch — make them curious. Raise a doubt.</span></div>
+          <div class="fw-row"><span class="fw-label">CTA:</span><span>15 minutes. That's the only ask.</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Great BDR Day Structure</div>
+        <div class="content-card">
+          <p><strong style="color:var(--accent)">Morning (90-min block):</strong> Cold calls. Highest energy. No email, no Slack.</p>
+          <p><strong style="color:var(--accent)">Midday:</strong> Account research and build. Map the org, find the signals, prep the outreach.</p>
+          <p><strong style="color:var(--accent)">Afternoon:</strong> CRM hygiene, follow-ups, replies. Protect the afternoon for reactive work.</p>
+          <p style="margin-bottom:0"><strong style="color:var(--accent)">End of day:</strong> 10-minute self-debrief on metrics. What worked, what didn't, what changes tomorrow.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">30/60/90 Day Plan</div>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-num">30</div>
+            <div class="pillar-title">Immersion</div>
+            <div class="pillar-text">Product immersion, shadow calls, map ICP. No cold emails until you know the product cold. Earn the right to represent Anthropic.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">60</div>
+            <div class="pillar-title">Execute</div>
+            <div class="pillar-text">Execute independently. Own your account list. First meetings booked. Watch your own data — what's working, what isn't.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">90</div>
+            <div class="pillar-title">Contribute</div>
+            <div class="pillar-text">Contribute beyond your quota. A sequence the team can steal. An insight that helps the next BDR ramp faster.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Practice Prompts — Say Each Answer Out Loud</div>
+        <div class="practice-list">
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m5p1')">
+            <div class="practice-text">
+              <div class="practice-q">"What does your prospecting process look like for enterprise AI?"</div>
+              <div class="practice-hint">Signal-first. ICP research. Cold email formula. Cold call structure. Specific and systematic.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m5p2')">
+            <div class="practice-text">
+              <div class="practice-q">"How would you write a cold email to a VP Eng using OpenAI?"</div>
+              <div class="practice-hint">Lead with a signal. Raise a question about something OpenAI doesn't do well. CTA for 15 min. Under 125 words.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m5p3')">
+            <div class="practice-text">
+              <div class="practice-q">"What does a great BDR day look like at Anthropic?"</div>
+              <div class="practice-hint">Morning call block, midday research, afternoon follow-ups, end-of-day debrief. Specific time blocks.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m5p4')">
+            <div class="practice-text">
+              <div class="practice-q">"What would your first 30, 60, and 90 days look like?"</div>
+              <div class="practice-hint">Immersion, execute, contribute. The 90-day answer should have something you'd give back to the team.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Completion Check</div>
+        <div class="completion-zone">
+          <div class="completion-zone-label">Before you advance, confirm:</div>
+          <div class="completion-check-item">
+            <input type="checkbox" id="m5-check" onchange="checkModuleReady(5)">
+            <label for="m5-check">I understand the Anthropic GTM motion and can explain the Claude Code bottom-up → enterprise expansion flywheel.</label>
+          </div>
+        </div>
+        <button class="complete-btn" id="btn-complete-5" onclick="completeModule(5)" disabled>
+          Mark Complete + Go to Module 6 →
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 6: STAR Stories -->
+    <div class="module-view" id="module-6">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(139,92,246,.15);color:var(--purple)">Module 6</span>
+          <span class="mod-badge-time">15 min</span>
+        </div>
+        <div class="mod-title-lg">Your STAR Stories</div>
+        <div class="mod-goal">Goal: Have 3-4 STAR stories sharp enough to pull instantly for any behavioral question.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">The Rule</div>
+        <div class="tip-box"><b>Every story needs an Anthropic bridge</b> — the line that connects your experience directly to this role. Without the bridge, the story stays in the past. With it, it becomes a preview of day one.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Your 4 Stories</div>
+
+        <div class="star-card">
+          <div class="star-header" onclick="toggleStar('star1')">
+            <div class="star-title-wrap">
+              <div class="star-title">Story 1: AI Command Center</div>
+              <div class="star-tags">Initiative · System-Building · Goes Above and Beyond</div>
+            </div>
+            <div class="star-chevron" id="star1-chev">▼</div>
+          </div>
+          <div class="star-body" id="star1-body">
+            <div class="star-row"><div class="star-label">Situation</div><div class="star-text">Running outbound at FiberSeal, spending 2-3 hours per day on manual research and admin tasks.</div></div>
+            <div class="star-row"><div class="star-label">Task</div><div class="star-text">No one asked me to fix it — I needed to sell more and the manual process was the ceiling.</div></div>
+            <div class="star-row"><div class="star-label">Action</div><div class="star-text">Built a Claude AI command center: automated research briefs, signal-based outreach, live CRM updates via MCP connector, morning briefing texted to phone before calls started.</div></div>
+            <div class="star-row"><div class="star-label">Result</div><div class="star-text">3 hours per day → 20 minutes. 5x outreach volume. Packaged the system so any rep could onboard in 1 hour.</div></div>
+            <div class="bridge-box">I don't just know your product — I built an operation on it. Day one, I'm not learning Claude. I'm bringing a system I've been running for months.</div>
+          </div>
+        </div>
+
+        <div class="star-card">
+          <div class="star-header" onclick="toggleStar('star2')">
+            <div class="star-title-wrap">
+              <div class="star-title">Story 2: FiberSeal Pipeline</div>
+              <div class="star-tags">Built from Zero · Outbound · Persistence</div>
+            </div>
+            <div class="star-chevron" id="star2-chev">▼</div>
+          </div>
+          <div class="star-body" id="star2-body">
+            <div class="star-row"><div class="star-label">Situation</div><div class="star-text">Zero pipeline, zero territory, zero playbook. New role, no hand-offs, no leads.</div></div>
+            <div class="star-row"><div class="star-label">Task</div><div class="star-text">Build an outbound engine from scratch using only cold outreach.</div></div>
+            <div class="star-row"><div class="star-label">Action</div><div class="star-text">Diagnosed wrong ICP, pivoted to country clubs. Built signal monitoring. A/B tested openers and found 9% vs. 1% reply rate. Built 5-touch cadences.</div></div>
+            <div class="star-row"><div class="star-label">Result</div><div class="star-text">20 meetings per month, 6 consecutive months. 500 calls per week at peak.</div></div>
+            <div class="bridge-box">Carl built an outbound engine at AssemblyAI where none existed. I did the same at FiberSeal. The context is different — the skill transfers.</div>
+          </div>
+        </div>
+
+        <div class="star-card">
+          <div class="star-header" onclick="toggleStar('star3')">
+            <div class="star-title-wrap">
+              <div class="star-title">Story 3: Rejection Recovery</div>
+              <div class="star-tags">Resilience · Analytical · Setback</div>
+            </div>
+            <div class="star-chevron" id="star3-chev">▼</div>
+          </div>
+          <div class="star-body" id="star3-body">
+            <div class="star-row"><div class="star-label">Situation</div><div class="star-text">First two weeks at FiberSeal: zero responses. Complete silence across every outreach.</div></div>
+            <div class="star-row"><div class="star-label">Task</div><div class="star-text">Diagnose the problem, not just try harder.</div></div>
+            <div class="star-row"><div class="star-label">Action</div><div class="star-text">Read every email as if I were the prospect. Found the problem: generic personalization that felt automated. A/B tested new approach. Rebuilt outreach around renovation signals.</div></div>
+            <div class="star-row"><div class="star-label">Result</div><div class="star-text">1% reply rate → 9% reply rate. Systematic fix, not just effort.</div></div>
+            <div class="bridge-box">Rejection without diagnosis is just pain. Rejection with diagnosis is a roadmap.</div>
+          </div>
+        </div>
+
+        <div class="star-card">
+          <div class="star-header" onclick="toggleStar('star4')">
+            <div class="star-title-wrap">
+              <div class="star-title">Story 4: Morgan Stanley</div>
+              <div class="star-tags">Learning Fast · Technical Ramp · Self-Directed</div>
+            </div>
+            <div class="star-chevron" id="star4-chev">▼</div>
+          </div>
+          <div class="star-body" id="star4-body">
+            <div class="star-row"><div class="star-label">Situation</div><div class="star-text">Assigned to run Aladdin risk/reward forecasts in the first week of the internship. No formal training. Complex tool.</div></div>
+            <div class="star-row"><div class="star-label">Task</div><div class="star-text">Deliver accurate reports by end of the week.</div></div>
+            <div class="star-row"><div class="star-label">Action</div><div class="star-text">Self-taught. Asked targeted questions — not broad "how does this work" but specific "what does this parameter mean in this context." Built a quick-reference guide for myself.</div></div>
+            <div class="star-row"><div class="star-label">Result</div><div class="star-text">Delivering independently by week 3. Supervisor cited the documentation as exceeding expectations.</div></div>
+            <div class="bridge-box">I'll learn the technical depth of Claude's products the same way — give me access and a problem to solve.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Practice Prompts — Say Each Answer Out Loud</div>
+        <div class="practice-list">
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m6p1')">
+            <div class="practice-text">
+              <div class="practice-q">"Tell me about a time you built something from scratch."</div>
+              <div class="practice-hint">FiberSeal pipeline or AI Command Center. Both work. Lead with the result.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m6p2')">
+            <div class="practice-text">
+              <div class="practice-q">"Tell me about a time you went above and beyond."</div>
+              <div class="practice-hint">AI Command Center is your strongest here — nobody asked you to build it.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m6p3')">
+            <div class="practice-text">
+              <div class="practice-q">"Tell me about handling rejection or a setback."</div>
+              <div class="practice-hint">Rejection Recovery story. Lead with the diagnosis angle — rejection as data, not failure.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m6p4')">
+            <div class="practice-text">
+              <div class="practice-q">"Tell me about learning something technical fast."</div>
+              <div class="practice-hint">Morgan Stanley / Aladdin. Specific method: targeted questions, quick-reference guide, independent in 3 weeks.</div>
+            </div>
+          </div>
+          <div class="practice-item">
+            <input type="checkbox" class="practice-check" onchange="savePractice(this,'m6p5')">
+            <div class="practice-text">
+              <div class="practice-q">"What makes you different from every other BDR candidate?"</div>
+              <div class="practice-hint">The Claude line. You're not learning the product — you're already running on it. Name the specific system you built.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Completion Check</div>
+        <div class="completion-zone">
+          <div class="completion-zone-label">Before you advance, confirm:</div>
+          <div class="completion-check-item">
+            <input type="checkbox" id="m6-check" onchange="checkModuleReady(6)">
+            <label for="m6-check">I can deliver the FiberSeal pipeline story in 90 seconds with the Anthropic bridge.</label>
+          </div>
+        </div>
+        <button class="complete-btn" id="btn-complete-6" onclick="completeModule(6)" disabled>
+          Mark Complete + Go to Module 7 →
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 7: Final Mock Interview -->
+    <div class="module-view" id="module-7">
+      <div class="mod-header">
+        <div class="mod-header-top">
+          <span class="mod-badge" style="background:rgba(239,68,68,.15);color:var(--red)">Module 7</span>
+          <span class="mod-badge-time">25 min</span>
+        </div>
+        <div class="mod-title-lg">Final Mock Interview</div>
+        <div class="mod-goal">Goal: Simulate the real Carl Johnson call under pressure. 14 questions, 2-minute timer each. Say every answer out loud.</div>
+      </div>
+
+      <!-- PRE-MOCK CHECKLIST -->
+      <div class="mock-prereq">
+        <div class="mock-prereq-title">Pre-Mock Checklist — Do This Before You Start</div>
+        <div class="mock-checklist">
+          <label class="mock-check-item"><input type="checkbox"> Close all other tabs</label>
+          <label class="mock-check-item"><input type="checkbox"> Sit up straight, camera on (even if practicing alone)</label>
+          <label class="mock-check-item"><input type="checkbox"> Say every answer OUT LOUD — not in your head</label>
+          <label class="mock-check-item"><input type="checkbox"> Don't skip questions or peek at answers</label>
+        </div>
+      </div>
+
+      <!-- SETUP SCREEN -->
+      <div class="mock-screen active" id="mock-setup-screen">
+        <div class="mock-setup">
+          <p>This is a full simulation of the Carl Johnson call. 14 questions in sequence covering background, motivations, and product knowledge. A 2-minute timer runs for each question.</p>
+          <p>No notes. No help. Real pressure. Every answer out loud.</p>
+          <button class="mock-start-btn" onclick="startMock()">Start Mock Interview →</button>
+        </div>
+      </div>
+
+      <!-- RUNNING SCREEN -->
+      <div class="mock-screen" id="mock-running-screen">
+        <div class="mock-progress" id="mock-progress-text">Question 1 of 14</div>
+        <div class="mock-pbar-bg"><div class="mock-pbar-fill" id="mock-pbar" style="width:0%"></div></div>
+        <div class="mock-q-text" id="mock-q-display"></div>
+        <div class="timer" id="mock-timer">2:00</div>
+        <div class="timer-label">Say your answer out loud — timer runs continuously</div>
+        <div class="mock-btn-row">
+          <button class="mock-btn mock-btn-skip" onclick="skipMockQ()">Skip</button>
+          <button class="mock-btn mock-btn-next" onclick="nextMockQ()">Next Question →</button>
+        </div>
+      </div>
+
+      <!-- DONE SCREEN -->
+      <div class="mock-screen" id="mock-done-screen">
+        <div class="mock-done">
+          <div class="mock-done-icon">🏁</div>
+          <h3>Mock Complete.</h3>
+          <p>Rate yourself on each topic area. Identify your weakest, then go back and drill it in InterviewIQ or re-read that module.</p>
+          <div class="self-rate-grid">
+            <div class="self-rate-card">
+              <div class="self-rate-label">Background &amp; Story</div>
+              <div class="star-rating" id="rate-background">
+                <button class="star-btn" onclick="setRating('background',1)">★</button>
+                <button class="star-btn" onclick="setRating('background',2)">★</button>
+                <button class="star-btn" onclick="setRating('background',3)">★</button>
+                <button class="star-btn" onclick="setRating('background',4)">★</button>
+                <button class="star-btn" onclick="setRating('background',5)">★</button>
+              </div>
+            </div>
+            <div class="self-rate-card">
+              <div class="self-rate-label">Motivations &amp; Why Anthropic</div>
+              <div class="star-rating" id="rate-motivations">
+                <button class="star-btn" onclick="setRating('motivations',1)">★</button>
+                <button class="star-btn" onclick="setRating('motivations',2)">★</button>
+                <button class="star-btn" onclick="setRating('motivations',3)">★</button>
+                <button class="star-btn" onclick="setRating('motivations',4)">★</button>
+                <button class="star-btn" onclick="setRating('motivations',5)">★</button>
+              </div>
+            </div>
+            <div class="self-rate-card">
+              <div class="self-rate-label">Product Knowledge</div>
+              <div class="star-rating" id="rate-product">
+                <button class="star-btn" onclick="setRating('product',1)">★</button>
+                <button class="star-btn" onclick="setRating('product',2)">★</button>
+                <button class="star-btn" onclick="setRating('product',3)">★</button>
+                <button class="star-btn" onclick="setRating('product',4)">★</button>
+                <button class="star-btn" onclick="setRating('product',5)">★</button>
+              </div>
+            </div>
+          </div>
+          <div class="weakest-box" id="weakest-box" style="display:none">
+            <div class="weakest-label">Your Weakest Area</div>
+            <div id="weakest-text"></div>
+          </div>
+          <div class="mock-btn-row" style="justify-content:center;margin-bottom:20px">
+            <button class="mock-btn mock-btn-skip" onclick="resetMock()">Redo Mock</button>
+          </div>
+        </div>
+
+        <!-- Completion check after mock -->
+        <div class="section" style="margin-top:0">
+          <div class="section-title">Completion Check</div>
+          <div class="completion-zone">
+            <div class="completion-zone-label">Before you finish:</div>
+            <div class="completion-check-item">
+              <input type="checkbox" id="m7-check" onchange="checkModuleReady(7)">
+              <label for="m7-check">I completed the full mock without skipping. My weakest area is identified.</label>
+            </div>
+          </div>
+          <button class="complete-btn" id="btn-complete-7" onclick="completeModule(7)" disabled>
+            Complete Course — See Final Results →
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'iqcourse_v1';
+
+const MOCK_QUESTIONS = [
+  // Background
+  { id:'b001', text:"Tell me about yourself — walk me through your background.", topic:'background' },
+  { id:'b002', text:"What did you actually do at Morgan Stanley day-to-day?", topic:'background' },
+  { id:'b003', text:"What were you doing at FiberSeal, and what did you actually build there?", topic:'background' },
+  { id:'b006', text:"You're a Communications grad — why sales, and why enterprise tech sales specifically?", topic:'background' },
+  { id:'b008', text:"What makes you different from every other BDR candidate I'm going to talk to today?", topic:'background' },
+  // Motivations
+  { id:'w001', text:"Why Anthropic — why not OpenAI, Google, or one of the other AI companies?", topic:'motivations' },
+  { id:'w002', text:"Why is this a generational career opportunity in your view?", topic:'motivations' },
+  { id:'w003', text:"What do you know about the BDR role here specifically — what does the motion look like?", topic:'motivations' },
+  // Product
+  { id:'p001', text:"Walk me through Anthropic's main products.", topic:'product' },
+  { id:'p002', text:"What is MCP and why does it matter for enterprise sales?", topic:'product' },
+  { id:'p003', text:"What is Claude Code and why is it growing so fast?", topic:'product' },
+  { id:'p005', text:"We already use OpenAI — we're all in. How do you handle that?", topic:'product' },
+  { id:'p006', text:"What does your prospecting process look like? Walk me through how you'd approach a VP Eng at a 1,000-person company.", topic:'product' },
+  { id:'p008', text:"Do you have any questions for me?", topic:'product' },
+];
+
+// ─── STATE ─────────────────────────────────────────────────────────────────────
+
+let state = {
+  completedModules: [],
+  currentModule: 1,
+  practiceChecks: {},
+  mockRatings: {},
+  startTime: null,
+};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = { ...state, ...JSON.parse(raw) };
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) {}
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────────
+
+function init() {
+  loadState();
+  if (!state.startTime) {
+    state.startTime = Date.now();
+    saveState();
+  }
+  renderProgress();
+  renderSidebar();
+  restoreCheckboxes();
+  showModule(state.currentModule);
+  updateBadgeDate();
+}
+
+function updateBadgeDate() {
+  const d = new Date();
+  document.getElementById('badge-date').textContent =
+    'Completed ' + d.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+
+function renderProgress() {
+  const n = state.completedModules.length;
+  const pct = Math.round((n / 7) * 100);
+  document.getElementById('prog-label').textContent = `${n} of 7 modules complete`;
+  document.getElementById('prog-bar').style.width = pct + '%';
+}
+
+function renderSidebar() {
+  for (let i = 1; i <= 7; i++) {
+    const check = document.getElementById('check-' + i);
+    const item = document.getElementById('sidenav-' + i);
+    if (state.completedModules.includes(i)) {
+      check.classList.add('done');
+      check.textContent = '✓';
+    } else {
+      check.classList.remove('done');
+      check.textContent = '';
+    }
+    item.classList.toggle('active', state.currentModule === i);
+  }
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+
+function showModule(n) {
+  // Hide all module views
+  document.querySelectorAll('.module-view').forEach(el => el.classList.remove('active'));
+  document.getElementById('course-complete').classList.remove('active');
+
+  if (n === 'complete') {
+    document.getElementById('course-complete').classList.add('active');
+  } else {
+    const el = document.getElementById('module-' + n);
+    if (el) el.classList.add('active');
+  }
+
+  state.currentModule = n;
+  renderSidebar();
+  // Scroll main to top
+  document.getElementById('main-content').scrollTop = 0;
+}
+
+function goToModule(n) {
+  showModule(n);
+  saveState();
+  // Close sidebar on mobile
+  closeSidebar();
+}
+
+// ─── MODULE COMPLETION ────────────────────────────────────────────────────────
+
+function checkModuleReady(modNum) {
+  const checkbox = document.getElementById('m' + modNum + '-check');
+  const btn = document.getElementById('btn-complete-' + modNum);
+  if (checkbox && btn) {
+    btn.disabled = !checkbox.checked;
+  }
+}
+
+function completeModule(n) {
+  if (!state.completedModules.includes(n)) {
+    state.completedModules.push(n);
+    saveState();
+  }
+  renderProgress();
+  renderSidebar();
+
+  // Mark button as done
+  const btn = document.getElementById('btn-complete-' + n);
+  if (btn) {
+    btn.classList.add('done');
+    btn.textContent = '✓ Complete';
+  }
+
+  if (state.completedModules.length === 7) {
+    setTimeout(() => showModule('complete'), 600);
+  } else {
+    const next = n + 1;
+    if (next <= 7) {
+      setTimeout(() => goToModule(next), 400);
+    }
+  }
+}
+
+// ─── PRACTICE CHECKBOXES ──────────────────────────────────────────────────────
+
+function savePractice(el, key) {
+  state.practiceChecks[key] = el.checked;
+  saveState();
+}
+
+function restoreCheckboxes() {
+  // Practice checks
+  Object.entries(state.practiceChecks).forEach(([key, val]) => {
+    const inputs = document.querySelectorAll('input.practice-check');
+    // Find by data or re-attach via class — use attribute
+  });
+  // Restore module completion checks
+  for (let i = 1; i <= 7; i++) {
+    const cb = document.getElementById('m' + i + '-check');
+    if (cb && state.completedModules.includes(i)) {
+      cb.checked = true;
+      const btn = document.getElementById('btn-complete-' + i);
+      if (btn) {
+        btn.disabled = false;
+        btn.classList.add('done');
+        btn.textContent = '✓ Complete';
+      }
+    }
+  }
+  // Restore mock ratings
+  Object.entries(state.mockRatings).forEach(([topic, val]) => {
+    renderStars(topic, val);
+  });
+}
+
+// ─── STAR ACCORDIONS ──────────────────────────────────────────────────────────
+
+function toggleStar(id) {
+  const body = document.getElementById(id + '-body');
+  const chev = document.getElementById(id + '-chev');
+  const isOpen = body.classList.contains('show');
+  body.classList.toggle('show', !isOpen);
+  chev.classList.toggle('open', !isOpen);
+}
+
+// ─── MOBILE SIDEBAR ───────────────────────────────────────────────────────────
+
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const isOpen = sb.classList.contains('open');
+  sb.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ─── MOCK INTERVIEW ───────────────────────────────────────────────────────────
+
+let mockState = {
+  currentQ: 0,
+  timerInterval: null,
+  secondsLeft: 120,
+  running: false,
+};
+
+function showMockScreen(id) {
+  document.querySelectorAll('.mock-screen').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startMock() {
+  mockState.currentQ = 0;
+  mockState.running = true;
+  showMockScreen('mock-running-screen');
+  renderMockQ();
+  startMockTimer();
+}
+
+function renderMockQ() {
+  const q = MOCK_QUESTIONS[mockState.currentQ];
+  document.getElementById('mock-q-display').textContent = q.text;
+  document.getElementById('mock-progress-text').textContent =
+    `Question ${mockState.currentQ + 1} of ${MOCK_QUESTIONS.length} — ${q.topic.charAt(0).toUpperCase() + q.topic.slice(1)}`;
+  const pct = (mockState.currentQ / MOCK_QUESTIONS.length) * 100;
+  document.getElementById('mock-pbar').style.width = pct + '%';
+}
+
+function startMockTimer() {
+  clearInterval(mockState.timerInterval);
+  mockState.secondsLeft = 120;
+  updateTimerDisplay();
+  mockState.timerInterval = setInterval(() => {
+    mockState.secondsLeft--;
+    updateTimerDisplay();
+    if (mockState.secondsLeft <= 0) {
+      clearInterval(mockState.timerInterval);
+      // Auto advance with flash
+      document.getElementById('mock-timer').classList.add('urgent');
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(mockState.secondsLeft / 60);
+  const s = mockState.secondsLeft % 60;
+  const el = document.getElementById('mock-timer');
+  el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  el.classList.toggle('urgent', mockState.secondsLeft <= 20);
+}
+
+function nextMockQ() {
+  clearInterval(mockState.timerInterval);
+  document.getElementById('mock-timer').classList.remove('urgent');
+  mockState.currentQ++;
+  if (mockState.currentQ >= MOCK_QUESTIONS.length) {
+    finishMock();
+  } else {
+    renderMockQ();
+    startMockTimer();
+  }
+}
+
+function skipMockQ() {
+  nextMockQ();
+}
+
+function finishMock() {
+  clearInterval(mockState.timerInterval);
+  showMockScreen('mock-done-screen');
+  document.getElementById('mock-pbar').style.width = '100%';
+}
+
+function resetMock() {
+  clearInterval(mockState.timerInterval);
+  document.getElementById('mock-timer').classList.remove('urgent');
+  showMockScreen('mock-setup-screen');
+}
+
+// ─── SELF RATINGS ─────────────────────────────────────────────────────────────
+
+function setRating(topic, val) {
+  state.mockRatings[topic] = val;
+  saveState();
+  renderStars(topic, val);
+  checkWeakest();
+}
+
+function renderStars(topic, val) {
+  const container = document.getElementById('rate-' + topic);
+  if (!container) return;
+  const btns = container.querySelectorAll('.star-btn');
+  btns.forEach((btn, i) => {
+    btn.classList.toggle('lit', i < val);
+  });
+}
+
+function checkWeakest() {
+  const ratings = state.mockRatings;
+  const keys = ['background', 'motivations', 'product'];
+  const labels = { background: 'Background & Story', motivations: 'Motivations & Why Anthropic', product: 'Product Knowledge' };
+  const modules = { background: 1, motivations: 2, product: 3 };
+  const set = keys.filter(k => ratings[k] !== undefined);
+  if (set.length < 3) return;
+
+  let weakest = set.reduce((a, b) => ratings[a] <= ratings[b] ? a : b);
+  const score = ratings[weakest];
+
+  document.getElementById('weakest-box').style.display = 'block';
+  document.getElementById('weakest-text').innerHTML =
+    `<strong style="color:var(--red)">${labels[weakest]}</strong> — you rated yourself ${score}/5. ` +
+    `Go back to Module ${modules[weakest] <= 2 ? modules[weakest] : '3-6'} and drill it, or open InterviewIQ for spaced repetition on those questions.`;
+}
+
+// ─── RESTART ──────────────────────────────────────────────────────────────────
+
+function restartCourse() {
+  state = {
+    completedModules: [],
+    currentModule: 1,
+    practiceChecks: {},
+    mockRatings: {},
+    startTime: Date.now(),
+  };
+  saveState();
+
+  // Reset all checkboxes
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+  // Reset all complete buttons
+  for (let i = 1; i <= 7; i++) {
+    const btn = document.getElementById('btn-complete-' + i);
+    if (btn) {
+      btn.disabled = true;
+      btn.classList.remove('done');
+      btn.textContent = i < 7 ? `Mark Complete + Go to Module ${i+1} →` : 'Complete Course — See Final Results →';
+    }
+  }
+  // Reset star ratings
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('lit'));
+  document.getElementById('weakest-box').style.display = 'none';
+  // Reset mock
+  resetMock();
+
+  renderProgress();
+  showModule(1);
+}
+
+// ─── RUN ──────────────────────────────────────────────────────────────────────
+
+init();
+</script>
+</body>
+</html>
