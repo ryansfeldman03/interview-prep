@@ -138,6 +138,29 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
 .complete-screen{text-align:center;padding:36px 20px}
 .complete-screen .big{font-size:50px;margin-bottom:10px}
 .mb16{margin-bottom:16px}
+/* PRINCIPLE / FOLLOWUP */
+.principle-box{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:9px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--text);line-height:1.6}
+.principle-box b{color:var(--accent)}
+.followup-teaser{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.25);border-radius:9px;padding:14px;margin-top:14px}
+.followup-teaser-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#a78bfa;margin-bottom:8px}
+.followup-teaser-q{font-size:14px;font-weight:600;color:var(--text);line-height:1.5;font-style:italic;margin-bottom:10px}
+/* DEEP DIVE */
+.dd-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.dd-header{padding:16px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dd-header:hover{background:rgba(245,158,11,.04)}
+.dd-name{font-size:15px;font-weight:700;color:var(--accent)}
+.dd-tagline{font-size:12px;color:var(--muted);margin-top:2px}
+.dd-chevron{color:var(--muted);font-size:16px;transition:transform .2s;flex-shrink:0}
+.dd-chevron.open{transform:rotate(180deg)}
+.dd-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.dd-body.show{display:block}
+.dd-section{margin-top:14px}
+.dd-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:5px}
+.dd-section-text{font-size:13px;line-height:1.7;color:var(--muted)}
+.dd-analogy{background:rgba(245,158,11,.06);border-left:3px solid var(--accent);padding:10px 12px;border-radius:0 8px 8px 0;font-size:13px;color:var(--text);line-height:1.6;margin-top:10px}
+.dd-pitch{background:rgba(59,130,246,.06);border-left:3px solid var(--blue);padding:10px 12px;border-radius:0 8px 8px 0;font-size:13px;color:var(--text);line-height:1.6;margin-top:10px;font-style:italic}
+.dd-number{display:inline-block;background:rgba(16,185,129,.1);color:var(--green);font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;margin-top:8px}
+.dd-challenge{font-size:12px;color:#a78bfa;margin-top:8px;padding:8px 10px;background:rgba(139,92,246,.06);border-radius:6px}
 @media(max-width:600px){
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .ref-grid{grid-template-columns:repeat(2,1fr)}
@@ -158,7 +181,7 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
   <button class="nav-tab" onclick="showView('mock')">Mock Interview</button>
   <button class="nav-tab" onclick="showView('bank')">Question Bank</button>
   <button class="nav-tab" onclick="showView('stories')">STAR Stories</button>
-  <button class="nav-tab" onclick="showView('quickref')">Quick Ref</button>
+  <button class="nav-tab" onclick="showView('quickref')">Deep Dive</button>
 </nav>
 
 <!-- DASHBOARD -->
@@ -191,7 +214,7 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
     <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.6">
       <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">1 · BACKGROUND</div><div style="color:var(--muted)">FiberSeal pipeline from zero, Morgan Stanley, AI command center. Lead with the Claude angle — you built your operation on their product. That's the story no other candidate has.</div></div>
       <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">2 · MOTIVATIONS</div><div style="color:var(--muted)">Must be specific and verifiable — not "I love AI." The PBC structure, the 1,167% growth, and the fact that you already run on Claude are your three real reasons. Carl came from AssemblyAI by choice. He wants the same conviction.</div></div>
-      <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">3 · PRODUCT</div><div style="color:var(--muted)">Know the 6 numbers cold. Be fluent on Claude Code ($2.5B ARR, fastest growing), MCP (platform moat), and why Anthropic wins 70% of head-to-head deals vs. OpenAI. Hit Quick Ref before the call.</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">3 · PRODUCT</div><div style="color:var(--muted)">Know the 6 numbers cold. Be fluent on Claude Code ($2.5B ARR, fastest growing), MCP (platform moat), and why Anthropic wins 70% of head-to-head deals vs. OpenAI. Hit Deep Dive before the call.</div></div>
     </div>
   </div>
 </div>
@@ -253,11 +276,121 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
   <div id="stories-list"></div>
 </div>
 
-<!-- QUICK REFERENCE -->
+<!-- DEEP DIVE / QUICK REFERENCE -->
 <div id="view-quickref" class="view">
-  <h2>Quick Reference — Memorize This</h2>
+  <h2>Deep Dive — Know It, Don't Just Memorize It</h2>
 
-  <div class="section-label">6 Numbers to Know Cold</div>
+  <div class="section-label" style="margin-bottom:10px">Product Deep Dives — Expand Each One</div>
+
+  <div class="dd-card">
+    <div class="dd-header" onclick="toggleDD('dd-api')">
+      <div><div class="dd-name">Claude API</div><div class="dd-tagline">The core revenue engine · Developer platform · 80% enterprise</div></div>
+      <div class="dd-chevron" id="chev-dd-api">▾</div>
+    </div>
+    <div class="dd-body" id="dd-api">
+      <div class="dd-section"><div class="dd-section-label">Plain English</div><div class="dd-section-text">The API is raw access to Claude for developers. You pay per token (per word, basically), and you can build any application on top of it — customer service bots, document analysis, code review pipelines, anything. It's available directly or through AWS Bedrock, Google Vertex, and Microsoft Foundry, so companies don't need to change their cloud setup to use it.</div></div>
+      <div class="dd-analogy">Analogy: An electricity grid. Anthropic generates the power (the model). Developers are the appliance makers — they plug into the grid and build whatever they want. The API is the outlet.</div>
+      <div class="dd-section"><div class="dd-section-label">Why Enterprises Buy</div><div class="dd-section-text">Custom AI applications built on their own data and workflows. Not a generic tool — their specific product, their data, their compliance requirements. The three tiers (Opus / Sonnet / Haiku) let them match capability to cost for each use case. Most enterprise apps run on Sonnet 4.6 because it's the best balance of performance and cost.</div></div>
+      <div class="dd-pitch">Your BDR opener: "Is your team building anything custom with AI right now, or mostly using off-the-shelf tools? Because the line between 'we're experimenting' and 'we have something in production' is usually the API conversation."</div>
+      <div class="dd-section"><div class="dd-section-label">Carl Might Ask You</div>
+        <div class="dd-challenge">→ "Who is the actual decision-maker for an API deal — the developer or the executive?"</div>
+        <div class="dd-challenge">→ "How is using the API different from just using Claude.ai Pro?"</div>
+      </div>
+      <div class="dd-number">$19B ARR · Opus $5/$25 · Sonnet $3/$15 · Haiku $1/$5 per 1M tokens</div>
+    </div>
+  </div>
+
+  <div class="dd-card">
+    <div class="dd-header" onclick="toggleDD('dd-code')">
+      <div><div class="dd-name">Claude Code</div><div class="dd-tagline">$2.5B ARR · Fastest growing · Agentic coding — does the task, not just the line</div></div>
+      <div class="dd-chevron" id="chev-dd-code">▾</div>
+    </div>
+    <div class="dd-body" id="dd-code">
+      <div class="dd-section"><div class="dd-section-label">Plain English</div><div class="dd-section-text">GitHub Copilot completes the next line of code — like autocomplete. Claude Code is different: you give it a task ("write me a login flow," "refactor this module," "debug why this test fails") and it executes the whole thing autonomously. It lives in the terminal and IDE. Developers use it to do in 20 minutes what used to take 3 hours.</div></div>
+      <div class="dd-analogy">Analogy: GitHub Copilot is a really smart autocomplete — it finishes your sentences. Claude Code is a junior developer you can delegate to: "Go build this, come back when it's done." Completely different capability tier.</div>
+      <div class="dd-section"><div class="dd-section-label">Why Enterprises Buy</div><div class="dd-section-text">Engineers ship faster. Backlogs shrink. The adoption motion is bottom-up: individual devs start using it on their own because it's genuinely better, it spreads by word of mouth within the engineering team, and eventually the VP Eng or CTO signs an enterprise contract to formalize what's already happening. That's the BDR opportunity — find where the fire is already burning and pour gas on it.</div></div>
+      <div class="dd-pitch">Your BDR opener: "Are your engineers spending time on repetitive coding tasks that feel like they should be automated by now? Because that's exactly the gap Claude Code closes — and a lot of teams find it's already spreading through their engineering org before they've made any formal decision."</div>
+      <div class="dd-section"><div class="dd-section-label">Carl Might Ask You</div>
+        <div class="dd-challenge">→ "Walk me through exactly how you'd convert a company where 5 developers are already using Claude Code into an enterprise deal."</div>
+        <div class="dd-challenge">→ "A VP Eng says their developers already use Claude Code individually — why does he need an enterprise contract?"</div>
+      </div>
+      <div class="dd-number">$2.5B ARR · Fastest growing product · Bottom-up adoption → enterprise expansion</div>
+    </div>
+  </div>
+
+  <div class="dd-card">
+    <div class="dd-header" onclick="toggleDD('dd-mcp')">
+      <div><div class="dd-name">MCP — Model Context Protocol</div><div class="dd-tagline">Open standard · Platform moat · Turns Claude from a tool into infrastructure</div></div>
+      <div class="dd-chevron" id="chev-dd-mcp">▾</div>
+    </div>
+    <div class="dd-body" id="dd-mcp">
+      <div class="dd-section"><div class="dd-section-label">Plain English</div><div class="dd-section-text">MCP is an open protocol Anthropic built that lets Claude connect to any external tool or data source — Slack, Salesforce, Gmail, databases, calendars, GitHub, anything. Without MCP, every integration requires custom development. With MCP, you build a connector once and it works everywhere. Anthropic made it open source, so anyone can build connectors, and the ecosystem grows on its own.</div></div>
+      <div class="dd-analogy">Analogy: USB-C. Before USB-C you had 5 different cables for 5 different devices. MCP is the USB-C of AI integrations — one standard that connects everything. OpenAI keeps their ecosystem closed. Anthropic opened theirs, which means the platform gets stickier with every new connector that gets built.</div>
+      <div class="dd-section"><div class="dd-section-label">Why Enterprises Buy</div><div class="dd-section-text">Enterprise stickiness. Once Claude is integrated into your CRM, Slack, and internal databases through MCP, it's not a tool you log into — it's infrastructure you run on. Removing it means removing all those integrations. That's a completely different kind of switching cost than "we prefer a different chatbot." More integrations = harder to rip out = the platform moat compounds over time.</div></div>
+      <div class="dd-pitch">Your BDR opener: "What's your team's current stack for CRM and internal communication? Because the reason MCP matters for enterprise is it means Claude lives natively inside all of it — your reps don't have to context-switch to another tool."</div>
+      <div class="dd-section"><div class="dd-section-label">Carl Might Ask You</div>
+        <div class="dd-challenge">→ "A prospect says: 'We already have Zapier for integrations — why do we need MCP?' What do you say?"</div>
+        <div class="dd-challenge">→ "How is MCP different from just using the Claude API with custom integrations?"</div>
+      </div>
+      <div class="dd-number">Open protocol · Hundreds of community connectors · Key differentiation vs. OpenAI's closed ecosystem</div>
+    </div>
+  </div>
+
+  <div class="dd-card">
+    <div class="dd-header" onclick="toggleDD('dd-cowork')">
+      <div><div class="dd-name">Cowork</div><div class="dd-tagline">Launched Jan 2026 · Non-technical teams · The enterprise expansion play beyond engineering</div></div>
+      <div class="dd-chevron" id="chev-dd-cowork">▾</div>
+    </div>
+    <div class="dd-body" id="dd-cowork">
+      <div class="dd-section"><div class="dd-section-label">Plain English</div><div class="dd-section-text">Cowork is a desktop app for people who aren't developers. Legal teams use it to review contracts. Finance uses it for analysis. HR uses it for policies and onboarding. Ops uses it for process documentation. It has built-in plugins for each function. It's Claude's power for non-technical knowledge workers — no coding, no API, just a product built for their workflow.</div></div>
+      <div class="dd-analogy">Analogy: If Claude Code is the engineering team's tool, Cowork is everyone else's. Same core intelligence, packaged for different users. An enterprise deal that starts in engineering can expand to every department through Cowork — that's how a $50K API contract becomes a $500K enterprise deal.</div>
+      <div class="dd-section"><div class="dd-section-label">Why Enterprises Buy</div><div class="dd-section-text">Horizontal expansion beyond the initial engineering wedge. The TAM for non-technical knowledge workers is enormous — legal, finance, HR, and ops teams are often 10x the size of engineering. Cowork is how Anthropic captures that expansion without requiring every user to be technical. For BDRs, Cowork is the conversation that starts with "who else in the organization could benefit from this?"</div></div>
+      <div class="dd-pitch">Your BDR opener: "A lot of our customers start with the engineering team and then ask — what about our legal and finance teams? That's what Cowork is built for. Is that a conversation happening inside your org right now?"</div>
+      <div class="dd-section"><div class="dd-section-label">Carl Might Ask You</div>
+        <div class="dd-challenge">→ "Who's the buyer for Cowork — IT, the department head, or HR? How does that change your outreach?"</div>
+        <div class="dd-challenge">→ "How does Cowork differ from just giving everyone a Claude.ai subscription?"</div>
+      </div>
+      <div class="dd-number">Launched Jan 2026 · Plugins for legal/finance/HR/ops · Expansion play across non-dev teams</div>
+    </div>
+  </div>
+
+  <div class="dd-card">
+    <div class="dd-header" onclick="toggleDD('dd-cu')">
+      <div><div class="dd-name">Computer Use</div><div class="dd-tagline">Launched March 23, 2026 · Claude controls a Mac · No competitor at scale</div></div>
+      <div class="dd-chevron" id="chev-dd-cu">▾</div>
+    </div>
+    <div class="dd-body" id="dd-cu">
+      <div class="dd-section"><div class="dd-section-label">Plain English</div><div class="dd-section-text">Computer Use means Claude can actually operate a computer — click buttons, navigate browsers, fill forms, read screens, and run multi-step workflows. You give it a task like "pull the Q4 data from this internal dashboard and put it into this spreadsheet" and it goes and does it. It can handle exceptions and make judgment calls, not just follow a fixed script.</div></div>
+      <div class="dd-analogy">Analogy: Every other AI tool is someone whispering advice in your ear. Computer Use is a coworker who can sit down at the keyboard and actually do the task. The difference between a consultant who tells you what to do and someone who just does it. For automation, this is the leap from RPA (Zapier, UiPath) — which follows fixed scripts and breaks on exceptions — to AI-driven automation that can handle variability.</div>
+      <div class="dd-section"><div class="dd-section-label">Why Enterprises Buy</div><div class="dd-section-text">Replaces or augments RPA for tasks that require judgment. Manual repetitive workflows — reconciling reports across systems, filling forms, navigating legacy software — become automatable even when the interface changes or exceptions appear. This is particularly compelling for ops teams, IT automation, and any business process with high manual overhead and low tolerance for error.</div></div>
+      <div class="dd-pitch">Your BDR opener: "Do you have any repetitive computer-based workflows — pulling reports from multiple systems, reconciling spreadsheets, filling forms in legacy software — that someone on your team does manually today? Because that's the exact gap Computer Use was built to close."</div>
+      <div class="dd-section"><div class="dd-section-label">Carl Might Ask You</div>
+        <div class="dd-challenge">→ "A CISO asks: 'If Claude can control our computers, what's the security model?' How do you respond?"</div>
+        <div class="dd-challenge">→ "What's the difference between Computer Use and traditional RPA tools like UiPath or Zapier?"</div>
+      </div>
+      <div class="dd-number">Launched March 23, 2026 · Only at-scale competitor product of its kind · RPA replacement story</div>
+    </div>
+  </div>
+
+  <div class="dd-card">
+    <div class="dd-header" onclick="toggleDD('dd-cai')">
+      <div><div class="dd-name">Constitutional AI</div><div class="dd-tagline">Safety baked in, not bolted on · Core training methodology · Enterprise compliance story</div></div>
+      <div class="dd-chevron" id="chev-dd-cai">▾</div>
+    </div>
+    <div class="dd-body" id="dd-cai">
+      <div class="dd-section"><div class="dd-section-label">Plain English</div><div class="dd-section-text">Constitutional AI is how Anthropic trains Claude's values, not as an afterthought. The model is trained to evaluate its own outputs against a set of principles — it critiques itself and revises until it meets the standard. This is different from content filters that try to block bad outputs after the model produces them. The safety is part of the model's reasoning, not a fence around it.</div></div>
+      <div class="dd-analogy">Analogy: Most AI safety is like a bouncer checking IDs at the door — it blocks certain outputs on the way out. Constitutional AI is like good judgment trained in from childhood — the model has internalized the principles, not just learned which outputs get flagged. The bouncer can be tricked or bypassed. Internalized judgment is far more robust.</div>
+      <div class="dd-section"><div class="dd-section-label">Why Enterprises Buy</div><div class="dd-section-text">Regulated industries — healthcare, financial services, legal — can't just accept "we have guardrails" from a vendor. They need a structural answer to "how do you guarantee outputs meet our compliance requirements?" Constitutional AI is that structural answer. Combined with the PBC (Public Benefit Corporation) legal structure, Anthropic is the only AI vendor that can say safety is both architecturally baked in AND legally required. That's a fundamentally different conversation in an enterprise procurement meeting.</div></div>
+      <div class="dd-pitch">Your BDR opener: "When your legal or compliance team gets involved in evaluating AI vendors, the question that usually blocks deals is 'how do you guarantee safe outputs?' Most vendors say 'we have content filters.' We have Constitutional AI — safety trained in systematically — and a PBC legal structure that makes safety research mandatory. That's a different answer."</div>
+      <div class="dd-section"><div class="dd-section-label">Carl Might Ask You</div>
+        <div class="dd-challenge">→ "How do you explain Constitutional AI to a non-technical buyer — like a General Counsel — in 2 sentences?"</div>
+        <div class="dd-challenge">→ "A CISO says: 'We've reviewed several AI vendors and they all claim to be safe.' How does your safety story differentiate?"</div>
+      </div>
+      <div class="dd-number">Published research · PBC legal structure · Peer-reviewed methodology · Key for regulated industries</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:20px">6 Numbers to Know Cold</div>
   <div class="ref-grid mb16">
     <div class="ref-stat"><div class="ref-stat-n">$19B</div><div class="ref-stat-l">ARR (Mar 2026)</div></div>
     <div class="ref-stat"><div class="ref-stat-n">1,167%</div><div class="ref-stat-l">YoY Revenue Growth</div></div>
@@ -265,46 +398,6 @@ h2{font-size:19px;font-weight:700;margin-bottom:14px}
     <div class="ref-stat"><div class="ref-stat-n">70%</div><div class="ref-stat-l">Fortune 100 Customers</div></div>
     <div class="ref-stat"><div class="ref-stat-n">500+</div><div class="ref-stat-l">Customers at $1M+ ARR</div></div>
     <div class="ref-stat"><div class="ref-stat-n">$2.5B</div><div class="ref-stat-l">Claude Code ARR</div></div>
-  </div>
-
-  <div class="section-label">Products at a Glance</div>
-  <div class="product-grid mb16">
-    <div class="product-card">
-      <div class="product-name">Claude API</div>
-      <div class="product-desc">Developer platform. Consumption-based (per token). Access via direct API, AWS Bedrock, Google Vertex, Microsoft Foundry.</div>
-      <div class="product-arr">Core revenue engine · 80% enterprise</div>
-      <div class="product-buyer">Buyer: VP Eng, CTO, Head of AI/ML</div>
-    </div>
-    <div class="product-card">
-      <div class="product-name">Claude Code</div>
-      <div class="product-desc">Agentic coding tool — autonomous coding in the terminal and IDE. $2.5B ARR. Fastest-growing product. Primary wedge into engineering teams.</div>
-      <div class="product-arr">$2.5B ARR · Fastest growing</div>
-      <div class="product-buyer">Buyer: Individual devs → VP Eng</div>
-    </div>
-    <div class="product-card">
-      <div class="product-name">Cowork</div>
-      <div class="product-desc">Desktop tool for non-technical users. Plugins for legal, finance, HR, ops. Launched Jan 2026. Enterprise expansion play beyond engineering.</div>
-      <div class="product-arr">Expansion into non-dev teams</div>
-      <div class="product-buyer">Buyer: IT Director, ops, legal, finance</div>
-    </div>
-    <div class="product-card">
-      <div class="product-name">MCP (Model Context Protocol)</div>
-      <div class="product-desc">Open protocol connecting Claude to Slack, Gmail, Salesforce, databases, anything. Turns Claude from a tool into a platform. More connectors = stickier product.</div>
-      <div class="product-arr">Platform moat differentiator</div>
-      <div class="product-buyer">Key enterprise stickiness story</div>
-    </div>
-    <div class="product-card">
-      <div class="product-name">Computer Use</div>
-      <div class="product-desc">Claude controls a Mac directly — clicks, types, navigates. Launched March 23, 2026. No competitor has shipped this at scale.</div>
-      <div class="product-arr">Unique differentiator vs. OpenAI</div>
-      <div class="product-buyer">Buyer: IT automation, ops, engineering</div>
-    </div>
-    <div class="product-card">
-      <div class="product-name">Model Tiers</div>
-      <div class="product-desc">Opus 4.6: $5/$25 per 1M tokens — most capable. Sonnet 4.6: $3/$15 — best balance. Haiku 4.5: $1/$5 — fastest/cheapest.</div>
-      <div class="product-arr">Consumer: Free · Pro $20 · Max $100-200 · Team $25/seat</div>
-      <div class="product-buyer">Enterprise: Custom pricing</div>
-    </div>
   </div>
 
   <div class="section-label">Differentiators vs. Competitors</div>
@@ -372,17 +465,23 @@ const QUESTIONS = [
   {id:'p001',category:'product',question:'What are Anthropic\'s main products? Walk me through each and who buys it.',
    hint:'Claude API (developers/VPE), Claude Code ($2.5B ARR, fastest growing, engineers), Cowork (non-technical teams, Jan 2026), Computer Use (March 2026), MCP (platform stickiness)',
    model_answer:`"Anthropic has five core products right now. Claude API is the developer platform — consumption-based pricing, three model tiers (Opus, Sonnet, Haiku), deployed via direct API or through AWS Bedrock, Google Vertex, and Microsoft Foundry. That's the core revenue engine with 80% enterprise. Claude Code is the agentic coding tool — it's autonomous, not just assistive, and it's at $2.5B ARR and growing fastest. That's the wedge into engineering teams. Cowork launched January 2026 — it's the desktop tool for non-technical users like legal, finance, and HR, which is the expansion play beyond engineering. Computer Use launched March 23rd — Claude controls a Mac directly, no competitor has shipped this at scale. And MCP is the open protocol that connects Claude to any external tool — Slack, Salesforce, Gmail, databases — which turns Claude from a tool into a platform."`,
-   science:'Product fluency is the first thing Carl will test. If you can\'t explain products and buyers cold, the conversation ends there.',difficulty:1},
+   science:'Product fluency is the first thing Carl will test. If you can\'t explain products and buyers cold, the conversation ends there.',difficulty:1,
+   principle:'Product fluency is table stakes — Carl will probe immediately. If you stumble here, the conversation ends.',
+   followup:'Which product would you lead with when prospecting a 2,000-person SaaS company already using OpenAI, and why?'},
 
   {id:'p002',category:'product',question:'What is MCP and why does it matter for enterprise sales?',
    hint:'Model Context Protocol — open standard connecting Claude to any external tool or data source. Makes Claude sticky and platform-like vs. point solution.',
    model_answer:`"MCP stands for Model Context Protocol — it's an open standard Anthropic built that lets Claude connect to any external tool or data source. So instead of Claude being a standalone chat product, with MCP it connects directly to your CRM, your Slack, your database, your calendar — anything. For enterprise sales, this is massive because it changes the conversation from 'which AI chatbot do you want?' to 'do you want your AI to be natively integrated into your entire workflow?' OpenAI keeps their ecosystem closed. Anthropic made MCP open, which means any developer can build connectors and the platform gets stickier with every integration. More connectors means more surface area, which means it's harder to rip out."`,
-   science:'MCP is one of Anthropic\'s clearest competitive moats vs. OpenAI. Being able to explain it clearly signals real product depth.',difficulty:2},
+   science:'MCP is one of Anthropic\'s clearest competitive moats vs. OpenAI. Being able to explain it clearly signals real product depth.',difficulty:2,
+   principle:'MCP transforms Claude from a point solution to a platform — that\'s the moat story, not just a feature.',
+   followup:'A prospect says: "We already have Zapier for integrations — why do we need MCP?" What do you say?'},
 
   {id:'p003',category:'product',question:'What is Claude Code and why is it the fastest-growing product?',
    hint:'Agentic coding tool — does the task, doesn\'t just complete code snippets. $2.5B ARR. Wedge: individual devs adopt bottom-up, expansion to VP Engineering.',
    model_answer:`"Claude Code is an agentic coding tool — the key word is agentic. GitHub Copilot completes the next line of code. Claude Code can be given a task — 'write me a login flow,' 'debug this entire module,' 'refactor this codebase to use this pattern' — and it executes autonomously. It's at $2.5B ARR and growing faster than anything else Anthropic has. The reason it's growing so fast is the motion: individual developers start using it on their own, it becomes indispensable, and then the CTO or VP Engineering hears about it from their team and turns it into a team or enterprise subscription. It's a bottom-up adoption flywheel. For BDRs, that means you can prospect into companies where developers are already using Claude Code and convert that usage into an enterprise contract."`,
-   science:'Carl specifically asked about the Claude Code to enterprise deal motion in your prep notes. Know this cold.',difficulty:2},
+   science:'Carl specifically asked about the Claude Code to enterprise deal motion in your prep notes. Know this cold.',difficulty:2,
+   principle:'The bottom-up motion is the key insight: devs adopt independently, then the BDR converts that usage to an enterprise contract.',
+   followup:'A VP Eng says: "My developers already use Claude Code on their own — why do I need an enterprise deal?" How do you respond?'},
 
   {id:'p004',category:'product',question:'Walk me through Claude\'s model tiers. When would a customer use each?',
    hint:'Opus 4.6 (most capable, $5/$25/1M tokens), Sonnet 4.6 (best balance, $3/$15), Haiku 4.5 (fastest/cheapest, $1/$5)',
@@ -392,69 +491,95 @@ const QUESTIONS = [
   {id:'p005',category:'product',question:'What is Anthropic\'s ICP? Who is the primary buyer for an enterprise Claude deal?',
    hint:'Primary: VP Engineering, CTO, Head of AI/ML. Expansion: IT Director, Head of Legal/Finance. Entry: often individual developer → bottom-up.',
    model_answer:`"Primary buyer for enterprise is VP Engineering, CTO, or Head of AI and ML at companies with 500 or more employees. Those are the people with budget authority and the technical context to evaluate the product. The entry point is often different — Claude Code gets adopted bottom-up by individual developers, and the BDR's job is often to find where that usage is already happening and convert it to a formal enterprise contract. The Cowork product opens up a second buyer persona — IT directors, heads of legal, finance, and HR — because it's built for non-technical users. The best enterprise deals often start with an engineering team, then expand horizontally across business functions as Cowork and MCP integrations get added. Best segments: tech companies, FinTech, healthcare, legal, and consulting firms with large knowledge worker populations."`,
-   science:'Carl is building this outreach motion. Showing you understand the ICP and the bottom-up expansion flywheel signals you\'ll be productive fast.',difficulty:1},
+   science:'Carl is building this outreach motion. Showing you understand the ICP and the bottom-up expansion flywheel signals you\'ll be productive fast.',difficulty:1,
+   principle:'The BDR\'s ICP has two layers: the entry point (developer) and the expansion buyer (VPE/CTO). Know both.',
+   followup:'Walk me through how you\'d build your first 50-account prospect list at Anthropic. What criteria do you use?'},
 
   {id:'p006',category:'product',question:'What buying signals would tell you a company is ready for a Claude API conversation?',
    hint:'Job postings, new technical hires, funding, AI press releases, developer activity, OpenAI mentions.',
    model_answer:`"Six signals I'd track. First: job postings for AI Engineer, ML Engineer, or anything with 'AI Integration' — means they're actively building and have a budget for AI infrastructure. Second: a new CTO, VP Engineering, or Head of AI hired in the last 90 days — new leaders often want to review the stack and make their mark. Third: Series B or C funding — capital is available and they're in growth mode. Fourth: any press release or company blog about an AI initiative or digital transformation — they've made it public that AI is a priority. Fifth: GitHub repositories that reference Claude or the Anthropic API — bottom-up adoption already happening. Sixth: any public mention of OpenAI pricing complaints or vendor reviews — that's an active buying conversation I want to be in."`,
-   science:'Signal-based prospecting generates 3-5x higher reply rates. Carl asked specifically about buying signals in your prep notes.',difficulty:1},
+   science:'Signal-based prospecting generates 3-5x higher reply rates. Carl asked specifically about buying signals in your prep notes.',difficulty:1,
+   principle:'Signal-based prospecting generates 3-5x higher reply rates. The best reps send fewer, more targeted emails — not more.',
+   followup:'You find a company with 3 AI engineer job postings and a new VP Engineering hired 60 days ago. What\'s your outreach sequence?'},
 
   {id:'p007',category:'product',question:'What is Constitutional AI and why does it matter in enterprise sales?',
    hint:'Core training methodology — values baked in systematically through self-critique and revision, not patched on. Matters for compliance, regulated industries, legal liability.',
    model_answer:`"Constitutional AI is Anthropic's core training methodology. Instead of trying to patch safety onto a model after it's trained, they train the model to evaluate and revise its own outputs against a set of principles — it critiques itself and improves. For enterprise sales, this matters in two ways. First, compliance and regulated industries — financial services, healthcare, legal — need an AI that won't produce outputs that create legal liability. Constitutional AI gives them a systematic basis for that guarantee, not just a promise. Second, it's a trust signal. When a Fortune 500 CISO is evaluating AI vendors, 'we have a PBC structure and Constitutional AI training' is a fundamentally different conversation than 'we have content filters.' It's the difference between architecture and afterthought."`,
-   science:'This is a technical differentiator that most SDR candidates can\'t explain. Knowing it fluently signals genuine product commitment.',difficulty:3},
+   science:'This is a technical differentiator that most SDR candidates can\'t explain. Knowing it fluently signals genuine product commitment.',difficulty:3,
+   principle:'Constitutional AI gives you a structural answer to compliance questions — it\'s not a filter, it\'s a training methodology.',
+   followup:'A CISO at a healthcare company asks: "How do I know Claude won\'t output protected patient data?" What do you say?'},
 
   // WHY ANTHROPIC
   {id:'w001',category:'why',question:'Why Anthropic specifically — why not OpenAI, Google, or another AI company?',
    hint:'Three angles: the product (you run on it), the mission (PBC, safety-first), the timing (generational opportunity). Be specific and authentic.',
    model_answer:`"Three real reasons. First: I already run my entire sales operation on Claude. Pre-call research, email drafts, live CRM updates, objection prep — Claude is the backbone of how I work. When I cold call a prospect about Claude, I'm not learning a product, I'm sharing what I use every day. That authenticity is detectable and it matters in sales. Second: the mission is structurally different from every other AI company. OpenAI restructured away from nonprofit. Google's AI is a business unit. Anthropic is a Public Benefit Corporation where safety research is in the legal DNA — not marketing. I want to sell something I genuinely believe in. Third: the timing. $19B ARR, 1,167% growth, 70% Fortune 100 penetration, and we're still early. This reminds me of getting into Salesforce or AWS in their scaling years. The BDRs who get in now become the foundation of the sales org."`,
-   science:'This is the most important question Carl will ask. An answer that sounds like every other candidate answer loses. Your "I run on Claude" angle is unique and verifiable.',difficulty:1},
+   science:'This is the most important question Carl will ask. An answer that sounds like every other candidate answer loses. Your "I run on Claude" angle is unique and verifiable.',difficulty:1,
+   principle:'The "I run on Claude" angle is uniquely verifiable — no other candidate can say this. Get it in within the first 30 seconds.',
+   followup:'Carl asks: "You\'ve used Claude daily for months — what\'s one thing it does better than you expected, and one thing that still frustrates you?"'},
 
   {id:'w002',category:'why',question:'Why is this a generational career opportunity right now?',
    hint:'Timing + growth rate + category leadership. Compare to AWS/Salesforce early days. Be specific with numbers.',
    model_answer:`"Anthropic went from $1B to $19B ARR in 15 months. That's not just fast — that's a product that the market was waiting for. And we're still at the beginning. 70% of Fortune 100 are customers but there are 30% left, plus the entire mid-market and global enterprise base. Claude Code is at $2.5B ARR and accelerating. Cowork just launched. Computer Use just launched. The product surface area is expanding while the sales team is still small enough that early BDRs become foundational. When I look at what happened to the early enterprise reps at Salesforce and AWS, they built careers, equity, and institutional knowledge that compounded for a decade. That's the window I want to be in right now at Anthropic."`,
-   science:'Conviction about timing signals you\'ve done real research and are making a deliberate career bet, not just applying everywhere.',difficulty:1},
+   science:'Conviction about timing signals you\'ve done real research and are making a deliberate career bet, not just applying everywhere.',difficulty:1,
+   principle:'Timing-based conviction separates deliberate career bets from resume-padding. Carl left AssemblyAI for the same reason.',
+   followup:'Carl pushes back: "Everyone says AI is a generational opportunity. Why specifically now at Anthropic vs. waiting for a more senior role?"'},
 
   {id:'w003',category:'why',question:'What do you know about Carl Johnson and what\'s your connection point with him?',
    hint:'He built prospecting systems from scratch at AssemblyAI — same as your FiberSeal build. He chose Anthropic deliberately. He\'s managed distributed BDR teams in hypergrowth.',
    model_answer:`"Carl built a strategic prospecting plan at AssemblyAI that significantly grew their pipeline — from scratch, no playbook, similar environment to what I did at FiberSeal. He chose Anthropic deliberately after that experience, coming from another AI company where he understood what selling technical AI products looks like. He's been at Anthropic about 18 months which means he joined during hypergrowth and knows what early hires look like when they succeed. The connection point I want to draw if it's natural is that we've both built outbound engines where none existed. He'll recognize that instinct. And his Boeing background — procurement, complex enterprise cycles — means he's not a typical tech-only leader. He responds to scrappiness and adaptability, not polish."`,
-   science:'Researching the interviewer signals the same behavior you\'ll apply to every prospect. Carl will notice if you\'ve done the work.',difficulty:2},
+   science:'Researching the interviewer signals the same behavior you\'ll apply to every prospect. Carl will notice if you\'ve done the work.',difficulty:2,
+   principle:'Researching the interviewer is the same signal-based approach you\'ll bring to every enterprise prospect. Carl will notice.',
+   followup:'Carl asks: "What would you have done differently at AssemblyAI if you were in my position?" How do you answer without being presumptuous?'},
 
   {id:'w004',category:'why',question:'Anthropic wins 70% of head-to-head enterprise deals against OpenAI. Why?',
    hint:'Constitutional AI + PBC structure (safety architecture vs. patched filters), Computer Use, MCP open ecosystem, performance on nuanced reasoning benchmarks.',
    model_answer:`"Based on what I know, it comes down to four things. First, safety architecture — enterprise procurement, especially at regulated companies, needs a structural answer to 'how do you guarantee safe outputs?' Constitutional AI provides that. OpenAI has content filters. Those are different levels of assurance. Second, Computer Use — Anthropic has shipped something OpenAI hasn't at scale, and for enterprise automation use cases, that's a meaningful capability gap right now. Third, MCP — an open protocol that integrates with any stack versus a closed ecosystem. Enterprise IT teams don't want to be locked in. Fourth, performance: Claude consistently outperforms on nuanced reasoning, instruction-following, and long-context tasks, which are the real enterprise workloads. ChatGPT wins on brand recognition. Claude wins on the actual work."`,
-   science:'Being able to articulate competitive win rates signals real preparation and will come up in almost every enterprise deal.',difficulty:2},
+   science:'Being able to articulate competitive win rates signals real preparation and will come up in almost every enterprise deal.',difficulty:2,
+   principle:'Being able to articulate competitive win rates with reasons signals real preparation — this comes up in every competitive deal.',
+   followup:'A prospect says: "I\'ve heard Claude is more conservative/restricted than ChatGPT. We need flexibility." How do you handle this?'},
 
   // BEHAVIORAL
   {id:'b001',category:'behavioral',question:'Tell me about yourself. [Anthropic version]',
    hint:'Present → Past → Future. End on: you run on Claude, you built a pipeline from scratch, you\'re ready to do it for Anthropic.',
    model_answer:`"I'm a recent UMD Communications grad who spent the last year at Morgan Stanley as a wealth management intern — real client-facing work, listening, presenting tailored solutions, managing relationships. While I was there I started building AI systems on the side. Not as a hobby — as the backbone of how I work. I built a full prospecting engine using Claude: automated research briefings, signal-based outreach, live CRM updates through the MCP connector. That system powered 500 calls a week and 20 booked meetings a month at FiberSeal, a fabric protection company I was running sales for in South Florida. The reason I'm specifically targeting Anthropic is that I already run on your product. Every day. Selling Claude to enterprises isn't a pitch for me — it's authentic. I want to be part of the team that's scaling this to the rest of the Fortune 100 and beyond."`,
-   science:'Your opener sets the cognitive frame. The "I run on Claude" line is your single most differentiating fact. Get it in within 30 seconds.',difficulty:1},
+   science:'Your opener sets the cognitive frame. The "I run on Claude" line is your single most differentiating fact. Get it in within 30 seconds.',difficulty:1,
+   principle:'Your opener sets the cognitive frame. "I run on Claude" is your single most differentiating fact — it must land in the first 30 seconds.',
+   followup:'Carl asks: "Walk me back — what did your day-to-day actually look like at FiberSeal? What were you doing hour by hour?"'},
 
   {id:'b002',category:'behavioral',question:'Tell me about building something from scratch with no playbook.',
    hint:'FiberSeal — zero pipeline, zero territory, zero playbook. Diagnosed wrong ICP, pivoted, scaled to 500 calls/week and 20 meetings/month. This is the parallel to Carl\'s AssemblyAI story.',
    model_answer:`"When I started at FiberSeal, there was nothing. No pipeline, no target list, no sequences, no playbook. Just me and a product. The first thing I did was diagnose who we should actually be targeting — and found we were targeting the wrong buyers. Pivoted to country clubs and commercial luxury properties in South Florida. Then I built the infrastructure: signal monitoring for renovation projects and new GMs, tiered account lists, personalized sequences, a five-touch cadence with break-up emails. I also built a full Claude AI system to run the operation — research, outreach, CRM updates. Within six months I was running 500 calls a week and booking 20 meetings a month consistently. That build-from-scratch mentality is exactly what a BDR territory at Anthropic looks like. I didn't need a manager to hand me a playbook. I diagnosed, built, and scaled."`,
-   science:'Carl did the same thing at AssemblyAI. This answer resonates because it mirrors his own experience. Use the parallel if it comes up naturally.',difficulty:1},
+   science:'Carl did the same thing at AssemblyAI. This answer resonates because it mirrors his own experience. Use the parallel if it comes up naturally.',difficulty:1,
+   principle:'Carl built the same thing at AssemblyAI. This answer resonates because it mirrors his own experience — the parallel is the power.',
+   followup:'Carl asks: "What would you do differently if you were starting FiberSeal\'s outbound from scratch with 6 months of hindsight?"'},
 
   {id:'b003',category:'behavioral',question:'How have you used AI in your sales process? [This is the money question at Anthropic]',
    hint:'Be specific: Claude as the backbone of your operation. Name the exact tools: MCP, HubSpot connector, Apollo, research briefs, email drafts, objection flashcards.',
    model_answer:`"Claude is the backbone of everything I do. Pre-call: I feed in a company name and get a full research brief — key stakeholders, recent news, ICP fit score, and a cold call opener — in about 2 minutes. For emails: I give Claude the signal I'm acting on and the prospect's context, and it drafts a personalized first line and body. I edit, I don't write from scratch. For CRM: I use the HubSpot MCP connector to update deal fields conversationally — 'move this to stage 3, update the close date' — instead of clicking through the UI. For objection prep: I built a flashcard system that drills me on objection responses before big call blocks. And for pipeline management: I built a scheduled task that texts me a morning briefing every day with my calendar, unread emails from prospects, and pipeline status. I'm not using AI as a tool. I built a system. The honest answer is that I can do in 20 minutes what takes a manual rep 3 hours. That's the day-one value I bring here."`,
-   science:'This is the highest-signal question at Anthropic specifically. Your answer here will carry more weight than any other answer in the interview.',difficulty:1},
+   science:'This is the highest-signal question at Anthropic specifically. Your answer here will carry more weight than any other answer in the interview.',difficulty:1,
+   principle:'This is the highest-signal question at Anthropic. Your answer here carries more weight than every other answer in the interview combined.',
+   followup:'Carl asks: "If I gave you a $10K budget on day one to improve our BDR workflow with AI, what would you build first?"'},
 
   {id:'b004',category:'behavioral',question:'Tell me about a time you went above and beyond.',
    hint:'AI command center — built it unprompted, compressed 3 hours of admin to 20 minutes. Frame it as initiative + system-building.',
    model_answer:`"No one asked me to build an AI system. I was doing outbound at FiberSeal and spending 2-3 hours a day on admin — research, drafting, logging. I noticed that every minute on admin was a minute not selling. So I spent two weeks building a full Claude AI command center: pre-call research briefs generated automatically, personalized outreach drafted from buying signals, post-call CRM updates produced in real time, a live pipeline dashboard texted to my phone every morning. Compressed 3 hours to 20 minutes. 5x the outreach volume with better personalization than I was hitting manually. And I packaged the whole system into a deployable document — so any new rep could onboard onto it in an hour. That's the version of 'above and beyond' I bring to Anthropic: not just working harder, but designing systems that make the whole operation more capable."`,
-   science:'Initiative + system-building is exactly what Carl is hiring for. He built the playbook at AssemblyAI. He wants someone who does the same.',difficulty:1},
+   science:'Initiative + system-building is exactly what Carl is hiring for. He built the playbook at AssemblyAI. He wants someone who does the same.',difficulty:1,
+   principle:'Initiative plus system-building is exactly what Carl hired for at AssemblyAI. This resonates because it\'s what he values most.',
+   followup:'Carl asks: "How would you help other reps adopt the AI system you built? Have you ever had to sell a process change internally?"'},
 
   {id:'b005',category:'behavioral',question:'What makes you different from every other BDR candidate who applies here?',
    hint:'Three specific differentiators: run on Claude, built pipeline from zero, mission alignment that\'s real. No generic answers.',
    model_answer:`"Three things, specifically. One: I already run on your product. Not 'I'm familiar with AI' — I built an entire prospecting operation on Claude and MCP. I know the product the way a customer knows it: what it does well, where it has friction, why enterprises resist it, and why they eventually adopt it. That's a day-one advantage no other candidate has. Two: I've built pipeline from zero. FiberSeal had no playbook, no territory, no sequences. I diagnosed, pivoted the ICP, built the infrastructure, and scaled to 20 meetings a month. That's the exact motion of a new BDR territory at Anthropic. Three: my mission alignment is verifiable. I didn't say I cared about AI safety — I built a system on the safety-first AI platform and kept using it because it actually works. That's the most honest 'why Anthropic' answer I can give."`,
-   science:'Differentiation answers backed by specific proof outperform personality-based answers 3:1 on hiring manager rubrics.',difficulty:1},
+   science:'Differentiation answers backed by specific proof outperform personality-based answers 3:1 on hiring manager rubrics.',difficulty:1,
+   principle:'Differentiation backed by specific, verifiable proof beats personality claims 3:1 on hiring manager rubrics.',
+   followup:'Carl says: "Okay, show me. Pull up your phone and walk me through one thing your AI system does that would surprise me."'},
 
   {id:'b006',category:'behavioral',question:'Tell me about a time you handled rejection or a setback and bounced back.',
    hint:'FiberSeal: 2 weeks of zero responses. Diagnosed the problem, rebuilt the opener, went from 1% to 9% reply rate.',
    model_answer:`"First two weeks of outreach at FiberSeal: zero responses. Not low — zero. I could have tried harder. Instead I diagnosed. I pulled every email I'd sent and read them as if I were the prospect. Found the problem: my personalization was superficial — 'I noticed you're in the golf industry' level. Started A/B testing openers. Renovation-signal based opener got 9% reply rate. Generic opener got 1%. I rebuilt every sequence around the renovation signal and built monitoring to flag those events automatically. Week three: 8 responses. The setback wasn't the two weeks of silence — that was information. The lesson is that rejection without diagnosis is just pain. Rejection with diagnosis is a roadmap."`,
-   science:'SDR attrition is highest among reps who internalize rejection personally. This answer shows you treat it informationally.',difficulty:1},
+   science:'SDR attrition is highest among reps who internalize rejection personally. This answer shows you treat it informationally.',difficulty:1,
+   principle:'SDR attrition is highest among reps who internalize rejection personally. Treating it informationally is the predictor of long-term success.',
+   followup:'Carl asks: "What\'s the most uncomfortable sales situation you\'ve been in — not just a hard call, but genuinely uncomfortable — and how did you handle it?"'},
 
   {id:'b007',category:'behavioral',question:'Where do you see yourself in 3 years?',
    hint:'AE at Anthropic — closing enterprise deals. Frame the SDR role as the foundation, not a stepping stone.',
@@ -465,7 +590,9 @@ const QUESTIONS = [
   {id:'s001',category:'sales_skills',question:'What does your prospecting process look like for enterprise AI?',
    hint:'Signal-based: ICP (VP Eng, CTO) → trigger events (job postings, funding, new hires) → research (10 min) → personalized outreach → 5-touch cadence.',
    model_answer:`"For enterprise AI, it's entirely signal-based. Step one: define the ICP precisely — VP Engineering, CTO, or Head of AI at companies 500-plus with an active build or integration agenda. Step two: signals. I look for job postings for AI engineers, funding announcements, new technical leadership hires, and any public AI initiative. At Anthropic specifically, I'd also track GitHub repos that already reference the Claude API — that's a company where adoption has started bottom-up. Step three: 10-minute research sprint per account. Company overview, the specific stakeholder, one angle I can reference. Step four: personalized outreach where the first line proves I actually looked. Step five: five-touch sequence over 10 days — each one adds new value, no check-ins. The Claude Code bottom-up motion also means I'd work closely with whoever owns the developer community to identify accounts where Claude Code adoption is already happening and convert those to enterprise conversations."`,
-   science:'Signal-based prospecting for enterprise AI is exactly the motion Carl is building. This answer shows you\'ve thought about how the Anthropic BDR motion specifically works.',difficulty:2},
+   science:'Signal-based prospecting for enterprise AI is exactly the motion Carl is building. This answer shows you\'ve thought about how the Anthropic BDR motion specifically works.',difficulty:2,
+   principle:'Signal-based prospecting for AI is the motion Carl is building — showing you understand it signals you\'ll contribute to strategy, not just execute.',
+   followup:'Carl asks: "You\'ve identified 50 accounts with strong signals. How do you prioritize which to contact first — what\'s your scoring model?"'},
 
   {id:'s002',category:'sales_skills',question:'How would you write a cold email to a VP of Engineering at a 1,000-person company that currently uses OpenAI?',
    hint:'Signal-first, under 100 words, one CTA. Reference a specific trigger. Don\'t bash OpenAI — raise a question.',
@@ -482,17 +609,23 @@ Worth a 15-minute call to see if there's a fit?
 Ryan
 
 The key principles: the trigger (job postings) proves I did research. The question ('needs to do more than assist') raises a doubt without attacking OpenAI. Under 100 words. One CTA."`,
-   science:'Email under 125 words: 49% higher reply rate. Signal-based first line: 3-5x higher engagement. OpenAI displacement requires raising doubt, not attacking.',difficulty:2},
+   science:'Email under 125 words: 49% higher reply rate. Signal-based first line: 3-5x higher engagement. OpenAI displacement requires raising doubt, not attacking.',difficulty:2,
+   principle:'Under 125 words with a signal-based first line is the highest-converting formula. Knowing the craft vs. just the theory is the difference.',
+   followup:'Carl asks: "Write me the 3-email follow-up sequence for a VP Eng who opened your first email twice but never responded."'},
 
   {id:'s003',category:'sales_skills',question:'How would you open a cold call to a CTO who you know is using OpenAI today?',
    hint:'Permission opener → hook on a signal → raise a question (not an attack) → CTA for 15 min.',
    model_answer:`"'Hey [Name], this is Ryan at Anthropic — do you have 27 seconds?' [Yes] 'Great. The reason I'm reaching out is I noticed [Company] just announced your AI infrastructure expansion — and when companies are at that stage, the question that usually comes up is whether your AI vendor can actually do the work autonomously or just assist. That's the thing Claude Code solves that most teams don't expect. Worth a 15-minute conversation to see if it's relevant?' The principle: I'm not saying OpenAI is bad. I'm raising a specific capability question — autonomous vs. assistive — that makes them curious. Then I get out of the way and let them respond."`,
-   science:'Permission openers increase connect-to-conversation by 40% (Gong Labs). Raising a question outperforms direct pitching by 2:1 with technical buyers.',difficulty:2},
+   science:'Permission openers increase connect-to-conversation by 40% (Gong Labs). Raising a question outperforms direct pitching by 2:1 with technical buyers.',difficulty:2,
+   principle:'Permission openers plus raising a question outperforms direct pitching 2:1 with technical buyers. This is Gong-validated.',
+   followup:'Carl asks: "You\'ve got 30 seconds on a cold call. The CTO says: \'We already have an AI strategy, we\'re good.\' What\'s your next line?"'},
 
   {id:'s004',category:'sales_skills',question:'What does a great BDR day look like at Anthropic?',
    hint:'Show structure: morning outbound block, research/account build, signal monitoring, CRM hygiene, personal debriefs.',
    model_answer:`"I'd front-load the outbound work. Morning is a 90-minute cold call block — all my highest-quality accounts that have an active signal. That's when I have the most energy and the most conviction in my outreach. I'd also run my email sends in the morning for accounts in active cadences. Midday is account research and build: identifying the next wave, pulling signals, building the outreach for tomorrow's block. Afternoon is CRM hygiene and follow-ups — any replies from morning emails, any inbound from marketing, pipeline updates. End of day is a 10-minute self-debrief: what's my reply rate today, what's my connect rate, what do I adjust tomorrow. I'd also spend 30 minutes a week in the product — using Claude API, reading MCP docs, staying current on what we're shipping. If I'm talking to a CTO about our product, I need to be using it."`,
-   science:'Structured days with front-loaded outbound are the behavioral pattern of top-quartile SDRs across every major study.',difficulty:1},
+   science:'Structured days with front-loaded outbound are the behavioral pattern of top-quartile SDRs across every major study.',difficulty:1,
+   principle:'Front-loading outbound is the behavioral pattern of top-quartile SDRs across every major study. Energy and conviction peak in the morning.',
+   followup:'Carl asks: "It\'s week 3 at Anthropic. You\'ve sent 200 emails, had 8 calls, booked 0 meetings. What do you do — and when do you escalate?"'},
 
   {id:'s005',category:'sales_skills',question:'How does the Claude Code motion differ from selling the broader Claude API?',
    hint:'Claude Code = bottom-up, developer-led, often already happening before BDR engages. API = top-down, IT/VPE decision, larger contract. Claude Code converts individual usage into enterprise deal.',
@@ -503,12 +636,16 @@ The key principles: the trigger (job postings) proves I did research. The questi
   {id:'o001',category:'objections',question:'Prospect: "We already use OpenAI — we\'re all in with them."',
    hint:'Acknowledge → explore → differentiate on specifics. Don\'t bash OpenAI. Focus on capability gaps.',
    model_answer:`"'Totally makes sense — OpenAI has great market awareness. Can I ask how the team is using it right now?' [Listen] 'Got it. One thing I find is that even teams all-in on OpenAI usually have one or two things they wish it did better — whether that's the autonomous coding capability, the open integration story with MCP, or just performance on complex reasoning tasks. Is there anything like that on your radar?' [If yes] 'That's actually where we typically come in. Worth a 15-minute call to see if Claude fills that specific gap?' The goal isn't to dislodge OpenAI on the first call. It's to find the crack — the use case they can't fully solve — and position Claude there."`,
-   science:'70% of enterprise AI wins against OpenAI start with a specific capability gap, not a full platform switch. Look for the crack, not the full replacement.',difficulty:2},
+   science:'70% of enterprise AI wins against OpenAI start with a specific capability gap, not a full platform switch. Look for the crack, not the full replacement.',difficulty:2,
+   principle:'70% of enterprise AI wins against OpenAI start with a specific capability gap — look for the crack, not the full replacement.',
+   followup:'The prospect says: "We\'ve actually tried Claude. For our specific use case, ChatGPT outperformed it in our benchmarks." How do you respond?'},
 
   {id:'o002',category:'objections',question:'Prospect: "We don\'t have budget for AI tooling right now."',
    hint:'Reframe: what\'s the cost of NOT having it? Explore if it\'s actually no budget or no priority. Offer a low-friction entry point.',
    model_answer:`"'Totally understand — budgets are tight everywhere. Can I ask: is it that AI isn't a priority right now, or more that the budget isn't allocated yet?' [If not a priority] 'Fair enough — what IS the biggest focus for your team right now?' [Then find the AI angle] [If budget not allocated] 'Got it — who owns that decision, and when does your budget cycle refresh? Because what I see a lot is companies where Claude Code gets adopted by 2-3 developers on their own, proves ROI, and then the enterprise contract is a natural next step. The entry point isn't a big commitment — would it make sense to set up a 15-minute call to see if there's a low-friction way to get started?'"`,
-   science:'"No budget" is often "not convinced of ROI." The reframe is always: find the pain, price the cost of inaction, then make the first step small.',difficulty:2},
+   science:'"No budget" is often "not convinced of ROI." The reframe is always: find the pain, price the cost of inaction, then make the first step small.',difficulty:2,
+   principle:'"No budget" is almost always "not convinced of ROI." The reframe: find the pain, price the cost of inaction, make the first step small.',
+   followup:'The prospect says their budget doesn\'t refresh until Q4. It\'s now Q1. What do you do with this account for the next 9 months?'},
 
   {id:'o003',category:'objections',question:'Prospect: "We\'re a Google shop — we use Gemini."',
    hint:'Acknowledge the Google relationship → differentiate on independence, MCP open ecosystem, not locked to Google cloud. Don\'t attack Google.',
@@ -518,7 +655,9 @@ The key principles: the trigger (job postings) proves I did research. The questi
   {id:'o004',category:'objections',question:'Prospect: "Your engineers are evaluating multiple AI options." / "We\'re in an AI vendor review."',
    hint:'This is actually GOOD news. They\'re in an active buying cycle. Offer to get on the evaluation.',
    model_answer:`"'That's actually great to hear — that means the decision is live. Who's running the evaluation, and what criteria are you scoring vendors on?' [Listen and note criteria] 'The reason I ask is that a lot of evaluations include benchmarks that favor general capability, but miss the specific workloads you're actually running. Claude performs best on nuanced reasoning, long-context tasks, and agentic coding — which is why we win 70% of head-to-head enterprise evaluations. It'd be worth 15 minutes to make sure our capabilities are properly represented in whatever rubric you're using. When does the evaluation close?'"`,
-   science:'Active vendor evaluations are high-priority pipeline. Move fast to get into the evaluation before criteria are set.',difficulty:2},
+   science:'Active vendor evaluations are high-priority pipeline. Move fast to get into the evaluation before criteria are set.',difficulty:2,
+   principle:'Active vendor evaluations are high-priority pipeline — move immediately to get Claude into the evaluation before criteria are finalized.',
+   followup:'The prospect says their evaluation is 80% complete and they\'re leaning toward OpenAI. You have one shot. What do you do?'},
 
   {id:'o005',category:'objections',question:'Prospect: "We already have Microsoft Copilot through our M365 contract."',
    hint:'Copilot is a wrapper on OpenAI + M365 integration. Claude Code vs. GitHub Copilot: agentic vs. assistive. Not the same use case.',
@@ -746,7 +885,7 @@ function renderDrillCard() {
     <div class="card">
       <div class="drill-cat ${cat.color}">${cat.label}</div>
       <div class="drill-q">${q.question}</div>
-      <div class="drill-hint">${q.hint}</div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--blue);margin-bottom:4px">Your angle — think before you flip:</div><div class="drill-hint">${q.hint}</div>
       <div style="margin-bottom:14px"><button class="btn btn-primary" onclick="showAnswer()" id="show-btn">Say your answer out loud, then flip →</button></div>
       <div class="drill-answer" id="drill-answer">
         <div class="ans-label">Model Answer</div>
@@ -773,7 +912,45 @@ function showAnswer() {
   document.getElementById('rating-wrap').style.display='block';
 }
 
-function rate(q) { sm2Update(drillQueue[drillIdx].id,q); drillIdx++; renderDrillCard(); }
+function rate(q) {
+  const currentQ = drillQueue[drillIdx];
+  sm2Update(currentQ.id, q);
+  const hasExtras = currentQ.principle || currentQ.followup;
+  if (!hasExtras) { drillIdx++; renderDrillCard(); return; }
+  const rw = document.getElementById('rating-wrap');
+  // Disable rating buttons
+  document.querySelectorAll('.rb').forEach(b => b.disabled = true);
+  let html = '';
+  if (currentQ.principle) {
+    html += `<div class="principle-box"><b>Key Insight:</b> ${currentQ.principle}</div>`;
+  }
+  if (currentQ.followup) {
+    html += `<div class="followup-teaser"><div class="followup-teaser-label">Carl might follow up with:</div><div class="followup-teaser-q">"${currentQ.followup}"</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-secondary" onclick="tryChallenge()">Answer this too →</button><button class="btn btn-ghost" onclick="nextCard()">Skip to next</button></div></div>`;
+  } else {
+    html += `<button class="btn btn-primary" onclick="nextCard()" style="margin-top:12px">Next Card →</button>`;
+  }
+  rw.innerHTML = html;
+}
+
+function nextCard() { drillIdx++; renderDrillCard(); }
+
+function tryChallenge() {
+  const q = drillQueue[drillIdx];
+  if (!q || !q.followup) { nextCard(); return; }
+  const c = document.getElementById('drill-container');
+  const cat = CATS[q.category];
+  c.innerHTML = `
+    <div class="drill-prog">Challenge · ${drillIdx+1} of ${drillQueue.length}</div>
+    <div class="pbar-bg mb16"><div class="pbar-fill" style="width:${((drillIdx+1)/drillQueue.length)*100}%"></div></div>
+    <div class="card">
+      <div class="drill-cat ${cat.color}" style="margin-bottom:6px">Follow-Up Challenge</div>
+      <div style="font-size:10px;color:var(--muted);margin-bottom:10px">Say your answer out loud. Carl uses these to probe depth beyond the prepared answer.</div>
+      <div class="drill-q">${q.followup}</div>
+      <div style="margin-top:20px">
+        <button class="btn btn-primary" onclick="nextCard()">Done — Next Card →</button>
+      </div>
+    </div>`;
+}
 
 // ==========================================
 // MOCK INTERVIEW
@@ -867,6 +1044,16 @@ function renderStories() {
 function toggleStory(id) {
   document.getElementById('body-'+id).classList.toggle('show');
   document.getElementById('chev-'+id).classList.toggle('open',document.getElementById('body-'+id).classList.contains('show'));
+}
+
+// ==========================================
+// DEEP DIVE TOGGLE
+// ==========================================
+function toggleDD(id) {
+  const body = document.getElementById(id);
+  const chev = document.getElementById('chev-' + id);
+  body.classList.toggle('show');
+  chev.classList.toggle('open', body.classList.contains('show'));
 }
 
 // ==========================================
