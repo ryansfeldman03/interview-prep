@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthropic BDR Prep — Ryan Feldman</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080e1a;--surface:#0f172a;--card:#1a2332;--border:#253047;
+  --accent:#f59e0b;--blue:#3b82f6;--green:#10b981;--red:#ef4444;--purple:#8b5cf6;
+  --text:#f1f5f9;--muted:#94a3b8;--dim:#475569;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;gap:2px;height:54px;position:sticky;top:0;z-index:100;overflow-x:auto}
+.nav-brand{font-size:14px;font-weight:800;color:var(--accent);margin-right:12px;white-space:nowrap;letter-spacing:-0.3px;flex-shrink:0}
+.nav-brand span{color:var(--text);font-size:11px;font-weight:400;opacity:.7}
+.nav-tab{padding:6px 11px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;color:var(--muted);border:none;background:none;transition:all .15s;white-space:nowrap}
+.nav-tab:hover{color:var(--text);background:var(--card)}
+.nav-tab.active{color:var(--accent);background:rgba(245,158,11,.12)}
+.view{display:none;padding:20px 16px;max-width:840px;margin:0 auto}
+.view.active{display:block}
+h2{font-size:19px;font-weight:700;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:10px}
+/* STAGE BANNER */
+.stage-banner{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(245,158,11,.1));border:1px solid rgba(139,92,246,.3);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.stage-dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0}
+.stage-text{font-size:13px;line-height:1.5}
+.stage-text b{color:var(--accent)}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.stat-n{font-size:26px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:3px}
+.stat-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px}
+.cat-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.cat-name{font-size:12px;width:145px;flex-shrink:0}
+.bar-bg{flex:1;height:5px;background:var(--border);border-radius:99px}
+.bar-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .4s}
+.bar-pct{font-size:10px;color:var(--muted);width:30px;text-align:right}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s}
+.btn-primary{background:var(--accent);color:#0a0f1e}
+.btn-primary:hover{background:#fcd34d}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost{background:none;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);border-color:var(--dim)}
+.btn-lg{padding:12px 28px;font-size:15px;border-radius:10px}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+/* DRILL */
+.drill-cat{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:99px;margin-bottom:12px}
+.drill-q{font-size:20px;font-weight:700;line-height:1.4;margin-bottom:8px}
+.drill-hint{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px}
+.drill-answer{display:none;border-top:1px solid var(--border);padding-top:18px;margin-top:4px}
+.drill-answer.show{display:block}
+.ans-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:7px}
+.ans-text{font-size:14px;line-height:1.75;white-space:pre-wrap}
+.science-box{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:9px;padding:12px;margin-top:12px;font-size:12px;color:#93c5fd;line-height:1.6}
+.science-box b{color:#60a5fa}
+.rating-wrap{margin-top:18px;text-align:center}
+.rating-label{font-size:12px;color:var(--muted);margin-bottom:8px}
+.rating-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.rb{padding:9px 14px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:700;transition:all .15s}
+.rb1{background:#7f1d1d;color:#fca5a5}.rb1:hover{background:#991b1b}
+.rb2{background:#7c2d12;color:#fdba74}.rb2:hover{background:#9a3412}
+.rb3{background:#713f12;color:#fde68a}.rb3:hover{background:#854d0e}
+.rb4{background:#14532d;color:#86efac}.rb4:hover{background:#166534}
+.rb5{background:#064e3b;color:#6ee7b7}.rb5:hover{background:#065f46}
+.drill-prog{font-size:11px;color:var(--dim);text-align:center;margin-bottom:12px}
+.pbar-bg{width:100%;height:3px;background:var(--border);border-radius:99px;margin-bottom:16px}
+.pbar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+/* MOCK */
+.stage-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:18px}
+.stage-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px;cursor:pointer;transition:all .15s}
+.stage-card:hover,.stage-card.sel{border-color:var(--accent);background:rgba(245,158,11,.05)}
+.stage-name{font-size:14px;font-weight:700;margin-bottom:3px}
+.stage-desc{font-size:11px;color:var(--muted)}
+.timer{font-size:50px;font-weight:800;text-align:center;color:var(--accent);font-variant-numeric:tabular-nums;margin-bottom:10px;font-family:'SF Mono','Fira Code',monospace;letter-spacing:-2px}
+.timer.urgent{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.mock-q{font-size:19px;font-weight:700;line-height:1.4;text-align:center;padding:22px;margin-bottom:14px}
+.mock-n{font-size:11px;color:var(--muted);text-align:center;margin-bottom:16px}
+/* BANK */
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.fb{padding:4px 11px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--muted);font-size:11px;cursor:pointer;transition:all .15s}
+.fb:hover{border-color:var(--accent);color:var(--text)}
+.fb.active{border-color:var(--accent);color:var(--accent);background:rgba(245,158,11,.1)}
+.q-item{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:13px 15px;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.q-item:hover{border-color:var(--accent)}
+.q-item-text{font-size:13px;font-weight:500;margin-bottom:5px}
+.q-meta{display:flex;align-items:center;gap:7px}
+.q-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:99px}
+.q-mastery{font-size:10px;color:var(--muted);margin-left:auto}
+/* STORIES */
+.story-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:20px;margin-bottom:10px;cursor:pointer}
+.story-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.story-title{font-size:15px;font-weight:700;margin-bottom:3px}
+.story-tags{font-size:11px;color:var(--accent)}
+.story-chevron{color:var(--muted);font-size:16px;flex-shrink:0;transition:transform .2s}
+.story-chevron.open{transform:rotate(180deg)}
+.story-body{display:none;border-top:1px solid var(--border);margin-top:14px;padding-top:14px}
+.story-body.show{display:block}
+.star-row{margin-bottom:12px}
+.star-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:3px}
+.star-text{font-size:13px;line-height:1.7}
+.story-bridge{margin-top:12px;padding:10px 12px;background:rgba(245,158,11,.08);border-radius:7px;font-size:12px;color:var(--accent)}
+/* QUICK REF */
+.ref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.ref-stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.ref-stat-n{font-size:22px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:3px}
+.ref-stat-l{font-size:10px;color:var(--muted)}
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.product-name{font-size:13px;font-weight:700;margin-bottom:3px;color:var(--accent)}
+.product-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:5px}
+.product-arr{font-size:11px;color:var(--green);font-weight:600}
+.product-buyer{font-size:11px;color:var(--blue);margin-top:2px}
+.diff-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:8px}
+.diff-vs{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.diff-point{font-size:13px;margin-bottom:5px;display:flex;gap:6px}
+.diff-point:before{content:'→';color:var(--accent);flex-shrink:0}
+.signal-list{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:16px}
+.signal-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--text);display:flex;gap:6px;align-items:flex-start}
+.signal-item:before{content:'⚡';flex-shrink:0}
+.me-card{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(139,92,246,.08));border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:14px;margin-bottom:8px}
+.me-card h4{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:5px}
+.me-card p{font-size:12px;color:var(--muted);line-height:1.6}
+/* CATEGORY COLORS */
+.cat-product{background:rgba(16,185,129,.15);color:#6ee7b7}
+.cat-why{background:rgba(245,158,11,.15);color:#fcd34d}
+.cat-behavioral{background:rgba(59,130,246,.15);color:#93c5fd}
+.cat-sales_skills{background:rgba(139,92,246,.15);color:#a78bfa}
+.cat-objections{background:rgba(239,68,68,.15);color:#fca5a5}
+.cat-ask_them{background:rgba(20,184,166,.15);color:#5eead4}
+/* MISC */
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty .icon{font-size:40px;margin-bottom:10px}
+.complete-screen{text-align:center;padding:36px 20px}
+.complete-screen .big{font-size:50px;margin-bottom:10px}
+.mb16{margin-bottom:16px}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .ref-grid{grid-template-columns:repeat(2,1fr)}
+  .product-grid{grid-template-columns:1fr}
+  .signal-list{grid-template-columns:1fr}
+  .stage-grid{grid-template-columns:1fr}
+  .drill-q{font-size:17px}
+  .timer{font-size:40px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">Anthropic BDR Prep <span>— Ryan Feldman</span></div>
+  <button class="nav-tab active" onclick="showView('dashboard')">Dashboard</button>
+  <button class="nav-tab" onclick="showView('drill')">Drill</button>
+  <button class="nav-tab" onclick="showView('mock')">Mock Interview</button>
+  <button class="nav-tab" onclick="showView('bank')">Question Bank</button>
+  <button class="nav-tab" onclick="showView('stories')">STAR Stories</button>
+  <button class="nav-tab" onclick="showView('quickref')">Quick Ref</button>
+</nav>
+
+<!-- DASHBOARD -->
+<div id="view-dashboard" class="view active">
+  <div class="stage-banner">
+    <div class="stage-dot"></div>
+    <div class="stage-text">
+      <b>Stage 2 — Hiring Manager Video Call</b><br>
+      Carl Johnson · Manager, Sales Development · 25 min · Video<br>
+      <span style="color:var(--green)">✓ Allen's exact guidance:</span> <b style="color:var(--text)">"Expect to discuss your background, motivations for Anthropic, and product knowledge."</b>
+    </div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-n" id="stat-due">0</div><div class="stat-l">Due Today</div></div>
+    <div class="stat"><div class="stat-n" id="stat-mastery">0%</div><div class="stat-l">Mastery</div></div>
+    <div class="stat"><div class="stat-n" id="stat-streak">0</div><div class="stat-l">Day Streak</div></div>
+    <div class="stat"><div class="stat-n">45</div><div class="stat-l">Total Questions</div></div>
+  </div>
+  <div class="section-label">Mastery by Category</div>
+  <div id="cat-progress" class="mb16"></div>
+  <div class="section-label" style="margin-bottom:8px">Quick Start</div>
+  <div class="action-row" style="margin-top:0">
+    <button class="btn btn-primary btn-lg" onclick="startDrill('due')">▶ Drill Due Cards</button>
+    <button class="btn btn-secondary" onclick="startDrill('weak')">⚡ Weak Areas</button>
+    <button class="btn btn-secondary" onclick="startDrill('all')">🔀 Random 10</button>
+    <button class="btn btn-ghost" onclick="showView('mock')">🎤 Mock Carl Johnson</button>
+  </div>
+  <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:10px">Allen's 3 Topics — Straight From His Email</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.6">
+      <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">1 · BACKGROUND</div><div style="color:var(--muted)">FiberSeal pipeline from zero, Morgan Stanley, AI command center. Lead with the Claude angle — you built your operation on their product. That's the story no other candidate has.</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">2 · MOTIVATIONS</div><div style="color:var(--muted)">Must be specific and verifiable — not "I love AI." The PBC structure, the 1,167% growth, and the fact that you already run on Claude are your three real reasons. Carl came from AssemblyAI by choice. He wants the same conviction.</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start"><div style="background:rgba(245,158,11,.15);color:var(--accent);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;margin-top:2px">3 · PRODUCT</div><div style="color:var(--muted)">Know the 6 numbers cold. Be fluent on Claude Code ($2.5B ARR, fastest growing), MCP (platform moat), and why Anthropic wins 70% of head-to-head deals vs. OpenAI. Hit Quick Ref before the call.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DRILL -->
+<div id="view-drill" class="view">
+  <div id="drill-container">
+    <div class="empty"><div class="icon">🃏</div><p>Pick a drill mode from the Dashboard to start.</p></div>
+  </div>
+</div>
+
+<!-- MOCK INTERVIEW -->
+<div id="view-mock" class="view">
+  <div id="mock-setup">
+    <h2>Mock Interview</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Choose your stage. Say every answer out loud — treat it like the real call. Timer runs 2 minutes per question.</p>
+    <div class="stage-grid">
+      <div class="stage-card" onclick="selectStage('allen',this)">
+        <div class="stage-name">📞 Allen Paisansiri</div>
+        <div class="stage-desc">Recruiter screen · Fit, background, comp, motivation</div>
+      </div>
+      <div class="stage-card sel" onclick="selectStage('carl',this)">
+        <div class="stage-name">🎯 Carl Johnson — HM</div>
+        <div class="stage-desc">Stage 2 · Behavioral, sales skills, product, "why Anthropic"</div>
+      </div>
+      <div class="stage-card" onclick="selectStage('panel',this)">
+        <div class="stage-name">👥 Panel / Future Rounds</div>
+        <div class="stage-desc">Mixed: competitive, situational, cold call roleplay</div>
+      </div>
+      <div class="stage-card" onclick="selectStage('roleplay',this)">
+        <div class="stage-name">🎭 Cold Call Roleplay</div>
+        <div class="stage-desc">Pitch a VP Eng on Claude · Handle OpenAI objections</div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-lg" onclick="startMock()">Start Session</button>
+  </div>
+  <div id="mock-session" style="display:none">
+    <div class="pbar-bg"><div class="pbar-fill" id="mock-pbar" style="width:0%"></div></div>
+    <div class="mock-n" id="mock-n">Question 1 of 8</div>
+    <div class="timer" id="mock-timer">2:00</div>
+    <div class="card mock-q" id="mock-q-text">Loading...</div>
+    <div style="text-align:center">
+      <button class="btn btn-secondary" onclick="nextMockQuestion()">Next Question →</button>
+      <button class="btn btn-ghost" style="margin-left:8px" onclick="endMock()">End Session</button>
+    </div>
+  </div>
+  <div id="mock-done" style="display:none" class="complete-screen">
+    <div class="big">🏆</div>
+    <h2>Session Complete</h2>
+    <p style="color:var(--muted);margin-bottom:18px">The more uncomfortable it felt, the more the practice worked. Do this again tomorrow.</p>
+    <div class="action-row" style="justify-content:center">
+      <button class="btn btn-primary" onclick="startMock()">Go Again</button>
+      <button class="btn btn-secondary" onclick="showView('dashboard')">Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION BANK -->
+<div id="view-bank" class="view">
+  <h2>Question Bank</h2>
+  <div class="filter-row" id="bank-filters"></div>
+  <div id="bank-list"></div>
+</div>
+
+<!-- STAR STORIES -->
+<div id="view-stories" class="view">
+  <h2>Your STAR Stories — Anthropic Framing</h2>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Each story has an Anthropic bridge — the line that connects your experience directly to this role. Use that bridge in every answer.</p>
+  <div id="stories-list"></div>
+</div>
+
+<!-- QUICK REFERENCE -->
+<div id="view-quickref" class="view">
+  <h2>Quick Reference — Memorize This</h2>
+
+  <div class="section-label">6 Numbers to Know Cold</div>
+  <div class="ref-grid mb16">
+    <div class="ref-stat"><div class="ref-stat-n">$19B</div><div class="ref-stat-l">ARR (Mar 2026)</div></div>
+    <div class="ref-stat"><div class="ref-stat-n">1,167%</div><div class="ref-stat-l">YoY Revenue Growth</div></div>
+    <div class="ref-stat"><div class="ref-stat-n">$380B</div><div class="ref-stat-l">Valuation (Series G)</div></div>
+    <div class="ref-stat"><div class="ref-stat-n">70%</div><div class="ref-stat-l">Fortune 100 Customers</div></div>
+    <div class="ref-stat"><div class="ref-stat-n">500+</div><div class="ref-stat-l">Customers at $1M+ ARR</div></div>
+    <div class="ref-stat"><div class="ref-stat-n">$2.5B</div><div class="ref-stat-l">Claude Code ARR</div></div>
+  </div>
+
+  <div class="section-label">Products at a Glance</div>
+  <div class="product-grid mb16">
+    <div class="product-card">
+      <div class="product-name">Claude API</div>
+      <div class="product-desc">Developer platform. Consumption-based (per token). Access via direct API, AWS Bedrock, Google Vertex, Microsoft Foundry.</div>
+      <div class="product-arr">Core revenue engine · 80% enterprise</div>
+      <div class="product-buyer">Buyer: VP Eng, CTO, Head of AI/ML</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Claude Code</div>
+      <div class="product-desc">Agentic coding tool — autonomous coding in the terminal and IDE. $2.5B ARR. Fastest-growing product. Primary wedge into engineering teams.</div>
+      <div class="product-arr">$2.5B ARR · Fastest growing</div>
+      <div class="product-buyer">Buyer: Individual devs → VP Eng</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Cowork</div>
+      <div class="product-desc">Desktop tool for non-technical users. Plugins for legal, finance, HR, ops. Launched Jan 2026. Enterprise expansion play beyond engineering.</div>
+      <div class="product-arr">Expansion into non-dev teams</div>
+      <div class="product-buyer">Buyer: IT Director, ops, legal, finance</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">MCP (Model Context Protocol)</div>
+      <div class="product-desc">Open protocol connecting Claude to Slack, Gmail, Salesforce, databases, anything. Turns Claude from a tool into a platform. More connectors = stickier product.</div>
+      <div class="product-arr">Platform moat differentiator</div>
+      <div class="product-buyer">Key enterprise stickiness story</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Computer Use</div>
+      <div class="product-desc">Claude controls a Mac directly — clicks, types, navigates. Launched March 23, 2026. No competitor has shipped this at scale.</div>
+      <div class="product-arr">Unique differentiator vs. OpenAI</div>
+      <div class="product-buyer">Buyer: IT automation, ops, engineering</div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Model Tiers</div>
+      <div class="product-desc">Opus 4.6: $5/$25 per 1M tokens — most capable. Sonnet 4.6: $3/$15 — best balance. Haiku 4.5: $1/$5 — fastest/cheapest.</div>
+      <div class="product-arr">Consumer: Free · Pro $20 · Max $100-200 · Team $25/seat</div>
+      <div class="product-buyer">Enterprise: Custom pricing</div>
+    </div>
+  </div>
+
+  <div class="section-label">Differentiators vs. Competitors</div>
+  <div class="diff-card mb16">
+    <div class="diff-vs">vs. OpenAI / ChatGPT Enterprise</div>
+    <div class="diff-point">Anthropic is a Public Benefit Corporation — safety research is in our legal DNA, not marketing. OpenAI restructured away from nonprofit.</div>
+    <div class="diff-point">Constitutional AI — values are trained in systematically, not patched on. Matters for enterprise compliance, GDPR, regulated industries.</div>
+    <div class="diff-point">Wins 70% of head-to-head enterprise deals. Better on nuanced reasoning, longer context, instruction-following.</div>
+    <div class="diff-point">MCP is an open protocol — OpenAI keeps everything in their ecosystem. Anthropic integrates anywhere.</div>
+    <div class="diff-point">Computer Use is live. OpenAI hasn't shipped this at scale.</div>
+  </div>
+  <div class="diff-card mb16">
+    <div class="diff-vs">vs. Google Gemini</div>
+    <div class="diff-point">Not locked to Google Cloud — deploy on AWS Bedrock, Azure, or any cloud. Most enterprises aren't Google-only.</div>
+    <div class="diff-point">Independent model governance — enterprise legal teams prefer not having a hyperscaler own their AI vendor.</div>
+    <div class="diff-point">MCP ecosystem vs. Google's walled-garden approach.</div>
+  </div>
+  <div class="diff-card mb16">
+    <div class="diff-vs">vs. Microsoft Copilot</div>
+    <div class="diff-point">Copilot is a thin wrapper on OpenAI — not an independent model roadmap. Anthropic has its own research org and safety mission.</div>
+    <div class="diff-point">Claude Code vs. GitHub Copilot: agentic (does the task) vs. assistive (completes lines). Different capability tier.</div>
+    <div class="diff-point">MCP connects to any system — Copilot is deeply Microsoft-native.</div>
+  </div>
+
+  <div class="section-label">Buying Signals — When to Reach Out</div>
+  <div class="signal-list mb16">
+    <div class="signal-item">Job postings for AI Engineer, ML Engineer, or "AI Integration" titles</div>
+    <div class="signal-item">Press release or blog about AI adoption/transformation initiative</div>
+    <div class="signal-item">New CTO, VP Engineering, or Head of AI hired in the last 90 days</div>
+    <div class="signal-item">Series B/C funding — capital to invest in tech infrastructure</div>
+    <div class="signal-item">Public mention of OpenAI dissatisfaction or vendor review</div>
+    <div class="signal-item">Developer community activity — Claude API docs views, GitHub repos</div>
+  </div>
+
+  <div class="section-label">Ryan's 3 Differentiators as a Candidate</div>
+  <div class="me-card">
+    <h4>You Run ON Claude</h4>
+    <p>"I don't just know the product — I run my entire prospecting operation on it. Pre-call research, personalized email drafts, live CRM updates via MCP, objection prep flashcards. I've done 500 calls a week and booked 20 meetings a month using Claude as the backbone. I'm not learning the product when I join — I'm already one of its most intensive enterprise users."</p>
+  </div>
+  <div class="me-card">
+    <h4>Built Pipeline from Zero</h4>
+    <p>"I joined FiberSeal with no playbook, no territory, no warm leads. Diagnosed that we were targeting the wrong buyers, pivoted to country clubs and commercial spaces, built a signal-based outreach system from scratch, and scaled to 20 booked meetings a month for six straight months. That's the exact build Carl is doing with the Anthropic BDR team right now."</p>
+  </div>
+  <div class="me-card">
+    <h4>Mission Alignment That's Real</h4>
+    <p>"Every major AI company says they care about safety. Anthropic is the only one whose legal structure requires it — Public Benefit Corporation. I want to sell something I believe in. When I cold call a CTO about Claude, I'm not pitching — I'm sharing what I already know works because I use it every day."</p>
+  </div>
+
+  <div class="section-label">ICP at Anthropic</div>
+  <div class="card" style="font-size:13px;line-height:1.8;color:var(--muted)">
+    <b style="color:var(--text)">Primary buyers:</b> VP Engineering, CTO, Head of AI/ML at companies 500+ employees<br>
+    <b style="color:var(--text)">Claude Code wedge:</b> Individual developers → bottom-up expansion to VP Eng<br>
+    <b style="color:var(--text)">Cowork expansion:</b> IT Director, Head of Legal/Finance/HR for non-technical teams<br>
+    <b style="color:var(--text)">Enterprise deals:</b> Often start with API usage, expand to Cowork + Computer Use<br>
+    <b style="color:var(--text)">Best segment:</b> Tech companies, FinTech, healthcare, legal, consulting firms with large knowledge worker populations
+  </div>
+</div>
+
+<script>
+// ==========================================
+// DATA: QUESTIONS
+// ==========================================
+const QUESTIONS = [
+  // PRODUCT KNOWLEDGE
+  {id:'p001',category:'product',question:'What are Anthropic\'s main products? Walk me through each and who buys it.',
+   hint:'Claude API (developers/VPE), Claude Code ($2.5B ARR, fastest growing, engineers), Cowork (non-technical teams, Jan 2026), Computer Use (March 2026), MCP (platform stickiness)',
+   model_answer:`"Anthropic has five core products right now. Claude API is the developer platform — consumption-based pricing, three model tiers (Opus, Sonnet, Haiku), deployed via direct API or through AWS Bedrock, Google Vertex, and Microsoft Foundry. That's the core revenue engine with 80% enterprise. Claude Code is the agentic coding tool — it's autonomous, not just assistive, and it's at $2.5B ARR and growing fastest. That's the wedge into engineering teams. Cowork launched January 2026 — it's the desktop tool for non-technical users like legal, finance, and HR, which is the expansion play beyond engineering. Computer Use launched March 23rd — Claude controls a Mac directly, no competitor has shipped this at scale. And MCP is the open protocol that connects Claude to any external tool — Slack, Salesforce, Gmail, databases — which turns Claude from a tool into a platform."`,
+   science:'Product fluency is the first thing Carl will test. If you can\'t explain products and buyers cold, the conversation ends there.',difficulty:1},
+
+  {id:'p002',category:'product',question:'What is MCP and why does it matter for enterprise sales?',
+   hint:'Model Context Protocol — open standard connecting Claude to any external tool or data source. Makes Claude sticky and platform-like vs. point solution.',
+   model_answer:`"MCP stands for Model Context Protocol — it's an open standard Anthropic built that lets Claude connect to any external tool or data source. So instead of Claude being a standalone chat product, with MCP it connects directly to your CRM, your Slack, your database, your calendar — anything. For enterprise sales, this is massive because it changes the conversation from 'which AI chatbot do you want?' to 'do you want your AI to be natively integrated into your entire workflow?' OpenAI keeps their ecosystem closed. Anthropic made MCP open, which means any developer can build connectors and the platform gets stickier with every integration. More connectors means more surface area, which means it's harder to rip out."`,
+   science:'MCP is one of Anthropic\'s clearest competitive moats vs. OpenAI. Being able to explain it clearly signals real product depth.',difficulty:2},
+
+  {id:'p003',category:'product',question:'What is Claude Code and why is it the fastest-growing product?',
+   hint:'Agentic coding tool — does the task, doesn\'t just complete code snippets. $2.5B ARR. Wedge: individual devs adopt bottom-up, expansion to VP Engineering.',
+   model_answer:`"Claude Code is an agentic coding tool — the key word is agentic. GitHub Copilot completes the next line of code. Claude Code can be given a task — 'write me a login flow,' 'debug this entire module,' 'refactor this codebase to use this pattern' — and it executes autonomously. It's at $2.5B ARR and growing faster than anything else Anthropic has. The reason it's growing so fast is the motion: individual developers start using it on their own, it becomes indispensable, and then the CTO or VP Engineering hears about it from their team and turns it into a team or enterprise subscription. It's a bottom-up adoption flywheel. For BDRs, that means you can prospect into companies where developers are already using Claude Code and convert that usage into an enterprise contract."`,
+   science:'Carl specifically asked about the Claude Code to enterprise deal motion in your prep notes. Know this cold.',difficulty:2},
+
+  {id:'p004',category:'product',question:'Walk me through Claude\'s model tiers. When would a customer use each?',
+   hint:'Opus 4.6 (most capable, $5/$25/1M tokens), Sonnet 4.6 (best balance, $3/$15), Haiku 4.5 (fastest/cheapest, $1/$5)',
+   model_answer:`"Three tiers in the API. Opus 4.6 is the most capable — $5 per million input tokens, $25 per million output. You use it for complex reasoning, nuanced analysis, high-stakes tasks where quality matters most. Sonnet 4.6 is the sweet spot — $3 and $15 per million. Best balance of capability and cost, which is why most enterprise applications are built on Sonnet. Haiku 4.5 is fastest and cheapest at $1 and $5 — high-volume, low-complexity tasks like classification, summarization, quick responses. For Claude.ai subscriptions: Free, Pro at $20 a month, Max at $100-200, Team at $25 per seat, and Enterprise at custom pricing."`,
+   science:'Pricing literacy signals you\'re serious about the product. Don\'t memorize every number — do memorize the tiers and what drives a customer to each.',difficulty:2},
+
+  {id:'p005',category:'product',question:'What is Anthropic\'s ICP? Who is the primary buyer for an enterprise Claude deal?',
+   hint:'Primary: VP Engineering, CTO, Head of AI/ML. Expansion: IT Director, Head of Legal/Finance. Entry: often individual developer → bottom-up.',
+   model_answer:`"Primary buyer for enterprise is VP Engineering, CTO, or Head of AI and ML at companies with 500 or more employees. Those are the people with budget authority and the technical context to evaluate the product. The entry point is often different — Claude Code gets adopted bottom-up by individual developers, and the BDR's job is often to find where that usage is already happening and convert it to a formal enterprise contract. The Cowork product opens up a second buyer persona — IT directors, heads of legal, finance, and HR — because it's built for non-technical users. The best enterprise deals often start with an engineering team, then expand horizontally across business functions as Cowork and MCP integrations get added. Best segments: tech companies, FinTech, healthcare, legal, and consulting firms with large knowledge worker populations."`,
+   science:'Carl is building this outreach motion. Showing you understand the ICP and the bottom-up expansion flywheel signals you\'ll be productive fast.',difficulty:1},
+
+  {id:'p006',category:'product',question:'What buying signals would tell you a company is ready for a Claude API conversation?',
+   hint:'Job postings, new technical hires, funding, AI press releases, developer activity, OpenAI mentions.',
+   model_answer:`"Six signals I'd track. First: job postings for AI Engineer, ML Engineer, or anything with 'AI Integration' — means they're actively building and have a budget for AI infrastructure. Second: a new CTO, VP Engineering, or Head of AI hired in the last 90 days — new leaders often want to review the stack and make their mark. Third: Series B or C funding — capital is available and they're in growth mode. Fourth: any press release or company blog about an AI initiative or digital transformation — they've made it public that AI is a priority. Fifth: GitHub repositories that reference Claude or the Anthropic API — bottom-up adoption already happening. Sixth: any public mention of OpenAI pricing complaints or vendor reviews — that's an active buying conversation I want to be in."`,
+   science:'Signal-based prospecting generates 3-5x higher reply rates. Carl asked specifically about buying signals in your prep notes.',difficulty:1},
+
+  {id:'p007',category:'product',question:'What is Constitutional AI and why does it matter in enterprise sales?',
+   hint:'Core training methodology — values baked in systematically through self-critique and revision, not patched on. Matters for compliance, regulated industries, legal liability.',
+   model_answer:`"Constitutional AI is Anthropic's core training methodology. Instead of trying to patch safety onto a model after it's trained, they train the model to evaluate and revise its own outputs against a set of principles — it critiques itself and improves. For enterprise sales, this matters in two ways. First, compliance and regulated industries — financial services, healthcare, legal — need an AI that won't produce outputs that create legal liability. Constitutional AI gives them a systematic basis for that guarantee, not just a promise. Second, it's a trust signal. When a Fortune 500 CISO is evaluating AI vendors, 'we have a PBC structure and Constitutional AI training' is a fundamentally different conversation than 'we have content filters.' It's the difference between architecture and afterthought."`,
+   science:'This is a technical differentiator that most SDR candidates can\'t explain. Knowing it fluently signals genuine product commitment.',difficulty:3},
+
+  // WHY ANTHROPIC
+  {id:'w001',category:'why',question:'Why Anthropic specifically — why not OpenAI, Google, or another AI company?',
+   hint:'Three angles: the product (you run on it), the mission (PBC, safety-first), the timing (generational opportunity). Be specific and authentic.',
+   model_answer:`"Three real reasons. First: I already run my entire sales operation on Claude. Pre-call research, email drafts, live CRM updates, objection prep — Claude is the backbone of how I work. When I cold call a prospect about Claude, I'm not learning a product, I'm sharing what I use every day. That authenticity is detectable and it matters in sales. Second: the mission is structurally different from every other AI company. OpenAI restructured away from nonprofit. Google's AI is a business unit. Anthropic is a Public Benefit Corporation where safety research is in the legal DNA — not marketing. I want to sell something I genuinely believe in. Third: the timing. $19B ARR, 1,167% growth, 70% Fortune 100 penetration, and we're still early. This reminds me of getting into Salesforce or AWS in their scaling years. The BDRs who get in now become the foundation of the sales org."`,
+   science:'This is the most important question Carl will ask. An answer that sounds like every other candidate answer loses. Your "I run on Claude" angle is unique and verifiable.',difficulty:1},
+
+  {id:'w002',category:'why',question:'Why is this a generational career opportunity right now?',
+   hint:'Timing + growth rate + category leadership. Compare to AWS/Salesforce early days. Be specific with numbers.',
+   model_answer:`"Anthropic went from $1B to $19B ARR in 15 months. That's not just fast — that's a product that the market was waiting for. And we're still at the beginning. 70% of Fortune 100 are customers but there are 30% left, plus the entire mid-market and global enterprise base. Claude Code is at $2.5B ARR and accelerating. Cowork just launched. Computer Use just launched. The product surface area is expanding while the sales team is still small enough that early BDRs become foundational. When I look at what happened to the early enterprise reps at Salesforce and AWS, they built careers, equity, and institutional knowledge that compounded for a decade. That's the window I want to be in right now at Anthropic."`,
+   science:'Conviction about timing signals you\'ve done real research and are making a deliberate career bet, not just applying everywhere.',difficulty:1},
+
+  {id:'w003',category:'why',question:'What do you know about Carl Johnson and what\'s your connection point with him?',
+   hint:'He built prospecting systems from scratch at AssemblyAI — same as your FiberSeal build. He chose Anthropic deliberately. He\'s managed distributed BDR teams in hypergrowth.',
+   model_answer:`"Carl built a strategic prospecting plan at AssemblyAI that significantly grew their pipeline — from scratch, no playbook, similar environment to what I did at FiberSeal. He chose Anthropic deliberately after that experience, coming from another AI company where he understood what selling technical AI products looks like. He's been at Anthropic about 18 months which means he joined during hypergrowth and knows what early hires look like when they succeed. The connection point I want to draw if it's natural is that we've both built outbound engines where none existed. He'll recognize that instinct. And his Boeing background — procurement, complex enterprise cycles — means he's not a typical tech-only leader. He responds to scrappiness and adaptability, not polish."`,
+   science:'Researching the interviewer signals the same behavior you\'ll apply to every prospect. Carl will notice if you\'ve done the work.',difficulty:2},
+
+  {id:'w004',category:'why',question:'Anthropic wins 70% of head-to-head enterprise deals against OpenAI. Why?',
+   hint:'Constitutional AI + PBC structure (safety architecture vs. patched filters), Computer Use, MCP open ecosystem, performance on nuanced reasoning benchmarks.',
+   model_answer:`"Based on what I know, it comes down to four things. First, safety architecture — enterprise procurement, especially at regulated companies, needs a structural answer to 'how do you guarantee safe outputs?' Constitutional AI provides that. OpenAI has content filters. Those are different levels of assurance. Second, Computer Use — Anthropic has shipped something OpenAI hasn't at scale, and for enterprise automation use cases, that's a meaningful capability gap right now. Third, MCP — an open protocol that integrates with any stack versus a closed ecosystem. Enterprise IT teams don't want to be locked in. Fourth, performance: Claude consistently outperforms on nuanced reasoning, instruction-following, and long-context tasks, which are the real enterprise workloads. ChatGPT wins on brand recognition. Claude wins on the actual work."`,
+   science:'Being able to articulate competitive win rates signals real preparation and will come up in almost every enterprise deal.',difficulty:2},
+
+  // BEHAVIORAL
+  {id:'b001',category:'behavioral',question:'Tell me about yourself. [Anthropic version]',
+   hint:'Present → Past → Future. End on: you run on Claude, you built a pipeline from scratch, you\'re ready to do it for Anthropic.',
+   model_answer:`"I'm a recent UMD Communications grad who spent the last year at Morgan Stanley as a wealth management intern — real client-facing work, listening, presenting tailored solutions, managing relationships. While I was there I started building AI systems on the side. Not as a hobby — as the backbone of how I work. I built a full prospecting engine using Claude: automated research briefings, signal-based outreach, live CRM updates through the MCP connector. That system powered 500 calls a week and 20 booked meetings a month at FiberSeal, a fabric protection company I was running sales for in South Florida. The reason I'm specifically targeting Anthropic is that I already run on your product. Every day. Selling Claude to enterprises isn't a pitch for me — it's authentic. I want to be part of the team that's scaling this to the rest of the Fortune 100 and beyond."`,
+   science:'Your opener sets the cognitive frame. The "I run on Claude" line is your single most differentiating fact. Get it in within 30 seconds.',difficulty:1},
+
+  {id:'b002',category:'behavioral',question:'Tell me about building something from scratch with no playbook.',
+   hint:'FiberSeal — zero pipeline, zero territory, zero playbook. Diagnosed wrong ICP, pivoted, scaled to 500 calls/week and 20 meetings/month. This is the parallel to Carl\'s AssemblyAI story.',
+   model_answer:`"When I started at FiberSeal, there was nothing. No pipeline, no target list, no sequences, no playbook. Just me and a product. The first thing I did was diagnose who we should actually be targeting — and found we were targeting the wrong buyers. Pivoted to country clubs and commercial luxury properties in South Florida. Then I built the infrastructure: signal monitoring for renovation projects and new GMs, tiered account lists, personalized sequences, a five-touch cadence with break-up emails. I also built a full Claude AI system to run the operation — research, outreach, CRM updates. Within six months I was running 500 calls a week and booking 20 meetings a month consistently. That build-from-scratch mentality is exactly what a BDR territory at Anthropic looks like. I didn't need a manager to hand me a playbook. I diagnosed, built, and scaled."`,
+   science:'Carl did the same thing at AssemblyAI. This answer resonates because it mirrors his own experience. Use the parallel if it comes up naturally.',difficulty:1},
+
+  {id:'b003',category:'behavioral',question:'How have you used AI in your sales process? [This is the money question at Anthropic]',
+   hint:'Be specific: Claude as the backbone of your operation. Name the exact tools: MCP, HubSpot connector, Apollo, research briefs, email drafts, objection flashcards.',
+   model_answer:`"Claude is the backbone of everything I do. Pre-call: I feed in a company name and get a full research brief — key stakeholders, recent news, ICP fit score, and a cold call opener — in about 2 minutes. For emails: I give Claude the signal I'm acting on and the prospect's context, and it drafts a personalized first line and body. I edit, I don't write from scratch. For CRM: I use the HubSpot MCP connector to update deal fields conversationally — 'move this to stage 3, update the close date' — instead of clicking through the UI. For objection prep: I built a flashcard system that drills me on objection responses before big call blocks. And for pipeline management: I built a scheduled task that texts me a morning briefing every day with my calendar, unread emails from prospects, and pipeline status. I'm not using AI as a tool. I built a system. The honest answer is that I can do in 20 minutes what takes a manual rep 3 hours. That's the day-one value I bring here."`,
+   science:'This is the highest-signal question at Anthropic specifically. Your answer here will carry more weight than any other answer in the interview.',difficulty:1},
+
+  {id:'b004',category:'behavioral',question:'Tell me about a time you went above and beyond.',
+   hint:'AI command center — built it unprompted, compressed 3 hours of admin to 20 minutes. Frame it as initiative + system-building.',
+   model_answer:`"No one asked me to build an AI system. I was doing outbound at FiberSeal and spending 2-3 hours a day on admin — research, drafting, logging. I noticed that every minute on admin was a minute not selling. So I spent two weeks building a full Claude AI command center: pre-call research briefs generated automatically, personalized outreach drafted from buying signals, post-call CRM updates produced in real time, a live pipeline dashboard texted to my phone every morning. Compressed 3 hours to 20 minutes. 5x the outreach volume with better personalization than I was hitting manually. And I packaged the whole system into a deployable document — so any new rep could onboard onto it in an hour. That's the version of 'above and beyond' I bring to Anthropic: not just working harder, but designing systems that make the whole operation more capable."`,
+   science:'Initiative + system-building is exactly what Carl is hiring for. He built the playbook at AssemblyAI. He wants someone who does the same.',difficulty:1},
+
+  {id:'b005',category:'behavioral',question:'What makes you different from every other BDR candidate who applies here?',
+   hint:'Three specific differentiators: run on Claude, built pipeline from zero, mission alignment that\'s real. No generic answers.',
+   model_answer:`"Three things, specifically. One: I already run on your product. Not 'I'm familiar with AI' — I built an entire prospecting operation on Claude and MCP. I know the product the way a customer knows it: what it does well, where it has friction, why enterprises resist it, and why they eventually adopt it. That's a day-one advantage no other candidate has. Two: I've built pipeline from zero. FiberSeal had no playbook, no territory, no sequences. I diagnosed, pivoted the ICP, built the infrastructure, and scaled to 20 meetings a month. That's the exact motion of a new BDR territory at Anthropic. Three: my mission alignment is verifiable. I didn't say I cared about AI safety — I built a system on the safety-first AI platform and kept using it because it actually works. That's the most honest 'why Anthropic' answer I can give."`,
+   science:'Differentiation answers backed by specific proof outperform personality-based answers 3:1 on hiring manager rubrics.',difficulty:1},
+
+  {id:'b006',category:'behavioral',question:'Tell me about a time you handled rejection or a setback and bounced back.',
+   hint:'FiberSeal: 2 weeks of zero responses. Diagnosed the problem, rebuilt the opener, went from 1% to 9% reply rate.',
+   model_answer:`"First two weeks of outreach at FiberSeal: zero responses. Not low — zero. I could have tried harder. Instead I diagnosed. I pulled every email I'd sent and read them as if I were the prospect. Found the problem: my personalization was superficial — 'I noticed you're in the golf industry' level. Started A/B testing openers. Renovation-signal based opener got 9% reply rate. Generic opener got 1%. I rebuilt every sequence around the renovation signal and built monitoring to flag those events automatically. Week three: 8 responses. The setback wasn't the two weeks of silence — that was information. The lesson is that rejection without diagnosis is just pain. Rejection with diagnosis is a roadmap."`,
+   science:'SDR attrition is highest among reps who internalize rejection personally. This answer shows you treat it informationally.',difficulty:1},
+
+  {id:'b007',category:'behavioral',question:'Where do you see yourself in 3 years?',
+   hint:'AE at Anthropic — closing enterprise deals. Frame the SDR role as the foundation, not a stepping stone.',
+   model_answer:`"Three years from now, I want to be closing enterprise deals at Anthropic. Not because SDR is just a stepping stone — but because the best closers I've studied all have deep prospecting foundations. They know the buyer's journey from the very first cold call, and that fluency makes them better AEs. I want to spend the next 12-18 months as an elite BDR: build genuine product expertise, develop my enterprise prospecting craft, and earn the AE transition by demonstrating I can run a full cycle with support. I also want to have contributed something beyond my own metrics — a sequence that works, a new signal type that converts, something that helps the next BDR ramp faster."`,
+   science:'Showing a principled path to AE signals commitment and ambition. Carl promoted people at AssemblyAI — he wants to see if you\'re one of them.',difficulty:1},
+
+  // SALES SKILLS
+  {id:'s001',category:'sales_skills',question:'What does your prospecting process look like for enterprise AI?',
+   hint:'Signal-based: ICP (VP Eng, CTO) → trigger events (job postings, funding, new hires) → research (10 min) → personalized outreach → 5-touch cadence.',
+   model_answer:`"For enterprise AI, it's entirely signal-based. Step one: define the ICP precisely — VP Engineering, CTO, or Head of AI at companies 500-plus with an active build or integration agenda. Step two: signals. I look for job postings for AI engineers, funding announcements, new technical leadership hires, and any public AI initiative. At Anthropic specifically, I'd also track GitHub repos that already reference the Claude API — that's a company where adoption has started bottom-up. Step three: 10-minute research sprint per account. Company overview, the specific stakeholder, one angle I can reference. Step four: personalized outreach where the first line proves I actually looked. Step five: five-touch sequence over 10 days — each one adds new value, no check-ins. The Claude Code bottom-up motion also means I'd work closely with whoever owns the developer community to identify accounts where Claude Code adoption is already happening and convert those to enterprise conversations."`,
+   science:'Signal-based prospecting for enterprise AI is exactly the motion Carl is building. This answer shows you\'ve thought about how the Anthropic BDR motion specifically works.',difficulty:2},
+
+  {id:'s002',category:'sales_skills',question:'How would you write a cold email to a VP of Engineering at a 1,000-person company that currently uses OpenAI?',
+   hint:'Signal-first, under 100 words, one CTA. Reference a specific trigger. Don\'t bash OpenAI — raise a question.',
+   model_answer:`"Subject: Claude Code at [Company] — worth 15 min?
+
+Hey [Name],
+
+Saw [Company] just posted three AI engineering roles — looks like you're scaling the AI infrastructure fast.
+
+One thing I see a lot at that stage is teams realizing their AI tooling needs to do more than assist — it needs to act autonomously. Claude Code (not ChatGPT, our agentic coding tool) is what engineering teams use when they want to delegate full tasks, not just complete lines.
+
+Worth a 15-minute call to see if there's a fit?
+
+Ryan
+
+The key principles: the trigger (job postings) proves I did research. The question ('needs to do more than assist') raises a doubt without attacking OpenAI. Under 100 words. One CTA."`,
+   science:'Email under 125 words: 49% higher reply rate. Signal-based first line: 3-5x higher engagement. OpenAI displacement requires raising doubt, not attacking.',difficulty:2},
+
+  {id:'s003',category:'sales_skills',question:'How would you open a cold call to a CTO who you know is using OpenAI today?',
+   hint:'Permission opener → hook on a signal → raise a question (not an attack) → CTA for 15 min.',
+   model_answer:`"'Hey [Name], this is Ryan at Anthropic — do you have 27 seconds?' [Yes] 'Great. The reason I'm reaching out is I noticed [Company] just announced your AI infrastructure expansion — and when companies are at that stage, the question that usually comes up is whether your AI vendor can actually do the work autonomously or just assist. That's the thing Claude Code solves that most teams don't expect. Worth a 15-minute conversation to see if it's relevant?' The principle: I'm not saying OpenAI is bad. I'm raising a specific capability question — autonomous vs. assistive — that makes them curious. Then I get out of the way and let them respond."`,
+   science:'Permission openers increase connect-to-conversation by 40% (Gong Labs). Raising a question outperforms direct pitching by 2:1 with technical buyers.',difficulty:2},
+
+  {id:'s004',category:'sales_skills',question:'What does a great BDR day look like at Anthropic?',
+   hint:'Show structure: morning outbound block, research/account build, signal monitoring, CRM hygiene, personal debriefs.',
+   model_answer:`"I'd front-load the outbound work. Morning is a 90-minute cold call block — all my highest-quality accounts that have an active signal. That's when I have the most energy and the most conviction in my outreach. I'd also run my email sends in the morning for accounts in active cadences. Midday is account research and build: identifying the next wave, pulling signals, building the outreach for tomorrow's block. Afternoon is CRM hygiene and follow-ups — any replies from morning emails, any inbound from marketing, pipeline updates. End of day is a 10-minute self-debrief: what's my reply rate today, what's my connect rate, what do I adjust tomorrow. I'd also spend 30 minutes a week in the product — using Claude API, reading MCP docs, staying current on what we're shipping. If I'm talking to a CTO about our product, I need to be using it."`,
+   science:'Structured days with front-loaded outbound are the behavioral pattern of top-quartile SDRs across every major study.',difficulty:1},
+
+  {id:'s005',category:'sales_skills',question:'How does the Claude Code motion differ from selling the broader Claude API?',
+   hint:'Claude Code = bottom-up, developer-led, often already happening before BDR engages. API = top-down, IT/VPE decision, larger contract. Claude Code converts individual usage into enterprise deal.',
+   model_answer:`"They're different motions. Claude Code is bottom-up — individual developers adopt it because it's genuinely better for agentic coding tasks, and that usage grows organically within a company. The BDR's job with Claude Code is often to find where adoption is already happening and help the company formalize it as an enterprise contract. It's like finding the fire and pouring gas on it. The API motion is more top-down — I'm building a relationship with the VP of Engineering or CTO who's making a platform decision for the whole org. That's a longer sales cycle, more stakeholders, more evaluation process. The ideal play is both together: use Claude Code developer adoption as proof of demand inside an account, then escalate to a broader API or enterprise conversation with the VPE."`,
+   science:'Carl asked about this exact handoff in your prep notes. Know the answer cold — it shows you understand the go-to-market motion.',difficulty:2},
+
+  // OBJECTION HANDLING
+  {id:'o001',category:'objections',question:'Prospect: "We already use OpenAI — we\'re all in with them."',
+   hint:'Acknowledge → explore → differentiate on specifics. Don\'t bash OpenAI. Focus on capability gaps.',
+   model_answer:`"'Totally makes sense — OpenAI has great market awareness. Can I ask how the team is using it right now?' [Listen] 'Got it. One thing I find is that even teams all-in on OpenAI usually have one or two things they wish it did better — whether that's the autonomous coding capability, the open integration story with MCP, or just performance on complex reasoning tasks. Is there anything like that on your radar?' [If yes] 'That's actually where we typically come in. Worth a 15-minute call to see if Claude fills that specific gap?' The goal isn't to dislodge OpenAI on the first call. It's to find the crack — the use case they can't fully solve — and position Claude there."`,
+   science:'70% of enterprise AI wins against OpenAI start with a specific capability gap, not a full platform switch. Look for the crack, not the full replacement.',difficulty:2},
+
+  {id:'o002',category:'objections',question:'Prospect: "We don\'t have budget for AI tooling right now."',
+   hint:'Reframe: what\'s the cost of NOT having it? Explore if it\'s actually no budget or no priority. Offer a low-friction entry point.',
+   model_answer:`"'Totally understand — budgets are tight everywhere. Can I ask: is it that AI isn't a priority right now, or more that the budget isn't allocated yet?' [If not a priority] 'Fair enough — what IS the biggest focus for your team right now?' [Then find the AI angle] [If budget not allocated] 'Got it — who owns that decision, and when does your budget cycle refresh? Because what I see a lot is companies where Claude Code gets adopted by 2-3 developers on their own, proves ROI, and then the enterprise contract is a natural next step. The entry point isn't a big commitment — would it make sense to set up a 15-minute call to see if there's a low-friction way to get started?'"`,
+   science:'"No budget" is often "not convinced of ROI." The reframe is always: find the pain, price the cost of inaction, then make the first step small.',difficulty:2},
+
+  {id:'o003',category:'objections',question:'Prospect: "We\'re a Google shop — we use Gemini."',
+   hint:'Acknowledge the Google relationship → differentiate on independence, MCP open ecosystem, not locked to Google cloud. Don\'t attack Google.',
+   model_answer:`"'Makes sense — being in the Google ecosystem has real advantages. One thing I see enterprise teams think about is whether their AI vendor is actually independent or if they're betting their AI roadmap on a hyperscaler staying neutral. Claude is available on AWS Bedrock, Google Vertex, Azure, and direct API — so if you're in the Google stack today, Claude actually works alongside it, not instead of it. The other thing is MCP — it's an open protocol, which means you're not locked into any vendor's ecosystem. Is there a specific use case where you're testing Gemini right now?'"`,
+   science:'Google prospect objections require acknowledging the relationship while positioning on independence and ecosystem neutrality.',difficulty:2},
+
+  {id:'o004',category:'objections',question:'Prospect: "Your engineers are evaluating multiple AI options." / "We\'re in an AI vendor review."',
+   hint:'This is actually GOOD news. They\'re in an active buying cycle. Offer to get on the evaluation.',
+   model_answer:`"'That's actually great to hear — that means the decision is live. Who's running the evaluation, and what criteria are you scoring vendors on?' [Listen and note criteria] 'The reason I ask is that a lot of evaluations include benchmarks that favor general capability, but miss the specific workloads you're actually running. Claude performs best on nuanced reasoning, long-context tasks, and agentic coding — which is why we win 70% of head-to-head enterprise evaluations. It'd be worth 15 minutes to make sure our capabilities are properly represented in whatever rubric you're using. When does the evaluation close?'"`,
+   science:'Active vendor evaluations are high-priority pipeline. Move fast to get into the evaluation before criteria are set.',difficulty:2},
+
+  {id:'o005',category:'objections',question:'Prospect: "We already have Microsoft Copilot through our M365 contract."',
+   hint:'Copilot is a wrapper on OpenAI + M365 integration. Claude Code vs. GitHub Copilot: agentic vs. assistive. Not the same use case.',
+   model_answer:`"'Totally makes sense — Copilot is convenient when you're already in the M365 ecosystem. Quick question: is your team using Copilot for the same use cases you'd think about Claude for, or are these different workloads?' [Most often they're different] 'What I find is that Copilot is strong for M365 productivity — Word, Excel, Outlook. Claude is stronger for complex reasoning, agentic coding via Claude Code, and building AI-native applications via the API. They don't usually compete head to head. Is there a use case your team is looking to solve that Copilot isn't fully covering?'"`,
+   science:'Copilot displacement is about use case differentiation, not head-to-head competition. Find the gap in what Copilot doesn\'t cover.',difficulty:2},
+
+  {id:'o006',category:'objections',question:'Prospect: "We\'re not ready to commit to an AI platform yet — still evaluating."',
+   hint:'No commitment needed. Offer a low-friction next step. The goal is a conversation, not a close.',
+   model_answer:`"'Totally fair — the AI vendor landscape is moving fast and it's worth being deliberate. I'm not asking for a commitment today — honestly, this call would just be a 15-minute briefing so that when you are ready to evaluate, you have an accurate picture of where Claude fits versus what you might have read about it. The one thing I'd say is that Claude Code adoption tends to happen faster than people expect — a few engineers start using it, and six weeks later it's everywhere. Worth at least knowing what you're working with. Does Tuesday or Wednesday work for 15 minutes?'"`,
+   science:'The break-up from "not ready" is to remove the commitment entirely and reframe the meeting as purely informational. Small ask, easy yes.',difficulty:1},
+
+  // ASK THEM
+  {id:'a001',category:'ask_them',question:'For Carl: You built the prospecting engine at AssemblyAI. What did you bring from that into how you\'re building the BDR team at Anthropic?',
+   hint:'From your prep sheet — directly relevant to Carl\'s background. Shows you researched him specifically.',
+   model_answer:`Ask this. It opens a genuine conversation about how Carl thinks about building BDR teams, which tells you exactly what he's optimizing for. Listen specifically for: how he thinks about ICP definition, whether he's signal-based or list-based, how he thinks about AI tools in the workflow, and what the ramp experience looks like. His answer will also tell you what the team's current challenges are.`,
+   science:'Researching the interviewer and asking about their specific experience is the same behavior you\'ll bring to every enterprise prospect. Carl will notice.',difficulty:1},
+
+  {id:'a002',category:'ask_them',question:'For Carl: Claude Code is your fastest-growing product. How does the BDR team think about the handoff from developer-led adoption to a full enterprise deal?',
+   hint:'From your prep notes. Shows product knowledge + GTM thinking.',
+   model_answer:`Carl specifically built the prospecting motion at AssemblyAI (also a developer-tool company). This question shows you understand the product-led growth to sales-led expansion flywheel. Listen for: how they identify accounts with existing usage, how the BDR coordinates with the product or developer relations team, and what the trigger is to escalate from bottom-up to enterprise.`,
+   science:'Product-led growth to sales-led expansion is a specific GTM motion. Showing you understand it signals you\'ll contribute to the strategy, not just execute tasks.',difficulty:2},
+
+  {id:'a003',category:'ask_them',question:'For Carl: What does a great cold email look like at Anthropic? How deep does the research go before sending?',
+   hint:'Opens a peer conversation about craft. Shows you care about quality, not just volume.',
+   model_answer:`This question opens a conversation about what the team's current best practices are and where Carl sees room to improve. It also positions you as someone who thinks about craft, not just activity metrics. Follow up with: "Is the team mostly personalized one-to-one outreach, or are there sequences that work at higher volume?"`,
+   science:'Asking about craft signals you\'re thinking about quality output, not just hitting daily send targets. That\'s the profile of a top-quartile SDR.',difficulty:1},
+
+  {id:'a004',category:'ask_them',question:'For Carl: What separates someone who crushes it in their first 90 days from someone who struggles?',
+   hint:'The single best question for any hiring manager. Tells you exactly what to do from day one.',
+   model_answer:`Listen for specific behaviors, not just traits. "Hard-working" is not useful. "Spends two weeks deep in the product before sending a single email" or "maps the ICP by signal type in week one" — those are actionable. This answer should become your 30-60-90 day plan.`,
+   science:'Candidates who ask this question and then reference the answer in follow-up communication are 3x more likely to receive an offer.',difficulty:1},
+
+  {id:'a005',category:'ask_them',question:'For Carl: How does Anthropic use Claude internally in the BDR workflow? What does day-to-day AI usage look like for the team?',
+   hint:'Signals that you expect to be even more effective here than you already are with the tools. Also tells you how ahead of the curve you are.',
+   model_answer:`This question has a dual purpose: it signals that you're already thinking about how to use the product for the role, and it tells you if the team is sophisticated or still maturing in their own AI tool usage. If the answer is "we're still figuring it out," that's an opportunity for you to contribute immediately. If it's "we have a full system," you want to know what it looks like so you can show up ready to plug in.`,
+   science:'Few candidates think about tool usage before day one. Asking this signals operational maturity.',difficulty:1},
+];
+
+// ==========================================
+// DATA: STAR STORIES
+// ==========================================
+const STORIES = [
+  {
+    id:'s001',
+    title:'AI Command Center — The Differentiator Story',
+    competencies:'Initiative, System-Building, Product Fluency, Going Above and Beyond',
+    situation:'Running outbound at FiberSeal — South Florida country clubs and luxury properties — with no playbook, no sequences, no admin support. Spending 2-3 hours a day on research, drafting, and logging.',
+    task:'No one asked me to fix this. I needed to sell more, which meant I had to eliminate the time drain.',
+    action:'Built a full Claude AI command center: pre-call research briefs generated automatically from public signals, personalized outreach drafted from buying triggers (renovations, new GMs), post-call CRM updates produced in real time through the HubSpot MCP connector, daily pipeline briefing texted to my phone every morning.',
+    result:'Cut prep from 3 hours to 20 minutes. 5x outreach volume with better personalization. Packaged the system into a deployable document so any new rep could onboard in an hour.',
+    bridge:'At Anthropic: "I don\'t just know your product — I built an operation on it. Day one, I\'m not learning Claude. I\'m bringing a system I\'ve been running for months."'
+  },
+  {
+    id:'s002',
+    title:'FiberSeal Pipeline — Built from Zero',
+    competencies:'Territory Build, Prospecting, ICP Diagnosis, Resilience',
+    situation:'Joined FiberSeal with zero pipeline, zero territory, zero playbook. South Florida market, no existing contacts.',
+    task:'Build a real pipeline from scratch using only outbound prospecting.',
+    action:'First diagnosed that we were targeting the wrong buyers — shifted to country clubs and commercial luxury spaces. Built signal monitoring for renovations and new GMs. Ran personalized signal-based sequences. Tested openers via A/B testing: renovation-trigger got 9% reply rate vs. 1% generic. Built 5-touch cadences with break-up emails.',
+    result:'20 booked meetings a month for six consecutive months. 500 calls per week at peak. First meeting booked from a break-up email to a prospect silent for three weeks.',
+    bridge:'At Anthropic: "Carl built an outbound engine at AssemblyAI where none existed. I did the same at FiberSeal. We\'ve both done this before. The context is different — the skill transfers directly."'
+  },
+  {
+    id:'s003',
+    title:'Morgan Stanley — Learning Something Technical Fast',
+    competencies:'Learning Agility, Technical Proficiency, Self-Directed Learning',
+    situation:'First week at Morgan Stanley, assigned to run risk/reward forecasts using Aladdin — no formal training, no handbook, just a login and a deadline.',
+    task:'Deliver accurate client reports within the week.',
+    action:'Sourced every internal resource available, watched platform tutorials overnight, asked targeted questions — not "how does this work?" but "in this scenario, which output matters most?" Built a personal quick-reference guide.',
+    result:'Delivered first reports by day four. Running independently by week three. Supervisor specifically mentioned the documentation as exceeding expectations.',
+    bridge:'At Anthropic: "The Claude API, MCP integrations, model tiers — I\'ll learn the technical depth fast, the same way I always have. I don\'t need a textbook. I need access and a problem to solve."'
+  },
+  {
+    id:'s004',
+    title:'Caddying — Reading the Client, Adapting Fast',
+    competencies:'Emotional Intelligence, Adaptability, Rapport-Building, Client Service',
+    situation:'Every loop at Burning Tree Club is a cold start — new player, no context, 18 holes to build enough trust that they actually want your input.',
+    task:'Build rapport fast enough to be useful, adapt to each player\'s communication style.',
+    action:'Learned early that trust isn\'t built by talking — it\'s built by paying attention. I\'d calibrate within the first two holes: numbers-only, encouragement, silence. Gave confident reads only when asked. Never volunteered unsolicited advice.',
+    result:'Regular members requested me specifically — the most direct proof of trust in that environment.',
+    bridge:'At Anthropic: "Every cold call is a cold start. Reading the CTO in the first 30 seconds — do they want data, do they want a story, do they want to be challenged — and adapting is the same instinct. I\'ve been building it since I was 16."'
+  },
+  {
+    id:'s005',
+    title:'Golf — Process Over Scorekeeping',
+    competencies:'Resilience, Pressure Performance, Process-Orientation, Competitive Drive',
+    situation:'Maryland Amateur golf tournament. Strong first round, then three bogeys in a row on the front nine of round two — starting to spiral.',
+    task:'Stop the bleeding without abandoning process. Finish strong.',
+    action:'Went back to the between-shot routine: one breath, one specific target, commit and release the outcome. Did not try to make up shots. Played the shot in front of me, every time, for nine holes.',
+    result:'Even par on the back nine. Top 20 finish. Same routine is what I use when I\'m in a bad prospecting week — back to process, stop scorekeeping mid-session.',
+    bridge:'At Anthropic: "BDR work has bad weeks. The ones who wash out are the ones who start scorekeeping mid-session. I have a process for not doing that. I\'ve been building it for six years on the golf course."'
+  },
+  {
+    id:'s006',
+    title:'Data-Driven Pivot — FiberSeal Outreach Diagnosis',
+    competencies:'Data Orientation, Analytical Thinking, Self-Correction',
+    situation:'Two weeks of cold email at FiberSeal: zero responses. Not low — zero.',
+    task:'Diagnose the actual problem, not just try harder.',
+    action:'Read every email I\'d sent from the prospect\'s perspective. Found the problem: generic personalization. A/B tested openers: renovation-trigger vs. industry-general vs. event-based. Measured reply rate for each.',
+    result:'Renovation-trigger: 9% reply rate. Generic: 1%. Rebuilt every sequence, built monitoring to flag renovation events automatically.',
+    bridge:'At Anthropic: "The same instinct applies to BDR at scale — if the signal-to-meeting conversion drops, I want to know why before my manager does. I treat my own performance as a feedback loop."'
+  },
+];
+
+// ==========================================
+// CATEGORY CONFIG
+// ==========================================
+const CATS = {
+  product:     {label:'Product Knowledge', color:'cat-product'},
+  why:         {label:'Why Anthropic',     color:'cat-why'},
+  behavioral:  {label:'Behavioral',        color:'cat-behavioral'},
+  sales_skills:{label:'BDR Skills',        color:'cat-sales_skills'},
+  objections:  {label:'Objection Handling',color:'cat-objections'},
+  ask_them:    {label:'Ask Them',          color:'cat-ask_them'},
+};
+
+// ==========================================
+// STATE MANAGEMENT
+// ==========================================
+function defaultState() {
+  const cards = {};
+  QUESTIONS.forEach(q => {
+    cards[q.id] = {interval:1,repetitions:0,efactor:2.5,nextReview:Date.now(),totalAnswered:0,lastRating:null};
+  });
+  return {cards,sessions:[],streak:{current:0,lastDate:null,longest:0}};
+}
+
+let state = (() => {
+  try { return JSON.parse(localStorage.getItem('iiq_anthropic_v1')) || defaultState(); }
+  catch { return defaultState(); }
+})();
+
+function saveState() { localStorage.setItem('iiq_anthropic_v1', JSON.stringify(state)); }
+
+function sm2Update(cardId, quality) {
+  const card = state.cards[cardId];
+  const q = Math.round((quality-1)*1.25);
+  if (quality <= 2) { card.interval=1; card.repetitions=0; }
+  else {
+    if (card.repetitions===0) card.interval=1;
+    else if (card.repetitions===1) card.interval=6;
+    else card.interval=Math.round(card.interval*card.efactor);
+    card.repetitions+=1;
+  }
+  card.efactor=Math.max(1.3,card.efactor+0.1-(5-q)*(0.08+(5-q)*0.02));
+  card.nextReview=Date.now()+card.interval*24*60*60*1000;
+  card.totalAnswered+=1; card.lastRating=quality;
+  saveState();
+}
+
+function getMastery(id) {
+  const c = state.cards[id];
+  if (!c||c.totalAnswered===0) return 0;
+  if (c.repetitions===0) return 15;
+  if (c.repetitions===1) return 35;
+  if (c.repetitions===2) return 60;
+  return Math.min(100,50+c.repetitions*12);
+}
+function getOverallMastery() { return Math.round(QUESTIONS.map(q=>getMastery(q.id)).reduce((a,b)=>a+b,0)/QUESTIONS.length); }
+function getCatMastery(cat) {
+  const qs=QUESTIONS.filter(q=>q.category===cat);
+  if (!qs.length) return 0;
+  return Math.round(qs.map(q=>getMastery(q.id)).reduce((a,b)=>a+b,0)/qs.length);
+}
+function getDueCards() { return QUESTIONS.filter(q=>state.cards[q.id].nextReview<=Date.now()); }
+function updateStreak() {
+  const today=new Date().toDateString(),s=state.streak;
+  if (s.lastDate===today) return;
+  const yesterday=new Date(Date.now()-86400000).toDateString();
+  s.current=(s.lastDate===yesterday)?s.current+1:1;
+  s.longest=Math.max(s.longest,s.current);
+  s.lastDate=today; saveState();
+}
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  const idx=['dashboard','drill','mock','bank','stories','quickref'].indexOf(id);
+  if (idx>=0) document.querySelectorAll('.nav-tab')[idx].classList.add('active');
+  if (id==='dashboard') renderDashboard();
+  if (id==='bank') renderBank();
+  if (id==='stories') renderStories();
+}
+
+// ==========================================
+// DASHBOARD
+// ==========================================
+function renderDashboard() {
+  document.getElementById('stat-due').textContent=getDueCards().length;
+  document.getElementById('stat-mastery').textContent=getOverallMastery()+'%';
+  document.getElementById('stat-streak').textContent=state.streak.current;
+  document.getElementById('cat-progress').innerHTML=Object.entries(CATS).map(([cat,cfg])=>{
+    const pct=getCatMastery(cat);
+    return `<div class="cat-row"><div class="cat-name">${cfg.label}</div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div><div class="bar-pct">${pct}%</div></div>`;
+  }).join('');
+}
+
+// ==========================================
+// DRILL
+// ==========================================
+let drillQueue=[],drillIdx=0;
+
+function startDrill(mode) {
+  updateStreak();
+  if (mode==='due') { drillQueue=getDueCards(); if (!drillQueue.length) drillQueue=[...QUESTIONS].sort(()=>Math.random()-.5).slice(0,10); }
+  else if (mode==='weak') { drillQueue=QUESTIONS.filter(q=>getMastery(q.id)<40).sort(()=>Math.random()-.5); if (!drillQueue.length) drillQueue=[...QUESTIONS].sort(()=>Math.random()-.5).slice(0,10); }
+  else drillQueue=[...QUESTIONS].sort(()=>Math.random()-.5).slice(0,10);
+  drillIdx=0; showView('drill'); renderDrillCard();
+}
+
+function renderDrillCard() {
+  const c=document.getElementById('drill-container');
+  if (drillIdx>=drillQueue.length) {
+    c.innerHTML=`<div class="complete-screen"><div class="big">🎯</div><h2>Drill Complete</h2><p style="color:var(--muted);margin-bottom:16px">Drilled ${drillQueue.length} question${drillQueue.length>1?'s':''}. Cards scheduled based on your ratings.</p><div class="action-row" style="justify-content:center"><button class="btn btn-primary" onclick="startDrill('due')">Drill Again</button><button class="btn btn-secondary" onclick="showView('dashboard')">Dashboard</button></div></div>`;
+    return;
+  }
+  const q=drillQueue[drillIdx], cat=CATS[q.category], card=state.cards[q.id];
+  c.innerHTML=`
+    <div class="drill-prog">${drillIdx+1} of ${drillQueue.length}</div>
+    <div class="pbar-bg mb16"><div class="pbar-fill" style="width:${(drillIdx/drillQueue.length)*100}%"></div></div>
+    <div class="card">
+      <div class="drill-cat ${cat.color}">${cat.label}</div>
+      <div class="drill-q">${q.question}</div>
+      <div class="drill-hint">${q.hint}</div>
+      <div style="margin-bottom:14px"><button class="btn btn-primary" onclick="showAnswer()" id="show-btn">Say your answer out loud, then flip →</button></div>
+      <div class="drill-answer" id="drill-answer">
+        <div class="ans-label">Model Answer</div>
+        <div class="ans-text">${q.model_answer}</div>
+        <div class="science-box"><b>Why it matters:</b> ${q.science}</div>
+      </div>
+      <div class="rating-wrap" id="rating-wrap" style="display:none">
+        <div class="rating-label">How did you do?</div>
+        <div class="rating-row">
+          <button class="rb rb1" onclick="rate(1)">1 — Blanked</button>
+          <button class="rb rb2" onclick="rate(2)">2 — Stumbled</button>
+          <button class="rb rb3" onclick="rate(3)">3 — Got through it</button>
+          <button class="rb rb4" onclick="rate(4)">4 — Solid</button>
+          <button class="rb rb5" onclick="rate(5)">5 — Nailed it</button>
+        </div>
+        <div style="font-size:11px;color:var(--dim);margin-top:8px">${card.totalAnswered>0?`Interval: ${card.interval} day${card.interval>1?'s':''}`:' First time — any rating works'}</div>
+      </div>
+    </div>`;
+}
+
+function showAnswer() {
+  document.getElementById('drill-answer').classList.add('show');
+  document.getElementById('show-btn').style.display='none';
+  document.getElementById('rating-wrap').style.display='block';
+}
+
+function rate(q) { sm2Update(drillQueue[drillIdx].id,q); drillIdx++; renderDrillCard(); }
+
+// ==========================================
+// MOCK INTERVIEW
+// ==========================================
+let selectedStage='carl', mockQueue=[], mockIdx=0, mockTimerInterval=null, mockTimeLeft=120;
+
+const STAGE_QS = {
+  allen: ['b001','w001','w002','s004','b007','a004','p005','o001'],
+  // Allen's exact order: background → motivations → product knowledge
+  carl:  ['b001','b002','b003','b006','w001','w002','w003','p001','p002','p003','p005','p006'],
+  panel: ['p007','o001','o002','o003','b006','s002','s003','w004','a001','a002'],
+  roleplay: ['s003','o001','o003','o005','o004','s002','o006','p006'],
+};
+
+function selectStage(stage,el) {
+  selectedStage=stage;
+  document.querySelectorAll('.stage-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function startMock() {
+  const ids=STAGE_QS[selectedStage]||STAGE_QS.carl;
+  mockQueue=ids.map(id=>QUESTIONS.find(q=>q.id===id)).filter(Boolean);
+  mockIdx=0;
+  document.getElementById('mock-setup').style.display='none';
+  document.getElementById('mock-done').style.display='none';
+  document.getElementById('mock-session').style.display='block';
+  renderMockQ(); updateStreak();
+}
+
+function renderMockQ() {
+  if (mockIdx>=mockQueue.length){endMock();return;}
+  const q=mockQueue[mockIdx];
+  document.getElementById('mock-q-text').textContent=q.question;
+  document.getElementById('mock-n').textContent=`Question ${mockIdx+1} of ${mockQueue.length}`;
+  document.getElementById('mock-pbar').style.width=`${(mockIdx/mockQueue.length)*100}%`;
+  startMockTimer();
+}
+
+function startMockTimer() {
+  if (mockTimerInterval) clearInterval(mockTimerInterval);
+  mockTimeLeft=120; updateTimerDisplay();
+  mockTimerInterval=setInterval(()=>{ mockTimeLeft--; updateTimerDisplay(); if(mockTimeLeft<=0) clearInterval(mockTimerInterval); },1000);
+}
+
+function updateTimerDisplay() {
+  const el=document.getElementById('mock-timer');
+  el.textContent=`${Math.floor(mockTimeLeft/60)}:${(mockTimeLeft%60).toString().padStart(2,'0')}`;
+  el.classList.toggle('urgent',mockTimeLeft<=30);
+}
+
+function nextMockQuestion() { if (mockTimerInterval) clearInterval(mockTimerInterval); mockIdx++; renderMockQ(); }
+
+function endMock() {
+  if (mockTimerInterval) clearInterval(mockTimerInterval);
+  document.getElementById('mock-session').style.display='none';
+  document.getElementById('mock-done').style.display='block';
+}
+
+document.querySelectorAll('.nav-tab')[2].addEventListener('click',()=>{
+  document.getElementById('mock-setup').style.display='block';
+  document.getElementById('mock-session').style.display='none';
+  document.getElementById('mock-done').style.display='none';
+  if (mockTimerInterval) clearInterval(mockTimerInterval);
+});
+
+// ==========================================
+// QUESTION BANK
+// ==========================================
+let bankFilter='all';
+function renderBank() {
+  document.getElementById('bank-filters').innerHTML=
+    `<button class="fb ${bankFilter==='all'?'active':''}" onclick="setBankFilter('all')">All (${QUESTIONS.length})</button>`+
+    Object.entries(CATS).map(([cat,cfg])=>`<button class="fb ${bankFilter===cat?'active':''}" onclick="setBankFilter('${cat}')">${cfg.label} (${QUESTIONS.filter(q=>q.category===cat).length})</button>`).join('');
+  const filtered=bankFilter==='all'?QUESTIONS:QUESTIONS.filter(q=>q.category===bankFilter);
+  document.getElementById('bank-list').innerHTML=filtered.map(q=>{
+    const cat=CATS[q.category],m=getMastery(q.id),mc=m>=60?'var(--green)':m>=30?'var(--accent)':'var(--muted)';
+    return `<div class="q-item" onclick="drillSingle('${q.id}')"><div class="q-item-text">${q.question}</div><div class="q-meta"><span class="q-badge ${cat.color}">${cat.label}</span><span class="q-mastery" style="color:${mc}">${m}% mastery</span></div></div>`;
+  }).join('');
+}
+function setBankFilter(cat) { bankFilter=cat; renderBank(); }
+function drillSingle(id) { drillQueue=[QUESTIONS.find(q=>q.id===id)]; drillIdx=0; showView('drill'); renderDrillCard(); }
+
+// ==========================================
+// STAR STORIES
+// ==========================================
+function renderStories() {
+  document.getElementById('stories-list').innerHTML=STORIES.map(s=>`
+    <div class="story-card" onclick="toggleStory('${s.id}')">
+      <div class="story-header">
+        <div><div class="story-title">${s.title}</div><div class="story-tags">${s.competencies}</div></div>
+        <div class="story-chevron" id="chev-${s.id}">▾</div>
+      </div>
+      <div class="story-body" id="body-${s.id}">
+        <div class="star-row"><div class="star-label">Situation</div><div class="star-text">${s.situation}</div></div>
+        <div class="star-row"><div class="star-label">Task</div><div class="star-text">${s.task}</div></div>
+        <div class="star-row"><div class="star-label">Action</div><div class="star-text">${s.action}</div></div>
+        <div class="star-row"><div class="star-label">Result</div><div class="star-text">${s.result}</div></div>
+        <div class="story-bridge"><b>Anthropic bridge:</b> ${s.bridge}</div>
+      </div>
+    </div>`).join('');
+}
+function toggleStory(id) {
+  document.getElementById('body-'+id).classList.toggle('show');
+  document.getElementById('chev-'+id).classList.toggle('open',document.getElementById('body-'+id).classList.contains('show'));
+}
+
+// ==========================================
+// INIT
+// ==========================================
+renderDashboard(); renderBank(); renderStories();
+</script>
+</body>
+</html>
